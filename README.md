@@ -6,13 +6,14 @@ Internal reference for how leadership and the security team build cybersecurity 
 
 - **`index.html`** — landing page linking to everything below.
 - **`company-stage-roadmap.html`** — CEO/COO learning path mapped to company stage (Seed → Series A → Growth → Pre-IPO), with a certification/course ladder at each stage.
-- **`skill-tree-roadmap.html`** — skill tree for the security org, branching into Penetration Testing, Network Engineering, Cybersecurity Analyst (SOC/Blue Team), Auditing, GRC, Cloud Security, and Incident Response/DFIR. Tools + certs at Foundation / Practitioner / Advanced level for each.
-- **`skill-tree-free-resources.html`** — same branches, with free YouTube channels, subreddits, and free practice platforms for each, so nothing here requires a training budget to start.
+- **`skill-tree-roadmap.html`** — skill tree for the security org, branching into Penetration Testing, Network Engineering, Cybersecurity Analyst (SOC/Blue Team), Auditing, GRC, Cloud Security, and Incident Response/DFIR. Tools + certs at Foundation / Practitioner / Advanced level for each. Branches scroll horizontally with momentum + rubber-band bounce at the edges.
+- **`skill-tree-free-resources.html`** — same branches, with free YouTube channels, subreddits, and free practice platforms for each, plus a full price-sorted ladder of every recognized cert in that field (cheapest → priciest) with the one that matters most to employers flagged, and a budget note per branch (what to skip, cheapest path to the top cert).
 - **`glossary.html`** — searchable plain-English definitions for every acronym used across these docs (SOC 2, CVE, MFA, etc.).
+- **`tracker.html`** — pick a specialty and check off tools, certs, and free resources as they're actually completed. Progress is saved in the browser's `localStorage` — no account, no backend, doesn't sync across devices.
 
 ## Viewing
 
-Open any `.html` file directly in a browser — single-file, no build step, no dependencies beyond a CDN font import.
+Open any `.html` file directly in a browser — single-file, no build step, no dependencies beyond a CDN font import (`tracker.html` also uses `localStorage`, which needs the page to be opened as `http(s)://`, not a bare `file://` path, in most browsers).
 
 If GitHub Pages is enabled (Settings → Pages → Deploy from branch → `main` → `/root`), the whole thing is served at:
 

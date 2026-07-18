@@ -4,67 +4,69 @@
 <meta charset="UTF-8">
 <title>Security Skill Tree — Specialization Branches</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root{
-  --navy: #0F2340;
-  --navy-deep: #0A1930;
-  --trace: #5FD4D0;
-  --amber: #F2A93B;
-  --paper: #EDEDE3;
-  --paper-dim: #B9C2D0;
-  --line: rgba(95,212,208,0.28);
+  --bg: #F5F6FB;
+  --surface: #FFFFFF;
+  --surface-alt: #F0F1FA;
+  --accent: #4640DE;
+  --accent-soft: #EDEDFB;
+  --ink: #14142B;
+  --ink-dim: #6E7191;
+  --line: #E9E9F5;
+  --highlight: #F2994A;
+  --shadow: 0 12px 30px rgba(20,20,43,0.06);
 }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 body{
-  background: var(--navy);
-  background-image: radial-gradient(circle at 1px 1px, rgba(95,212,208,0.10) 1px, transparent 1px);
-  background-size: 28px 28px;
-  color: var(--paper);
-  font-family:'IBM Plex Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family:'Plus Jakarta Sans', sans-serif;
   line-height:1.5;
 }
 .wrap{max-width: 1240px; margin:0 auto; padding: 52px 28px 90px;}
 
-header{border-bottom:1px solid var(--line); padding-bottom:28px; margin-bottom:10px;}
+header{padding-bottom:28px; margin-bottom:10px;}
 .eyebrow{
-  font-family:'IBM Plex Mono', monospace; color:var(--trace);
-  font-size:12px; letter-spacing:2.5px; text-transform:uppercase;
-  display:flex; align-items:center; gap:10px;
+  color:var(--accent);
+  font-weight:700; font-size:12.5px; letter-spacing:1px; text-transform:uppercase;
+  display:flex; align-items:center; gap:8px;
 }
-.eyebrow::before{content:''; width:8px; height:8px; background:var(--trace); box-shadow:0 0 8px var(--trace);}
-h1{font-family:'IBM Plex Sans Condensed', sans-serif; font-weight:700; font-size:38px; letter-spacing:-0.5px; margin:14px 0 10px;}
-h1 span{color:var(--amber);}
-.subhead{color:var(--paper-dim); font-size:15.5px; max-width:680px;}
+.eyebrow::before{content:''; width:7px; height:7px; border-radius:50%; background:var(--accent);}
+h1{font-weight:800; font-size:36px; letter-spacing:-0.5px; margin:14px 0 10px;}
+h1 span{color:var(--accent);}
+.subhead{color:var(--ink-dim); font-size:15.5px; max-width:680px;}
 
 /* ROOT */
 .root-wrap{display:flex; justify-content:center; margin-top:46px;}
 .root-node{
-  font-family:'IBM Plex Sans Condensed', sans-serif;
-  font-weight:700; font-size:17px;
-  background: var(--navy-deep);
-  border: 2px solid var(--amber);
-  color: var(--paper);
+  font-weight:800; font-size:17px;
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: 18px;
+  color: var(--ink);
   padding: 16px 30px;
   text-align:center;
-  box-shadow: 0 0 20px rgba(242,169,59,0.18);
+  box-shadow: var(--shadow);
 }
 .root-node small{
-  display:block; font-family:'IBM Plex Mono', monospace;
-  font-weight:400; font-size:11px; letter-spacing:1px;
-  color: var(--paper-dim); text-transform:uppercase; margin-top:4px;
+  display:block;
+  font-weight:500; font-size:11px; letter-spacing:0.5px;
+  color: var(--ink-dim); text-transform:uppercase; margin-top:4px;
 }
 
 /* TRUNK + BAR */
 .trunk-line{
-  width:2px; height:34px; background:var(--trace);
-  margin: 0 auto;
+  width:2px; height:34px; background:var(--accent);
+  margin: 0 auto; opacity:0.4;
 }
-.bar-wrap{ position:relative; height:2px; margin: 0 7.14%; background:var(--trace); }
+.bar-wrap{ position:relative; height:2px; margin: 0 7.14%; background:var(--accent); opacity:0.4; }
 
 /* BRANCH COLUMNS */
-.tree-scroll{ overflow-x:auto; padding-bottom: 6px; }
+.tree-scroll{ overflow-x:auto; padding-bottom: 6px; cursor: grab; touch-action: pan-y; user-select: none; }
+.tree-scroll:active{ cursor: grabbing; }
 .columns{
   display:flex;
   min-width: 1340px;
@@ -78,81 +80,78 @@ h1 span{color:var(--amber);}
   position:relative;
 }
 .col-tick{
-  width:2px; height:22px; background:var(--trace);
-  margin: 0 auto;
+  width:2px; height:22px; background:var(--accent);
+  margin: 0 auto; opacity:0.4;
 }
 .col-header{
-  font-family:'IBM Plex Sans Condensed', sans-serif;
-  font-weight:700; font-size:15.5px;
+  font-weight:700; font-size:15px;
   text-align:center;
-  background: rgba(95,212,208,0.12);
-  border: 1px solid var(--trace);
-  color: var(--paper);
-  padding: 10px 8px;
+  background: var(--accent-soft);
+  border-radius: 12px;
+  color: var(--ink);
+  padding: 11px 8px;
   margin-bottom: 18px;
 }
 
 /* LEVEL CARDS */
 .level{
-  background: rgba(20,42,74,0.55);
+  background: var(--surface);
   border: 1px solid var(--line);
-  border-left: 3px solid var(--amber);
-  padding: 14px 14px 16px;
+  border-radius: 14px;
+  padding: 16px 14px 16px;
   margin-bottom: 14px;
   position:relative;
+  box-shadow: var(--shadow);
 }
 .level::before{
   content: attr(data-level);
   position:absolute;
   top:-9px; left:12px;
-  font-family:'IBM Plex Mono', monospace;
   font-size:9.5px; letter-spacing:1px; text-transform:uppercase;
-  background: var(--amber);
-  color: var(--navy-deep);
-  padding: 2px 7px;
+  background: var(--highlight);
+  color: #fff;
+  border-radius: 999px;
+  padding: 3px 9px;
   font-weight:700;
 }
 .stem{
-  width:2px; height:14px; background:var(--trace);
-  margin: 0 auto;
+  width:2px; height:14px; background:var(--accent);
+  margin: 0 auto; opacity:0.4;
 }
 .lvl-label{
-  font-family:'IBM Plex Mono', monospace;
   font-size:10px; letter-spacing:1px; text-transform:uppercase;
-  color: var(--trace); margin: 6px 0 8px;
+  color: var(--accent); margin: 6px 0 8px; font-weight:700;
 }
 .tools{
   list-style:none; margin:0 0 10px; padding:0;
   display:flex; flex-wrap:wrap; gap:5px;
 }
 .tools li{
-  font-family:'IBM Plex Mono', monospace;
   font-size:11px;
-  background: rgba(237,237,227,0.06);
-  border: 1px solid var(--line);
-  color: var(--paper-dim);
-  padding: 3px 7px;
+  background: var(--surface-alt);
+  border-radius: 999px;
+  color: var(--ink-dim);
+  padding: 3px 10px;
 }
 .cert-line{
   font-size:12.5px;
-  color: var(--paper);
-  border-top: 1px dashed var(--line);
+  color: var(--ink);
+  border-top: 1px solid var(--line);
   padding-top: 8px;
   margin-top: 2px;
 }
-.cert-line b{color:var(--amber); font-weight:600;}
+.cert-line b{color:var(--highlight); font-weight:700;}
 
 .legend{
   display:flex; gap:22px; margin: 24px 0 6px; flex-wrap:wrap;
-  font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--paper-dim);
+  font-size:12.5px; font-weight:500; color:var(--ink-dim);
 }
 .legend div{display:flex; align-items:center; gap:8px;}
-.chip{width:14px; height:14px; display:inline-block;}
+.chip{width:14px; height:14px; display:inline-block; border-radius:4px;}
 
 footer.note{
   margin-top: 44px;
-  font-family:'IBM Plex Mono', monospace;
-  font-size:11px; color:var(--paper-dim); opacity:0.75;
+  font-size:12px; color:var(--ink-dim);
   max-width: 720px;
 }
 </style>
@@ -336,5 +335,103 @@ footer.note{
   <footer class="note">Scroll horizontally on smaller screens — six branches, one trunk. Each branch is a hiring ladder as much as a personal one: useful for leveling job reqs, not just self-study.</footer>
 
 </div>
+<script>
+(function(){
+  const el = document.querySelector('.tree-scroll');
+  if(!el) return;
+
+  let isDown = false, startX = 0, startScroll = 0, lastX = 0, lastT = 0, velocity = 0, raf = null;
+  const RESIST = 0.45;      // how much the edge resists during an active drag
+  const SPRING = 0.22;      // how fast it springs back into bounds
+  const FRICTION = 0.94;    // momentum decay per frame
+
+  function maxScroll(){ return el.scrollWidth - el.clientWidth; }
+
+  function settle(){
+    const max = maxScroll();
+    function step(){
+      const pos = el.scrollLeft;
+      const target = pos < 0 ? 0 : (pos > max ? max : pos);
+      const next = pos + (target - pos) * SPRING;
+      el.scrollLeft = next;
+      if(Math.abs(target - next) > 0.4){
+        raf = requestAnimationFrame(step);
+      } else {
+        el.scrollLeft = target;
+      }
+    }
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(step);
+  }
+
+  function momentum(){
+    let vel = velocity;
+    function step(){
+      const max = maxScroll();
+      let pos = el.scrollLeft + vel;
+      vel *= FRICTION;
+      if(pos < 0){ pos += (0 - pos) * SPRING; vel *= 0.6; }
+      else if(pos > max){ pos += (max - pos) * SPRING; vel *= 0.6; }
+      el.scrollLeft = pos;
+      if(Math.abs(vel) > 0.4 || pos < -1 || pos > max + 1){
+        raf = requestAnimationFrame(step);
+      } else {
+        settle();
+      }
+    }
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(step);
+  }
+
+  el.addEventListener('pointerdown', function(e){
+    isDown = true;
+    cancelAnimationFrame(raf);
+    el.setPointerCapture(e.pointerId);
+    startX = e.clientX;
+    startScroll = el.scrollLeft;
+    lastX = e.clientX;
+    lastT = Date.now();
+    velocity = 0;
+  });
+
+  el.addEventListener('pointermove', function(e){
+    if(!isDown) return;
+    const dx = e.clientX - startX;
+    let pos = startScroll - dx;
+    const max = maxScroll();
+    if(pos < 0){ pos *= RESIST; }
+    else if(pos > max){ pos = max + (pos - max) * RESIST; }
+    el.scrollLeft = pos;
+    const now = Date.now();
+    const dt = Math.max(now - lastT, 1);
+    velocity = ((e.clientX - lastX) / dt) * -16;
+    lastX = e.clientX;
+    lastT = now;
+  });
+
+  function release(){
+    if(!isDown) return;
+    isDown = false;
+    momentum();
+  }
+  el.addEventListener('pointerup', release);
+  el.addEventListener('pointercancel', release);
+  el.addEventListener('pointerleave', function(){ if(isDown) release(); });
+
+  el.addEventListener('wheel', function(e){
+    if(Math.abs(e.deltaX) < Math.abs(e.deltaY) && maxScroll() <= 0) return;
+    e.preventDefault();
+    cancelAnimationFrame(raf);
+    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    const max = maxScroll();
+    let pos = el.scrollLeft + delta;
+    if(pos < 0){ pos *= RESIST; }
+    else if(pos > max){ pos = max + (pos - max) * RESIST; }
+    el.scrollLeft = pos;
+    clearTimeout(el._settleTimer);
+    el._settleTimer = setTimeout(settle, 90);
+  }, {passive:false});
+})();
+</script>
 </body>
 </html>

@@ -4,59 +4,141 @@
 <meta charset="UTF-8">
 <title>Security Learning Roadmap</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 :root{
-  --navy:#0F2340; --navy-deep:#0A1930; --trace:#5FD4D0; --amber:#F2A93B;
-  --paper:#EDEDE3; --paper-dim:#B9C2D0; --line:rgba(95,212,208,0.25);
+  --bg:#F5F6FB; --surface:#FFFFFF; --surface-alt:#F0F1FA;
+  --accent:#4640DE; --accent-soft:#EDEDFB; --accent-deep:#2F2BC9;
+  --ink:#14142B; --ink-dim:#6E7191; --line:#E9E9F5;
+  --highlight:#F2994A; --shadow:0 12px 30px rgba(20,20,43,0.07);
 }
 *{box-sizing:border-box;}
 body{
-  margin:0; background:var(--navy);
-  background-image: radial-gradient(circle at 1px 1px, rgba(95,212,208,0.09) 1px, transparent 1px);
-  background-size:28px 28px;
-  color:var(--paper); font-family:'IBM Plex Sans', sans-serif;
-  display:flex; align-items:center; justify-content:center; min-height:100vh;
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:'Plus Jakarta Sans', sans-serif;
+  min-height:100vh;
 }
-.wrap{max-width:640px; padding: 40px 28px;}
-.eyebrow{font-family:'IBM Plex Mono', monospace; color:var(--trace); font-size:12px; letter-spacing:2.5px; text-transform:uppercase; display:flex; align-items:center; gap:10px;}
-.eyebrow::before{content:''; width:8px; height:8px; background:var(--trace); box-shadow:0 0 8px var(--trace);}
-h1{font-family:'IBM Plex Sans Condensed', sans-serif; font-size:32px; margin:14px 0 24px;}
+
+/* TOP BAR */
+.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 18px 40px; background:var(--surface); border-bottom:1px solid var(--line);
+}
+.brand{display:flex; align-items:center; gap:12px;}
+.brand-mark{
+  width:38px; height:38px; border-radius:12px;
+  background: linear-gradient(135deg, var(--accent), #8B7BFF);
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-weight:800; font-size:15px;
+}
+.brand-name{font-weight:700; font-size:15px;}
+.brand-sub{font-size:12px; color:var(--ink-dim);}
+.get-in-touch{
+  background:var(--ink); color:#fff; border:none; border-radius:999px;
+  padding:10px 20px; font-family:inherit; font-weight:600; font-size:13px;
+  text-decoration:none; display:inline-block;
+}
+
+.page{max-width:900px; margin:0 auto; padding: 48px 28px 90px;}
+
+.hero{margin-bottom:34px;}
+.eyebrow{
+  color:var(--accent); font-weight:700; font-size:12.5px;
+  letter-spacing:1px; text-transform:uppercase;
+  display:flex; align-items:center; gap:8px; margin-bottom:10px;
+}
+.eyebrow::before{content:''; width:7px; height:7px; border-radius:50%; background:var(--accent);}
+h1{font-size:34px; font-weight:800; margin:0 0 10px; letter-spacing:-0.5px;}
+.subhead{color:var(--ink-dim); font-size:15px; max-width:600px; line-height:1.6;}
+
+/* CARD GRID */
+.grid{display:flex; flex-direction:column; gap:14px;}
 .card{
-  display:block; text-decoration:none; color:var(--paper);
-  border:1px solid var(--line); border-left:3px solid var(--amber);
-  background: rgba(20,42,74,0.5);
-  padding: 18px 20px; margin-bottom: 14px;
-  transition: background 0.15s;
+  display:flex; align-items:center; gap:18px;
+  text-decoration:none; color:var(--ink);
+  background:var(--surface); border:1px solid var(--line); border-radius:18px;
+  padding: 20px 22px; box-shadow:var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-.card:hover{background: rgba(95,212,208,0.08);}
-.card b{font-family:'IBM Plex Sans Condensed', sans-serif; font-size:17px; display:block; margin-bottom:4px;}
-.card span{font-size:13px; color:var(--paper-dim);}
+.card:hover{transform: translateY(-2px); box-shadow:0 16px 36px rgba(20,20,43,0.1);}
+.card-icon{
+  flex-shrink:0; width:48px; height:48px; border-radius:14px;
+  background:var(--accent-soft); color:var(--accent);
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; font-weight:800;
+}
+.card-body b{font-size:16.5px; font-weight:700; display:block; margin-bottom:3px;}
+.card-body span{font-size:13px; color:var(--ink-dim); line-height:1.5;}
+.card-arrow{margin-left:auto; color:var(--ink-dim); font-size:18px; flex-shrink:0;}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="eyebrow">Security Learning Roadmap</div>
-  <h1>Pick a view</h1>
 
-  <a class="card" href="company-stage-roadmap.html">
-    <b>Company-Stage Roadmap →</b>
-    <span>CEO/COO learning path mapped to Seed → Series A → Growth → Pre-IPO, with a cert ladder per stage.</span>
-  </a>
-
-  <a class="card" href="skill-tree-roadmap.html">
-    <b>Specialty Skill Tree →</b>
-    <span>Branches into Pentest, Network, SOC Analyst, Auditing, GRC, Cloud Security — tools + certs per level.</span>
-  </a>
-
-  <a class="card" href="skill-tree-free-resources.html">
-    <b>Free Learning Resources →</b>
-    <span>Same specialties, with free YouTube channels, subreddits, and practice platforms for each.</span>
-  </a>
-
-  <a class="card" href="glossary.html">
-    <b>Glossary →</b>
-    <span>Plain-English definitions for every acronym used across these docs — searchable.</span>
-  </a>
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">S</div>
+    <div>
+      <div class="brand-name">Security Learning Roadmap</div>
+      <div class="brand-sub">Internal reference · updated 2026</div>
+    </div>
+  </div>
+  <a class="get-in-touch" href="glossary.html">Glossary →</a>
 </div>
+
+<div class="page">
+  <div class="hero">
+    <div class="eyebrow">Pick a view</div>
+    <h1>Where do you want to start?</h1>
+    <p class="subhead">Four ways to look at the same roadmap — pick whichever matches what you're trying to figure out right now.</p>
+  </div>
+
+  <div class="grid">
+    <a class="card" href="company-stage-roadmap.html">
+      <div class="card-icon">01</div>
+      <div class="card-body">
+        <b>Company-Stage Roadmap</b>
+        <span>CEO/COO learning path mapped to Seed → Series A → Growth → Pre-IPO, with a certification ladder at each stage.</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="card" href="skill-tree-roadmap.html">
+      <div class="card-icon">02</div>
+      <div class="card-body">
+        <b>Specialty Skill Tree</b>
+        <span>Branches into Pentest, Network, SOC Analyst, Auditing, GRC, Cloud Security &amp; Incident Response — tools + certs per level.</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="card" href="skill-tree-free-resources.html">
+      <div class="card-icon">03</div>
+      <div class="card-body">
+        <b>Free Resources &amp; Full Cert Pricing</b>
+        <span>Every branch with free YouTube/Reddit/practice resources, plus every recognized cert ranked cheapest → priciest with the one that matters most flagged.</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="card" href="glossary.html">
+      <div class="card-icon">04</div>
+      <div class="card-body">
+        <b>Glossary</b>
+        <span>Plain-English, searchable definitions for every acronym used across these docs.</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="card" href="tracker.html">
+      <div class="card-icon">05</div>
+      <div class="card-body">
+        <b>Path Tracker</b>
+        <span>Pick a specialty and check off tools, certs, and free resources as you actually complete them.</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+  </div>
+</div>
+
 </body>
 </html>

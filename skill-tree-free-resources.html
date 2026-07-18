@@ -4,79 +4,82 @@
 <meta charset="UTF-8">
 <title>Security Skill Tree — Free Learning Paths</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root{
-  --navy: #0F2340;
-  --navy-deep: #0A1930;
-  --trace: #5FD4D0;
-  --amber: #F2A93B;
-  --paper: #EDEDE3;
-  --paper-dim: #B9C2D0;
-  --line: rgba(95,212,208,0.25);
+  --bg: #F5F6FB;
+  --surface: #FFFFFF;
+  --surface-alt: #F0F1FA;
+  --accent: #4640DE;
+  --accent-soft: #EDEDFB;
+  --ink: #14142B;
+  --ink-dim: #6E7191;
+  --line: #E9E9F5;
+  --highlight: #F2994A;
+  --shadow: 0 10px 26px rgba(20,20,43,0.06);
 }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 body{
-  background: var(--navy);
-  background-image: radial-gradient(circle at 1px 1px, rgba(95,212,208,0.09) 1px, transparent 1px);
-  background-size: 28px 28px;
-  color: var(--paper);
-  font-family:'IBM Plex Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family:'Plus Jakarta Sans', sans-serif;
   line-height:1.5;
 }
 .wrap{max-width: 880px; margin:0 auto; padding: 52px 24px 90px;}
 
-header{border-bottom:1px solid var(--line); padding-bottom:26px; margin-bottom:10px;}
+header{padding-bottom:26px; margin-bottom:10px;}
 .eyebrow{
-  font-family:'IBM Plex Mono', monospace; color:var(--trace);
-  font-size:12px; letter-spacing:2.5px; text-transform:uppercase;
-  display:flex; align-items:center; gap:10px;
+  color:var(--accent);
+  font-weight:700; font-size:12.5px; letter-spacing:1px; text-transform:uppercase;
+  display:flex; align-items:center; gap:8px;
 }
-.eyebrow::before{content:''; width:8px; height:8px; background:var(--trace); box-shadow:0 0 8px var(--trace);}
-h1{font-family:'IBM Plex Sans Condensed', sans-serif; font-weight:700; font-size:34px; letter-spacing:-0.5px; margin:14px 0 10px;}
-h1 span{color:var(--amber);}
-.subhead{color:var(--paper-dim); font-size:15px; max-width:640px;}
+.eyebrow::before{content:''; width:7px; height:7px; border-radius:50%; background:var(--accent);}
+h1{font-weight:800; font-size:32px; letter-spacing:-0.5px; margin:14px 0 10px;}
+h1 span{color:var(--accent);}
+.subhead{color:var(--ink-dim); font-size:15px; max-width:640px;}
 
-.legend{display:flex; gap:20px; margin:22px 0 4px; flex-wrap:wrap; font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--paper-dim);}
+.legend{display:flex; gap:20px; margin:22px 0 4px; flex-wrap:wrap; font-size:12px; font-weight:500; color:var(--ink-dim);}
 .legend div{display:flex; align-items:center; gap:7px;}
-.chip{width:12px; height:12px; display:inline-block;}
+.chip{width:12px; height:12px; display:inline-block; border-radius:4px;}
 
 /* ROOT NOTE */
 .root-note{
   margin-top:36px;
-  font-family:'IBM Plex Mono', monospace;
-  font-size:12.5px;
-  color:var(--paper-dim);
-  border-left: 2px solid var(--trace);
-  padding: 10px 16px;
-  background: rgba(95,212,208,0.06);
+  font-size:13px;
+  color:var(--ink-dim);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  padding: 12px 16px;
+  background: var(--accent-soft);
 }
-.root-note b{color:var(--trace);}
+.root-note b{color:var(--accent);}
 
 /* SPECIALTY CARDS — vertical stack */
 .specialty{
   margin-top: 30px;
   border: 1px solid var(--line);
-  background: rgba(20,42,74,0.4);
+  border-radius: 20px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: hidden;
 }
 .spec-head{
   display:flex; align-items:center; gap:14px;
   padding: 18px 22px;
-  border-bottom: 1px solid var(--line);
-  background: rgba(95,212,208,0.07);
+  background: var(--accent-soft);
 }
 .spec-num{
-  font-family:'IBM Plex Mono', monospace;
-  font-size:12px; font-weight:700;
-  color: var(--navy-deep);
-  background: var(--trace);
-  width:26px; height:26px;
+  font-size:12px; font-weight:800;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 8px;
+  width:28px; height:28px;
   display:flex; align-items:center; justify-content:center;
   flex-shrink:0;
 }
-.spec-title{font-family:'IBM Plex Sans Condensed', sans-serif; font-weight:700; font-size:19px;}
-.spec-sub{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--paper-dim); margin-top:2px;}
+.spec-title{font-weight:800; font-size:18px; color:var(--ink);}
+.spec-sub{font-size:11.5px; color:var(--ink-dim); margin-top:2px;}
 
 .spec-body{padding: 20px 22px 22px;}
 
@@ -87,87 +90,108 @@ h1 span{color:var(--amber);}
   grid-template-columns: 96px 1fr 1fr;
   gap:14px;
   align-items:center;
-  padding: 10px 12px;
+  padding: 12px 14px;
   border: 1px solid var(--line);
-  border-left: 3px solid var(--amber);
+  border-radius: 12px;
   font-size:13px;
 }
 @media (max-width:640px){ .lvl-row{grid-template-columns: 1fr; gap:6px;} }
 .lvl-tag{
-  font-family:'IBM Plex Mono', monospace;
   font-size:10.5px; letter-spacing:0.5px; text-transform:uppercase;
-  color: var(--amber); font-weight:700;
+  color: var(--highlight); font-weight:700;
 }
 .lvl-tools{display:flex; flex-wrap:wrap; gap:5px;}
 .lvl-tools span{
-  font-family:'IBM Plex Mono', monospace; font-size:10.5px;
-  background: rgba(237,237,227,0.06); border:1px solid var(--line);
-  color: var(--paper-dim); padding:2px 6px;
+  font-size:10.5px;
+  background: var(--surface-alt); border-radius: 999px;
+  color: var(--ink-dim); padding:3px 9px;
 }
-.lvl-cert{color:var(--paper);}
-.lvl-cert b{color:var(--trace); font-weight:600;}
+.lvl-cert{color:var(--ink);}
+.lvl-cert b{color:var(--accent); font-weight:700;}
 .cost{
-  display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:10px;
-  color:var(--navy-deep); background:var(--amber); font-weight:700;
-  padding:1px 6px; margin-left:6px; vertical-align:1px;
+  display:inline-block; font-size:10px;
+  color:#fff; background:var(--highlight); font-weight:700;
+  border-radius: 999px;
+  padding:2px 8px; margin-left:6px; vertical-align:1px;
 }
 
 /* FULL CERT PRICE LADDER */
 .certladder{
   margin-bottom:20px;
   border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow:hidden;
 }
 .certladder-head{
   display:grid;
   grid-template-columns: 1fr 90px 1fr 110px;
   gap:10px;
-  padding: 8px 12px;
-  background: rgba(95,212,208,0.1);
-  font-family:'IBM Plex Mono', monospace;
+  padding: 10px 14px;
+  background: var(--surface-alt);
   font-size:9.5px; letter-spacing:1px; text-transform:uppercase;
-  color: var(--trace); font-weight:700;
+  color: var(--ink-dim); font-weight:700;
 }
 .certrow{
   display:grid;
   grid-template-columns: 1fr 90px 1fr 110px;
   gap:10px;
   align-items:center;
-  padding: 9px 12px;
-  border-top: 1px solid rgba(95,212,208,0.1);
+  padding: 11px 14px;
+  border-top: 1px solid var(--line);
   font-size:12.5px;
+  background: var(--surface);
 }
 @media (max-width:680px){
   .certladder-head{display:none;}
-  .certrow{grid-template-columns:1fr; gap:3px; padding:12px;}
-  .certrow > div::before{content: attr(data-label) ": "; color:var(--paper-dim); font-family:'IBM Plex Mono', monospace; font-size:9.5px;}
+  .certrow{grid-template-columns:1fr; gap:3px; padding:12px 14px;}
+  .certrow > div::before{content: attr(data-label) ": "; color:var(--ink-dim); font-size:9.5px;}
 }
-.certrow.matters{ background: rgba(242,169,59,0.08); border-left: 3px solid var(--amber); }
-.certrow-name b{color:var(--paper); font-weight:600;}
-.certrow-cost{font-family:'IBM Plex Mono', monospace; color:var(--trace); font-size:12px;}
-.certrow-note{color:var(--paper-dim); font-size:12px;}
+.certrow.matters{ background: #FFF6EC; }
+.certrow-name b{color:var(--ink); font-weight:700;}
+.certrow-cost{color:var(--accent); font-size:12px; font-weight:600;}
+.certrow-note{color:var(--ink-dim); font-size:12px;}
 .matters-badge{
-  font-family:'IBM Plex Mono', monospace; font-size:9.5px; font-weight:700;
+  font-size:9.5px; font-weight:700;
   letter-spacing:0.5px; text-transform:uppercase;
-  color:var(--navy-deep); background:var(--amber);
-  padding:3px 7px; text-align:center; white-space:nowrap;
+  color:#fff; background:var(--highlight);
+  border-radius: 999px;
+  padding:4px 9px; text-align:center; white-space:nowrap;
 }
-.no-badge{color:var(--paper-dim); font-size:11px; opacity:0.4;}
+.no-badge{color:var(--ink-dim); font-size:11px; opacity:0.4;}
 .certladder-label{
-  font-family:'IBM Plex Mono', monospace; font-size:10.5px;
+  font-size:10.5px;
   letter-spacing:1px; text-transform:uppercase;
-  color: var(--amber); margin: 4px 0 8px; font-weight:700;
+  color: var(--highlight); margin: 4px 0 8px; font-weight:700;
+}
+
+/* BUDGET NOTE */
+.budget-note{
+  margin-bottom: 20px;
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  background: var(--accent-soft);
+  padding: 14px 16px;
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+}
+.budget-note .row{font-size:12.5px; color:var(--ink);}
+.budget-note .row b{
+  font-size:10px;
+  letter-spacing:0.5px; text-transform:uppercase;
+  color:var(--accent); font-weight:700; margin-right:8px;
 }
 
 /* FREE RESOURCES */
 .free-box{
-  background: rgba(242,169,59,0.06);
-  border: 1px dashed rgba(242,169,59,0.4);
-  padding: 14px 16px;
+  background: #FFF8EF;
+  border-radius: 14px;
+  padding: 16px 18px;
 }
 .free-label{
-  font-family:'IBM Plex Mono', monospace; font-size:10.5px;
+  font-size:10.5px;
   letter-spacing:1px; text-transform:uppercase;
-  color: var(--amber); margin-bottom:10px; font-weight:700;
+  color: var(--highlight); margin-bottom:10px; font-weight:700;
 }
 .free-grid{
   display:grid;
@@ -177,18 +201,17 @@ h1 span{color:var(--amber);}
 @media (max-width:760px){ .free-grid{grid-template-columns: 1fr 1fr;} }
 @media (max-width:460px){ .free-grid{grid-template-columns:1fr;} }
 .free-col-label{
-  font-family:'IBM Plex Mono', monospace; font-size:9.5px;
+  font-size:9.5px;
   letter-spacing:1px; text-transform:uppercase;
-  color: var(--trace); margin-bottom:6px;
+  color: var(--accent); margin-bottom:6px; font-weight:700;
 }
 .free-col ul{list-style:none; margin:0; padding:0;}
-.free-col li{font-size:12.5px; color:var(--paper); margin-bottom:5px; padding-left:12px; position:relative;}
-.free-col li::before{content:'—'; position:absolute; left:0; color:var(--paper-dim);}
+.free-col li{font-size:12.5px; color:var(--ink); margin-bottom:5px; padding-left:12px; position:relative;}
+.free-col li::before{content:'—'; position:absolute; left:0; color:var(--ink-dim);}
 
 footer.note{
   margin-top: 40px;
-  font-family:'IBM Plex Mono', monospace;
-  font-size:11px; color:var(--paper-dim); opacity:0.75;
+  font-size:12px; color:var(--ink-dim);
   max-width: 680px;
 }
 </style>
@@ -251,6 +274,11 @@ footer.note{
         <div class="certrow matters"><div class="certrow-name" data-label="Cert"><b>OSCP</b> (OffSec)</div><div class="certrow-cost" data-label="Cost">~$1,749</div><div class="certrow-note" data-label="Note">Universal gold standard — the one every hiring manager recognizes</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
       </div>
 
+      <div class="budget-note">
+        <div class="row"><b>Skip if tight</b>CEH (~$1,199) — priciest of the "entry" tier but the least technically respected; only worth it if a specific job posting names it by keyword.</div>
+        <div class="row"><b>Cheapest path to OSCP</b>~$1,749 direct, no prerequisite required. Recommended prep route (PJPT + PNPT first) runs closer to ~$2,500 but builds real skill along the way.</div>
+      </div>
+
       <div class="free-box">
         <div class="free-label">Learn it for free</div>
         <div class="free-grid">
@@ -311,6 +339,11 @@ footer.note{
         <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CompTIA Network+</b></div><div class="certrow-cost" data-label="Cost">~$390</div><div class="certrow-note" data-label="Note">Vendor-neutral fallback if you're not committed to Cisco</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
         <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Cisco CCNP</b> (core + concentration)</div><div class="certrow-cost" data-label="Cost">~$700</div><div class="certrow-note" data-label="Note">Mid-career depth; Security concentration maps to this tree</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
         <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Cisco CCIE</b> (written + lab)</div><div class="certrow-cost" data-label="Cost">~$2,300+</div><div class="certrow-note" data-label="Note">Expert tier — rare, elite, usually employer-funded</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+      </div>
+
+      <div class="budget-note">
+        <div class="row"><b>Skip if tight</b>CCIE — the time and cost only pay off for principal/architect-track roles; most network hires never need it.</div>
+        <div class="row"><b>Cheapest path to CCNA</b>~$300 direct, no prerequisite required. Network+ first (~$390 extra) helps if you're starting from zero, but isn't required.</div>
       </div>
 
       <div class="free-box">
@@ -376,6 +409,11 @@ footer.note{
         <div class="certrow"><div class="certrow-name" data-label="Cert"><b>GCFA</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999</div><div class="certrow-note" data-label="Note">Senior analyst / forensics-adjacent ceiling</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
       </div>
 
+      <div class="budget-note">
+        <div class="row"><b>Skip if tight</b>ISC2 CC — Security+ covers the same ground and carries more recognition; don't pay for both unless something specifically requires CC.</div>
+        <div class="row"><b>Cheapest path to Security+</b>~$425 direct, no prerequisite required — the fastest of all seven branches' "matters most" certs to reach.</div>
+      </div>
+
       <div class="free-box">
         <div class="free-label">Learn it for free</div>
         <div class="free-grid">
@@ -435,6 +473,11 @@ footer.note{
         <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CRISC</b> (ISACA, crossover)</div><div class="certrow-cost" data-label="Cost">$575–$760</div><div class="certrow-note" data-label="Note">Useful if your audits lean risk-focused rather than compliance-only</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
         <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CGEIT</b> (ISACA, crossover)</div><div class="certrow-cost" data-label="Cost">$575–$760</div><div class="certrow-note" data-label="Note">IT governance angle, useful for audit leadership roles</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
         <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CIA</b> (IIA)</div><div class="certrow-cost" data-label="Cost">$990–$1,515</div><div class="certrow-note" data-label="Note">Broader internal-audit credential beyond just IT systems</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+      </div>
+
+      <div class="budget-note">
+        <div class="row"><b>Skip if tight</b>CIA — only worth the extra cost if the role expands beyond IT audit into full internal audit; redundant if it stays IT-focused.</div>
+        <div class="row"><b>Cheapest path to CISA</b>$575–$760 direct (join ISACA first — the membership fee is usually smaller than the non-member discount it unlocks).</div>
       </div>
 
       <div class="free-box">
@@ -500,6 +543,11 @@ footer.note{
         <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CGEIT</b> (ISACA)</div><div class="certrow-cost" data-label="Cost">$575–$760</div><div class="certrow-note" data-label="Note">IT-governance ceiling, most relevant once you're setting policy org-wide</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
       </div>
 
+      <div class="budget-note">
+        <div class="row"><b>Skip if tight</b>ISO 27001 Lead Implementer — pricey and overlapping with CISM/CRISC knowledge; only get it if you'll personally run an ISMS build-out.</div>
+        <div class="row"><b>Cheapest path to CISM</b>$575–$760 direct, no prerequisite required — don't feel obligated to stack CRISC underneath it first.</div>
+      </div>
+
       <div class="free-box">
         <div class="free-label">Learn it for free</div>
         <div class="free-grid">
@@ -562,6 +610,11 @@ footer.note{
         <div class="certrow matters"><div class="certrow-name" data-label="Cert"><b>CCSP</b> (ISC2)</div><div class="certrow-cost" data-label="Cost">~$599</div><div class="certrow-note" data-label="Note">The broadest, vendor-neutral senior/architect credential — the "CISSP of cloud"</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
       </div>
 
+      <div class="budget-note">
+        <div class="row"><b>Skip if tight</b>Don't get both AWS Security Specialty and CCSP — pick one based on whether your stack is AWS-committed (Specialty) or multi-cloud (CCSP).</div>
+        <div class="row"><b>Cheapest path to CCSP</b>~$599 direct. Adding AWS Cloud Practitioner first (~$100) is a reasonable, cheap way to build hands-on footing before the harder exam.</div>
+      </div>
+
       <div class="free-box">
         <div class="free-label">Learn it for free</div>
         <div class="free-grid">
@@ -622,6 +675,11 @@ footer.note{
         <div class="certrow matters"><div class="certrow-name" data-label="Cert"><b>GCFA</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999</div><div class="certrow-note" data-label="Note">The most recognized standalone DFIR credential in hiring</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
         <div class="certrow"><div class="certrow-name" data-label="Cert"><b>GNFA</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999</div><div class="certrow-note" data-label="Note">Network-forensics specialty, useful alongside GCFA</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
         <div class="certrow"><div class="certrow-name" data-label="Cert"><b>GREM</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999</div><div class="certrow-note" data-label="Note">Malware reverse-engineering specialty, for the deepest cases</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+      </div>
+
+      <div class="budget-note">
+        <div class="row"><b>Skip if tight</b>GNFA and GREM — genuinely specialist add-ons; only worth stacking on top of GCFA if your incidents specifically involve network traffic analysis or malware reversing.</div>
+        <div class="row"><b>Cheapest path to GCFA</b>~$999 direct. Going through GCFE first roughly doubles the spend (~$1,998) — worth it only if you're building the discipline from zero.</div>
       </div>
 
       <div class="free-box">
