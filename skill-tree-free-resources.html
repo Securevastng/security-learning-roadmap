@@ -106,6 +106,11 @@ h1 span{color:var(--amber);}
 }
 .lvl-cert{color:var(--paper);}
 .lvl-cert b{color:var(--trace); font-weight:600;}
+.cost{
+  display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:10px;
+  color:var(--navy-deep); background:var(--amber); font-weight:700;
+  padding:1px 6px; margin-left:6px; vertical-align:1px;
+}
 
 /* FREE RESOURCES */
 .free-box{
@@ -120,10 +125,11 @@ h1 span{color:var(--amber);}
 }
 .free-grid{
   display:grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 14px;
 }
-@media (max-width:640px){ .free-grid{grid-template-columns:1fr;} }
+@media (max-width:760px){ .free-grid{grid-template-columns: 1fr 1fr;} }
+@media (max-width:460px){ .free-grid{grid-template-columns:1fr;} }
 .free-col-label{
   font-family:'IBM Plex Mono', monospace; font-size:9.5px;
   letter-spacing:1px; text-transform:uppercase;
@@ -146,14 +152,15 @@ footer.note{
 
   <header>
     <div class="eyebrow">Security Org / Skill Tree</div>
-    <h1>Six specialties, <span>zero paywall required</span></h1>
-    <p class="subhead">Same tree as before — tools and certs per level — now with the free way in for each branch: a YouTube channel, a Reddit community, and a free platform or forum to actually practice on.</p>
+    <h1>Six specialties, <span>real prices, real prep</span></h1>
+    <p class="subhead">Same tree as before — now every cert has an approximate cost next to it, plus how to actually study for it for free (or close to it): a YouTube channel, a Reddit community, a free/cheap platform to practice on, and a prep resource for the exam itself.</p>
 
     <div class="legend">
-      <div><span class="chip" style="background:var(--amber)"></span> Level marker</div>
+      <div><span class="chip" style="background:var(--amber)"></span> Level marker / cost</div>
       <div><span class="chip" style="background:rgba(237,237,227,0.06); border:1px solid var(--line)"></span> Tool in active use</div>
-      <div><span class="chip" style="background:rgba(242,169,59,0.15); border:1px dashed var(--amber)"></span> Free resource</div>
+      <div><span class="chip" style="background:rgba(242,169,59,0.15); border:1px dashed var(--amber)"></span> Free or low-cost resource</div>
     </div>
+    <div class="root-note" style="margin-top:16px;"><b>On prices:</b> vendor exam fees change often and vary by region/currency — treat every figure below as an approximate 2026 US-list-price ballpark, and confirm the current number on the vendor's site before you pay.</div>
   </header>
 
   <div class="root-note"><b>Trunk everyone starts from:</b> CIA triad, basic networking, Linux fundamentals, common frameworks (NIST CSF). Free: <b>professormesser.com</b> (Security+ material, fully free), <b>r/CompTIA</b>, <b>r/cybersecurity</b> for orientation.</div>
@@ -172,17 +179,17 @@ footer.note{
         <div class="lvl-row">
           <div class="lvl-tag">Foundation</div>
           <div class="lvl-tools"><span>Nmap</span><span>Wireshark</span><span>Burp Suite CE</span></div>
-          <div class="lvl-cert"><b>TCM Security</b> — Practical Ethical Hacking</div>
+          <div class="lvl-cert"><b>TCM Security</b> — Practical Ethical Hacking <span class="cost">free–$30</span></div>
         </div>
         <div class="lvl-row">
           <div class="lvl-tag">Practitioner</div>
           <div class="lvl-tools"><span>Metasploit</span><span>Burp Pro</span><span>Nessus</span></div>
-          <div class="lvl-cert"><b>TCM Security</b> — PJPT · or eJPT</div>
+          <div class="lvl-cert"><b>TCM Security</b> — PJPT <span class="cost">~$249</span> · or eJPT</div>
         </div>
         <div class="lvl-row">
           <div class="lvl-tag">Advanced</div>
           <div class="lvl-tools"><span>Cobalt Strike</span><span>BloodHound</span><span>C2 frameworks</span></div>
-          <div class="lvl-cert"><b>TCM Security</b> — PNPT · or OSCP</div>
+          <div class="lvl-cert"><b>TCM Security</b> — PNPT <span class="cost">~$499</span> · or OSCP <span class="cost">~$1,749</span></div>
         </div>
       </div>
       <div class="free-box">
@@ -199,6 +206,10 @@ footer.note{
           <div class="free-col">
             <div class="free-col-label">Practice free</div>
             <ul><li>TryHackMe (free rooms)</li><li>HackTheBox (free tier)</li><li>PicoCTF</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Exam prep</div>
+            <ul><li>PJPT/PNPT training is bundled free with voucher</li><li>IppSec + THM "Offensive Pentesting" path for OSCP</li></ul>
           </div>
         </div>
       </div>
@@ -219,17 +230,17 @@ footer.note{
         <div class="lvl-row">
           <div class="lvl-tag">Foundation</div>
           <div class="lvl-tools"><span>Wireshark</span><span>Packet Tracer</span><span>traceroute</span></div>
-          <div class="lvl-cert"><b>CompTIA Network+</b></div>
+          <div class="lvl-cert"><b>CompTIA Network+</b> <span class="cost">~$390</span></div>
         </div>
         <div class="lvl-row">
           <div class="lvl-tag">Practitioner</div>
           <div class="lvl-tools"><span>pfSense</span><span>Cisco ASA</span><span>VPN configs</span></div>
-          <div class="lvl-cert"><b>Cisco CCNA</b></div>
+          <div class="lvl-cert"><b>Cisco CCNA</b> <span class="cost">~$300</span></div>
         </div>
         <div class="lvl-row">
           <div class="lvl-tag">Advanced</div>
           <div class="lvl-tools"><span>Cisco ISE</span><span>Zscaler</span><span>SD-WAN</span></div>
-          <div class="lvl-cert"><b>Cisco CCNP Security</b></div>
+          <div class="lvl-cert"><b>Cisco CCNP Security</b> <span class="cost">~$700</span></div>
         </div>
       </div>
       <div class="free-box">
@@ -246,6 +257,10 @@ footer.note{
           <div class="free-col">
             <div class="free-col-label">Practice free</div>
             <ul><li>Cisco Packet Tracer (free)</li><li>Cisco Networking Academy (free courses)</li><li>GNS3</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Exam prep</div>
+            <ul><li>Jeremy's IT Lab free practice questions</li><li>Cisco U. free CE credit courses</li></ul>
           </div>
         </div>
       </div>
@@ -266,17 +281,17 @@ footer.note{
         <div class="lvl-row">
           <div class="lvl-tag">Foundation</div>
           <div class="lvl-tools"><span>Splunk Free</span><span>Event Viewer</span><span>Wireshark</span></div>
-          <div class="lvl-cert"><b>ISC2 CC</b> · or Security+</div>
+          <div class="lvl-cert"><b>ISC2 CC</b> <span class="cost">$199+$50/yr</span> · or Security+ <span class="cost">~$425</span></div>
         </div>
         <div class="lvl-row">
           <div class="lvl-tag">Practitioner</div>
           <div class="lvl-tools"><span>Splunk Ent.</span><span>ELK Stack</span><span>EDR</span></div>
-          <div class="lvl-cert"><b>Blue Team Level 1</b> · or GCIH</div>
+          <div class="lvl-cert"><b>Blue Team Level 1</b> <span class="cost">~$400</span> · or GCIH <span class="cost">~$999</span></div>
         </div>
         <div class="lvl-row">
           <div class="lvl-tag">Advanced</div>
           <div class="lvl-tools"><span>YARA</span><span>Volatility</span><span>Sysmon + Sigma</span></div>
-          <div class="lvl-cert"><b>GCFA</b> · or CySA+</div>
+          <div class="lvl-cert"><b>GCFA</b> <span class="cost">~$999</span> · or CySA+ <span class="cost">~$425</span></div>
         </div>
       </div>
       <div class="free-box">
@@ -293,6 +308,10 @@ footer.note{
           <div class="free-col">
             <div class="free-col-label">Practice free</div>
             <ul><li>LetsDefend (free tier)</li><li>CyberDefenders</li><li>Blue Team Labs Online</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Exam prep</div>
+            <ul><li>professormesser.com (free Security+/CySA+)</li><li>GIAC's own practice tests (paid, but official)</li></ul>
           </div>
         </div>
       </div>
@@ -318,12 +337,12 @@ footer.note{
         <div class="lvl-row">
           <div class="lvl-tag">Practitioner</div>
           <div class="lvl-tools"><span>AuditBoard</span><span>Workiva</span></div>
-          <div class="lvl-cert"><b>CISA</b> (ISACA)</div>
+          <div class="lvl-cert"><b>CISA</b> (ISACA) <span class="cost">$575–$760</span></div>
         </div>
         <div class="lvl-row">
           <div class="lvl-tag">Advanced</div>
           <div class="lvl-tools"><span>Enterprise GRC suites</span></div>
-          <div class="lvl-cert"><b>CISA</b> + <b>CIA</b> (Certified Internal Auditor)</div>
+          <div class="lvl-cert"><b>CISA</b> + <b>CIA</b> <span class="cost">~$1,000–1,500</span></div>
         </div>
       </div>
       <div class="free-box">
@@ -340,6 +359,10 @@ footer.note{
           <div class="free-col">
             <div class="free-col-label">Read free</div>
             <ul><li>NIST 800-53 (free, public)</li><li>IIA free practice guides</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Exam prep</div>
+            <ul><li>ISACA free member webinars count as CPE</li><li>Join ISACA before booking — cuts CISA fee ~$185</li></ul>
           </div>
         </div>
       </div>
@@ -360,17 +383,17 @@ footer.note{
         <div class="lvl-row">
           <div class="lvl-tag">Foundation</div>
           <div class="lvl-tools"><span>Policy templates</span><span>Vanta / Drata</span></div>
-          <div class="lvl-cert"><b>ISC2 CC</b></div>
+          <div class="lvl-cert"><b>ISC2 CC</b> <span class="cost">$199+$50/yr</span></div>
         </div>
         <div class="lvl-row">
           <div class="lvl-tag">Practitioner</div>
           <div class="lvl-tools"><span>Vanta</span><span>OneTrust</span><span>ServiceNow GRC</span></div>
-          <div class="lvl-cert"><b>CRISC</b> · or ISO 27001 Lead Implementer</div>
+          <div class="lvl-cert"><b>CRISC</b> <span class="cost">$575–$760</span> · or ISO 27001 Lead Implementer</div>
         </div>
         <div class="lvl-row">
           <div class="lvl-tag">Advanced</div>
           <div class="lvl-tools"><span>RSA Archer</span><span>MetricStream</span></div>
-          <div class="lvl-cert"><b>CGEIT</b> · or advanced CRISC practice</div>
+          <div class="lvl-cert"><b>CGEIT</b> <span class="cost">$575–$760</span> · or advanced CRISC practice</div>
         </div>
       </div>
       <div class="free-box">
@@ -387,6 +410,10 @@ footer.note{
           <div class="free-col">
             <div class="free-col-label">Read free</div>
             <ul><li>NIST CSF 2.0 (free, public)</li><li>Vanta &amp; Drata trust-center blogs</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Exam prep</div>
+            <ul><li>ISACA free webinars count toward CPE</li><li>No official training required — self-study + a question bank is enough</li></ul>
           </div>
         </div>
       </div>
@@ -407,17 +434,17 @@ footer.note{
         <div class="lvl-row">
           <div class="lvl-tag">Foundation</div>
           <div class="lvl-tools"><span>AWS/Azure free tier</span><span>CloudTrail</span></div>
-          <div class="lvl-cert"><b>AWS Cloud Practitioner</b></div>
+          <div class="lvl-cert"><b>AWS Cloud Practitioner</b> <span class="cost">~$100</span></div>
         </div>
         <div class="lvl-row">
           <div class="lvl-tag">Practitioner</div>
           <div class="lvl-tools"><span>Prowler</span><span>ScoutSuite</span><span>IAM policy tools</span></div>
-          <div class="lvl-cert"><b>CCSK</b></div>
+          <div class="lvl-cert"><b>CCSK</b> <span class="cost">~$445</span></div>
         </div>
         <div class="lvl-row">
           <div class="lvl-tag">Advanced</div>
           <div class="lvl-tools"><span>Wiz</span><span>Terraform + OPA</span></div>
-          <div class="lvl-cert"><b>AWS Security Specialty</b> · or CCSP</div>
+          <div class="lvl-cert"><b>AWS Security Specialty</b> <span class="cost">~$300</span> · or CCSP <span class="cost">~$599</span></div>
         </div>
       </div>
       <div class="free-box">
@@ -435,12 +462,67 @@ footer.note{
             <div class="free-col-label">Practice free</div>
             <ul><li>AWS Skill Builder (free tier)</li><li>Google Cloud Skills Boost (free courses)</li><li>Prowler / ScoutSuite (open source)</li></ul>
           </div>
+          <div class="free-col">
+            <div class="free-col-label">Exam prep</div>
+            <ul><li>AWS Skill Builder free official practice questions</li><li>CSA's free CCSK Prep Kit + Security Guidance v5</li></ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <footer class="note">Free tracks get you to job-ready; certifications and paid labs (HTB Pro, TCM's paid tier, SANS) are where you go once a specific role or client demands the credential — not a prerequisite to start learning.</footer>
+  <!-- 7. INCIDENT RESPONSE / DFIR -->
+  <div class="specialty">
+    <div class="spec-head">
+      <div class="spec-num">07</div>
+      <div>
+        <div class="spec-title">Incident Response &amp; Forensics</div>
+        <div class="spec-sub">DFIR / breach investigation</div>
+      </div>
+    </div>
+    <div class="spec-body">
+      <div class="levels">
+        <div class="lvl-row">
+          <div class="lvl-tag">Foundation</div>
+          <div class="lvl-tools"><span>FTK Imager</span><span>Autopsy</span><span>Event Viewer</span></div>
+          <div class="lvl-cert"><b>No cert required</b> — start with NIST 800-61r2</div>
+        </div>
+        <div class="lvl-row">
+          <div class="lvl-tag">Practitioner</div>
+          <div class="lvl-tools"><span>Velociraptor</span><span>KAPE</span><span>Volatility</span></div>
+          <div class="lvl-cert"><b>GCFE</b> <span class="cost">~$999</span> · or Blue Team Level 2</div>
+        </div>
+        <div class="lvl-row">
+          <div class="lvl-tag">Advanced</div>
+          <div class="lvl-tools"><span>Chainsaw</span><span>Timesketch</span><span>Rekall</span></div>
+          <div class="lvl-cert"><b>GCFA</b> <span class="cost">~$999</span> · or GNFA / GREM <span class="cost">~$999</span></div>
+        </div>
+      </div>
+      <div class="free-box">
+        <div class="free-label">Learn it for free</div>
+        <div class="free-grid">
+          <div class="free-col">
+            <div class="free-col-label">YouTube</div>
+            <ul><li>13Cubed (dedicated DFIR channel)</li><li>John Hammond</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Reddit</div>
+            <ul><li>r/computerforensics</li><li>r/AskNetsec</li><li>r/blueteamsec</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Practice free</div>
+            <ul><li>CyberDefenders (DFIR challenges)</li><li>Digital Corpora (free forensic images)</li><li>NIST SP 800-61r2 (free, public)</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Exam prep</div>
+            <ul><li>GIAC exams are open-book — a well-tabbed printout of your notes matters more than a question bank</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="note">Free tracks get you to job-ready; certifications are where you go once a specific role or client demands the credential. Prices are approximate 2026 US-list figures and change often — always confirm on the vendor's site before paying.</footer>
 
 </div>
 </body>
