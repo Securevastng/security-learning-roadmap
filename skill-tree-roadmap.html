@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Security Skill Tree — Specialization Branches</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap');
+
+:root{
+  --navy: #0F2340;
+  --navy-deep: #0A1930;
+  --trace: #5FD4D0;
+  --amber: #F2A93B;
+  --paper: #EDEDE3;
+  --paper-dim: #B9C2D0;
+  --line: rgba(95,212,208,0.28);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background: var(--navy);
+  background-image: radial-gradient(circle at 1px 1px, rgba(95,212,208,0.10) 1px, transparent 1px);
+  background-size: 28px 28px;
+  color: var(--paper);
+  font-family:'IBM Plex Sans', sans-serif;
+  line-height:1.5;
+}
+.wrap{max-width: 1240px; margin:0 auto; padding: 52px 28px 90px;}
+
+header{border-bottom:1px solid var(--line); padding-bottom:28px; margin-bottom:10px;}
+.eyebrow{
+  font-family:'IBM Plex Mono', monospace; color:var(--trace);
+  font-size:12px; letter-spacing:2.5px; text-transform:uppercase;
+  display:flex; align-items:center; gap:10px;
+}
+.eyebrow::before{content:''; width:8px; height:8px; background:var(--trace); box-shadow:0 0 8px var(--trace);}
+h1{font-family:'IBM Plex Sans Condensed', sans-serif; font-weight:700; font-size:38px; letter-spacing:-0.5px; margin:14px 0 10px;}
+h1 span{color:var(--amber);}
+.subhead{color:var(--paper-dim); font-size:15.5px; max-width:680px;}
+
+/* ROOT */
+.root-wrap{display:flex; justify-content:center; margin-top:46px;}
+.root-node{
+  font-family:'IBM Plex Sans Condensed', sans-serif;
+  font-weight:700; font-size:17px;
+  background: var(--navy-deep);
+  border: 2px solid var(--amber);
+  color: var(--paper);
+  padding: 16px 30px;
+  text-align:center;
+  box-shadow: 0 0 20px rgba(242,169,59,0.18);
+}
+.root-node small{
+  display:block; font-family:'IBM Plex Mono', monospace;
+  font-weight:400; font-size:11px; letter-spacing:1px;
+  color: var(--paper-dim); text-transform:uppercase; margin-top:4px;
+}
+
+/* TRUNK + BAR */
+.trunk-line{
+  width:2px; height:34px; background:var(--trace);
+  margin: 0 auto;
+}
+.bar-wrap{ position:relative; height:2px; margin: 0 8.333%; background:var(--trace); }
+
+/* BRANCH COLUMNS */
+.tree-scroll{ overflow-x:auto; padding-bottom: 6px; }
+.columns{
+  display:flex;
+  min-width: 1160px;
+}
+.column{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  padding: 0 10px;
+  position:relative;
+}
+.col-tick{
+  width:2px; height:22px; background:var(--trace);
+  margin: 0 auto;
+}
+.col-header{
+  font-family:'IBM Plex Sans Condensed', sans-serif;
+  font-weight:700; font-size:15.5px;
+  text-align:center;
+  background: rgba(95,212,208,0.12);
+  border: 1px solid var(--trace);
+  color: var(--paper);
+  padding: 10px 8px;
+  margin-bottom: 18px;
+}
+
+/* LEVEL CARDS */
+.level{
+  background: rgba(20,42,74,0.55);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--amber);
+  padding: 14px 14px 16px;
+  margin-bottom: 14px;
+  position:relative;
+}
+.level::before{
+  content: attr(data-level);
+  position:absolute;
+  top:-9px; left:12px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:9.5px; letter-spacing:1px; text-transform:uppercase;
+  background: var(--amber);
+  color: var(--navy-deep);
+  padding: 2px 7px;
+  font-weight:700;
+}
+.stem{
+  width:2px; height:14px; background:var(--trace);
+  margin: 0 auto;
+}
+.lvl-label{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10px; letter-spacing:1px; text-transform:uppercase;
+  color: var(--trace); margin: 6px 0 8px;
+}
+.tools{
+  list-style:none; margin:0 0 10px; padding:0;
+  display:flex; flex-wrap:wrap; gap:5px;
+}
+.tools li{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  background: rgba(237,237,227,0.06);
+  border: 1px solid var(--line);
+  color: var(--paper-dim);
+  padding: 3px 7px;
+}
+.cert-line{
+  font-size:12.5px;
+  color: var(--paper);
+  border-top: 1px dashed var(--line);
+  padding-top: 8px;
+  margin-top: 2px;
+}
+.cert-line b{color:var(--amber); font-weight:600;}
+
+.legend{
+  display:flex; gap:22px; margin: 24px 0 6px; flex-wrap:wrap;
+  font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--paper-dim);
+}
+.legend div{display:flex; align-items:center; gap:8px;}
+.chip{width:14px; height:14px; display:inline-block;}
+
+footer.note{
+  margin-top: 44px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px; color:var(--paper-dim); opacity:0.75;
+  max-width: 720px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Security Org / Skill Tree</div>
+    <h1>One trunk, <span>six ways to specialize</span></h1>
+    <p class="subhead">Same foundation everyone starts from — then the path splits by specialization. Useful for structuring the security team, hiring against real levels, or picking a branch to go deeper on yourselves.</p>
+
+    <div class="legend">
+      <div><span class="chip" style="background:var(--amber)"></span> Level marker</div>
+      <div><span class="chip" style="background:rgba(237,237,227,0.06); border:1px solid var(--line)"></span> Tool in active use at that level</div>
+      <div><span class="chip" style="background:var(--trace)"></span> Branch / growth line</div>
+    </div>
+  </header>
+
+  <div class="root-wrap">
+    <div class="root-node">Security Foundations
+      <small>CIA triad · networking basics · Linux · common frameworks</small>
+    </div>
+  </div>
+  <div class="trunk-line"></div>
+  <div class="bar-wrap"></div>
+
+  <div class="tree-scroll">
+  <div class="columns">
+
+    <!-- BRANCH: PENTEST -->
+    <div class="column">
+      <div class="col-tick"></div>
+      <div class="col-header">Penetration Testing</div>
+
+      <div class="level" data-level="Foundation">
+        <ul class="tools"><li>Nmap</li><li>Wireshark</li><li>Burp Suite CE</li></ul>
+        <div class="cert-line"><b>TCM Security</b> — Practical Ethical Hacking (PEH)</div>
+      </div>
+      <div class="stem"></div>
+      <div class="level" data-level="Practitioner">
+        <ul class="tools"><li>Metasploit</li><li>Burp Suite Pro</li><li>Nessus</li></ul>
+        <div class="cert-line"><b>TCM Security</b> — PJPT · or eJPT</div>
+      </div>
+      <div class="stem"></div>
+      <div class="level" data-level="Advanced">
+        <ul class="tools"><li>Cobalt Strike</li><li>BloodHound</li><li>C2 frameworks</li></ul>
+        <div class="cert-line"><b>TCM Security</b> — PNPT · or OSCP</div>
+      </div>
+    </div>
+
+    <!-- BRANCH: NETWORK ENGINEER -->
+    <div class="column">
+      <div class="col-tick"></div>
+      <div class="col-header">Network Engineering</div>
+
+      <div class="level" data-level="Foundation">
+        <ul class="tools"><li>Wireshark</li><li>Packet Tracer</li><li>traceroute</li></ul>
+        <div class="cert-line"><b>CompTIA Network+</b></div>
+      </div>
+      <div class="stem"></div>
+      <div class="level" data-level="Practitioner">
+        <ul class="tools"><li>pfSense</li><li>Cisco ASA</li><li>VPN configs</li></ul>
+        <div class="cert-line"><b>Cisco CCNA</b></div>
+      </div>
+      <div class="stem"></div>
+      <div class="level" data-level="Advanced">
+        <ul class="tools"><li>Cisco ISE</li><li>Zscaler</li><li>SD-WAN</li></ul>
+        <div class="cert-line"><b>Cisco CCNP Security</b></div>
+      </div>
+    </div>
+
+    <!-- BRANCH: SOC ANALYST -->
+    <div class="column">
+      <div class="col-tick"></div>
+      <div class="col-header">Cybersecurity Analyst<br><span style="font-weight:400; font-size:11px; opacity:0.7;">(SOC / Blue Team)</span></div>
+
+      <div class="level" data-level="Foundation">
+        <ul class="tools"><li>Splunk Free</li><li>Event Viewer</li><li>Wireshark</li></ul>
+        <div class="cert-line"><b>ISC2 CC</b> · or Security+</div>
+      </div>
+      <div class="stem"></div>
+      <div class="level" data-level="Practitioner">
+        <ul class="tools"><li>Splunk Ent.</li><li>ELK Stack</li><li>EDR (CrowdStrike)</li></ul>
+        <div class="cert-line"><b>Blue Team Level 1</b> · or GCIH</div>
+      </div>
+      <div class="stem"></div>
+      <div class="level" data-level="Advanced">
+        <ul class="tools"><li>YARA</li><li>Volatility</li><li>Sysmon + Sigma</li></ul>
+        <div class="cert-line"><b>GCFA</b> · or CySA+</div>
+      </div>
+    </div>
+
+    <!-- BRANCH: AUDITING -->
+    <div class="column">
+      <div class="col-tick"></div>
+      <div class="col-header">Auditing</div>
+
+      <div class="level" data-level="Foundation">
+        <ul class="tools"><li>Control checklists</li><li>Evidence trackers</li></ul>
+        <div class="cert-line"><b>No cert required</b> — learn on real audits</div>
+      </div>
+      <div class="stem"></div>
+      <div class="level" data-level="Practitioner">
+        <ul class="tools"><li>AuditBoard</li><li>Workiva</li></ul>
+        <div class="cert-line"><b>CISA</b> (ISACA)</div>
+      </div>
+      <div class="stem"></div>
+      <div class="level" data-level="Advanced">
+        <ul class="tools"><li>Enterprise GRC suites</li></ul>
+        <div class="cert-line"><b>CISA</b> + <b>CIA</b> (Certified Internal Auditor)</div>
+      </div>
+    </div>
+
+    <!-- BRANCH: GRC -->
+    <div class="column">
+      <div class="col-tick"></div>
+      <div class="col-header">GRC</div>
+
+      <div class="level" data-level="Foundation">
+        <ul class="tools"><li>Policy templates</li><li>Vanta / Drata</li></ul>
+        <div class="cert-line"><b>ISC2 CC</b></div>
+      </div>
+      <div class="stem"></div>
+      <div class="level" data-level="Practitioner">
+        <ul class="tools"><li>Vanta</li><li>OneTrust</li><li>ServiceNow GRC</li></ul>
+        <div class="cert-line"><b>CRISC</b> · or ISO 27001 Lead Implementer</div>
+      </div>
+      <div class="stem"></div>
+      <div class="level" data-level="Advanced">
+        <ul class="tools"><li>RSA Archer</li><li>MetricStream</li></ul>
+        <div class="cert-line"><b>CGEIT</b> · or advanced CRISC practice</div>
+      </div>
+    </div>
+
+    <!-- BRANCH: CLOUD SECURITY -->
+    <div class="column">
+      <div class="col-tick"></div>
+      <div class="col-header">Cloud Security</div>
+
+      <div class="level" data-level="Foundation">
+        <ul class="tools"><li>AWS/Azure free tier</li><li>CloudTrail</li></ul>
+        <div class="cert-line"><b>AWS Cloud Practitioner</b></div>
+      </div>
+      <div class="stem"></div>
+      <div class="level" data-level="Practitioner">
+        <ul class="tools"><li>Prowler</li><li>ScoutSuite</li><li>IAM policy tools</li></ul>
+        <div class="cert-line"><b>CCSK</b></div>
+      </div>
+      <div class="stem"></div>
+      <div class="level" data-level="Advanced">
+        <ul class="tools"><li>Wiz</li><li>Terraform + OPA</li></ul>
+        <div class="cert-line"><b>AWS Security Specialty</b> · or CCSP</div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+  <footer class="note">Scroll horizontally on smaller screens — six branches, one trunk. Each branch is a hiring ladder as much as a personal one: useful for leveling job reqs, not just self-study.</footer>
+
+</div>
+</body>
+</html>

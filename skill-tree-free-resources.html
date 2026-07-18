@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Security Skill Tree — Free Learning Paths</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap');
+
+:root{
+  --navy: #0F2340;
+  --navy-deep: #0A1930;
+  --trace: #5FD4D0;
+  --amber: #F2A93B;
+  --paper: #EDEDE3;
+  --paper-dim: #B9C2D0;
+  --line: rgba(95,212,208,0.25);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background: var(--navy);
+  background-image: radial-gradient(circle at 1px 1px, rgba(95,212,208,0.09) 1px, transparent 1px);
+  background-size: 28px 28px;
+  color: var(--paper);
+  font-family:'IBM Plex Sans', sans-serif;
+  line-height:1.5;
+}
+.wrap{max-width: 880px; margin:0 auto; padding: 52px 24px 90px;}
+
+header{border-bottom:1px solid var(--line); padding-bottom:26px; margin-bottom:10px;}
+.eyebrow{
+  font-family:'IBM Plex Mono', monospace; color:var(--trace);
+  font-size:12px; letter-spacing:2.5px; text-transform:uppercase;
+  display:flex; align-items:center; gap:10px;
+}
+.eyebrow::before{content:''; width:8px; height:8px; background:var(--trace); box-shadow:0 0 8px var(--trace);}
+h1{font-family:'IBM Plex Sans Condensed', sans-serif; font-weight:700; font-size:34px; letter-spacing:-0.5px; margin:14px 0 10px;}
+h1 span{color:var(--amber);}
+.subhead{color:var(--paper-dim); font-size:15px; max-width:640px;}
+
+.legend{display:flex; gap:20px; margin:22px 0 4px; flex-wrap:wrap; font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--paper-dim);}
+.legend div{display:flex; align-items:center; gap:7px;}
+.chip{width:12px; height:12px; display:inline-block;}
+
+/* ROOT NOTE */
+.root-note{
+  margin-top:36px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12.5px;
+  color:var(--paper-dim);
+  border-left: 2px solid var(--trace);
+  padding: 10px 16px;
+  background: rgba(95,212,208,0.06);
+}
+.root-note b{color:var(--trace);}
+
+/* SPECIALTY CARDS — vertical stack */
+.specialty{
+  margin-top: 30px;
+  border: 1px solid var(--line);
+  background: rgba(20,42,74,0.4);
+}
+.spec-head{
+  display:flex; align-items:center; gap:14px;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(95,212,208,0.07);
+}
+.spec-num{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px; font-weight:700;
+  color: var(--navy-deep);
+  background: var(--trace);
+  width:26px; height:26px;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.spec-title{font-family:'IBM Plex Sans Condensed', sans-serif; font-weight:700; font-size:19px;}
+.spec-sub{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--paper-dim); margin-top:2px;}
+
+.spec-body{padding: 20px 22px 22px;}
+
+/* LEVEL ROWS */
+.levels{display:flex; flex-direction:column; gap:10px; margin-bottom:20px;}
+.lvl-row{
+  display:grid;
+  grid-template-columns: 96px 1fr 1fr;
+  gap:14px;
+  align-items:center;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--amber);
+  font-size:13px;
+}
+@media (max-width:640px){ .lvl-row{grid-template-columns: 1fr; gap:6px;} }
+.lvl-tag{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10.5px; letter-spacing:0.5px; text-transform:uppercase;
+  color: var(--amber); font-weight:700;
+}
+.lvl-tools{display:flex; flex-wrap:wrap; gap:5px;}
+.lvl-tools span{
+  font-family:'IBM Plex Mono', monospace; font-size:10.5px;
+  background: rgba(237,237,227,0.06); border:1px solid var(--line);
+  color: var(--paper-dim); padding:2px 6px;
+}
+.lvl-cert{color:var(--paper);}
+.lvl-cert b{color:var(--trace); font-weight:600;}
+
+/* FREE RESOURCES */
+.free-box{
+  background: rgba(242,169,59,0.06);
+  border: 1px dashed rgba(242,169,59,0.4);
+  padding: 14px 16px;
+}
+.free-label{
+  font-family:'IBM Plex Mono', monospace; font-size:10.5px;
+  letter-spacing:1px; text-transform:uppercase;
+  color: var(--amber); margin-bottom:10px; font-weight:700;
+}
+.free-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width:640px){ .free-grid{grid-template-columns:1fr;} }
+.free-col-label{
+  font-family:'IBM Plex Mono', monospace; font-size:9.5px;
+  letter-spacing:1px; text-transform:uppercase;
+  color: var(--trace); margin-bottom:6px;
+}
+.free-col ul{list-style:none; margin:0; padding:0;}
+.free-col li{font-size:12.5px; color:var(--paper); margin-bottom:5px; padding-left:12px; position:relative;}
+.free-col li::before{content:'—'; position:absolute; left:0; color:var(--paper-dim);}
+
+footer.note{
+  margin-top: 40px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px; color:var(--paper-dim); opacity:0.75;
+  max-width: 680px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Security Org / Skill Tree</div>
+    <h1>Six specialties, <span>zero paywall required</span></h1>
+    <p class="subhead">Same tree as before — tools and certs per level — now with the free way in for each branch: a YouTube channel, a Reddit community, and a free platform or forum to actually practice on.</p>
+
+    <div class="legend">
+      <div><span class="chip" style="background:var(--amber)"></span> Level marker</div>
+      <div><span class="chip" style="background:rgba(237,237,227,0.06); border:1px solid var(--line)"></span> Tool in active use</div>
+      <div><span class="chip" style="background:rgba(242,169,59,0.15); border:1px dashed var(--amber)"></span> Free resource</div>
+    </div>
+  </header>
+
+  <div class="root-note"><b>Trunk everyone starts from:</b> CIA triad, basic networking, Linux fundamentals, common frameworks (NIST CSF). Free: <b>professormesser.com</b> (Security+ material, fully free), <b>r/CompTIA</b>, <b>r/cybersecurity</b> for orientation.</div>
+
+  <!-- 1. PENTEST -->
+  <div class="specialty">
+    <div class="spec-head">
+      <div class="spec-num">01</div>
+      <div>
+        <div class="spec-title">Penetration Testing</div>
+        <div class="spec-sub">offensive security / red team</div>
+      </div>
+    </div>
+    <div class="spec-body">
+      <div class="levels">
+        <div class="lvl-row">
+          <div class="lvl-tag">Foundation</div>
+          <div class="lvl-tools"><span>Nmap</span><span>Wireshark</span><span>Burp Suite CE</span></div>
+          <div class="lvl-cert"><b>TCM Security</b> — Practical Ethical Hacking</div>
+        </div>
+        <div class="lvl-row">
+          <div class="lvl-tag">Practitioner</div>
+          <div class="lvl-tools"><span>Metasploit</span><span>Burp Pro</span><span>Nessus</span></div>
+          <div class="lvl-cert"><b>TCM Security</b> — PJPT · or eJPT</div>
+        </div>
+        <div class="lvl-row">
+          <div class="lvl-tag">Advanced</div>
+          <div class="lvl-tools"><span>Cobalt Strike</span><span>BloodHound</span><span>C2 frameworks</span></div>
+          <div class="lvl-cert"><b>TCM Security</b> — PNPT · or OSCP</div>
+        </div>
+      </div>
+      <div class="free-box">
+        <div class="free-label">Learn it for free</div>
+        <div class="free-grid">
+          <div class="free-col">
+            <div class="free-col-label">YouTube</div>
+            <ul><li>TCM Security (free full courses)</li><li>IppSec (HTB walkthroughs)</li><li>John Hammond</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Reddit</div>
+            <ul><li>r/AskNetsec</li><li>r/HowToHack</li><li>r/oscp</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Practice free</div>
+            <ul><li>TryHackMe (free rooms)</li><li>HackTheBox (free tier)</li><li>PicoCTF</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. NETWORK ENGINEERING -->
+  <div class="specialty">
+    <div class="spec-head">
+      <div class="spec-num">02</div>
+      <div>
+        <div class="spec-title">Network Engineering</div>
+        <div class="spec-sub">infrastructure / network security</div>
+      </div>
+    </div>
+    <div class="spec-body">
+      <div class="levels">
+        <div class="lvl-row">
+          <div class="lvl-tag">Foundation</div>
+          <div class="lvl-tools"><span>Wireshark</span><span>Packet Tracer</span><span>traceroute</span></div>
+          <div class="lvl-cert"><b>CompTIA Network+</b></div>
+        </div>
+        <div class="lvl-row">
+          <div class="lvl-tag">Practitioner</div>
+          <div class="lvl-tools"><span>pfSense</span><span>Cisco ASA</span><span>VPN configs</span></div>
+          <div class="lvl-cert"><b>Cisco CCNA</b></div>
+        </div>
+        <div class="lvl-row">
+          <div class="lvl-tag">Advanced</div>
+          <div class="lvl-tools"><span>Cisco ISE</span><span>Zscaler</span><span>SD-WAN</span></div>
+          <div class="lvl-cert"><b>Cisco CCNP Security</b></div>
+        </div>
+      </div>
+      <div class="free-box">
+        <div class="free-label">Learn it for free</div>
+        <div class="free-grid">
+          <div class="free-col">
+            <div class="free-col-label">YouTube</div>
+            <ul><li>Jeremy's IT Lab (full free CCNA course)</li><li>NetworkChuck</li><li>David Bombal</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Reddit</div>
+            <ul><li>r/networking</li><li>r/ccna</li><li>r/homelab</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Practice free</div>
+            <ul><li>Cisco Packet Tracer (free)</li><li>Cisco Networking Academy (free courses)</li><li>GNS3</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. SOC ANALYST -->
+  <div class="specialty">
+    <div class="spec-head">
+      <div class="spec-num">03</div>
+      <div>
+        <div class="spec-title">Cybersecurity Analyst</div>
+        <div class="spec-sub">SOC / blue team / detection</div>
+      </div>
+    </div>
+    <div class="spec-body">
+      <div class="levels">
+        <div class="lvl-row">
+          <div class="lvl-tag">Foundation</div>
+          <div class="lvl-tools"><span>Splunk Free</span><span>Event Viewer</span><span>Wireshark</span></div>
+          <div class="lvl-cert"><b>ISC2 CC</b> · or Security+</div>
+        </div>
+        <div class="lvl-row">
+          <div class="lvl-tag">Practitioner</div>
+          <div class="lvl-tools"><span>Splunk Ent.</span><span>ELK Stack</span><span>EDR</span></div>
+          <div class="lvl-cert"><b>Blue Team Level 1</b> · or GCIH</div>
+        </div>
+        <div class="lvl-row">
+          <div class="lvl-tag">Advanced</div>
+          <div class="lvl-tools"><span>YARA</span><span>Volatility</span><span>Sysmon + Sigma</span></div>
+          <div class="lvl-cert"><b>GCFA</b> · or CySA+</div>
+        </div>
+      </div>
+      <div class="free-box">
+        <div class="free-label">Learn it for free</div>
+        <div class="free-grid">
+          <div class="free-col">
+            <div class="free-col-label">YouTube</div>
+            <ul><li>13Cubed (DFIR &amp; forensics)</li><li>John Hammond</li><li>NetworkChuck</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Reddit</div>
+            <ul><li>r/blueteamsec</li><li>r/netsecstudents</li><li>r/AskNetsec</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Practice free</div>
+            <ul><li>LetsDefend (free tier)</li><li>CyberDefenders</li><li>Blue Team Labs Online</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. AUDITING -->
+  <div class="specialty">
+    <div class="spec-head">
+      <div class="spec-num">04</div>
+      <div>
+        <div class="spec-title">Auditing</div>
+        <div class="spec-sub">IT audit / assurance</div>
+      </div>
+    </div>
+    <div class="spec-body">
+      <div class="levels">
+        <div class="lvl-row">
+          <div class="lvl-tag">Foundation</div>
+          <div class="lvl-tools"><span>Control checklists</span><span>Evidence trackers</span></div>
+          <div class="lvl-cert"><b>No cert required</b> — learn on real audits</div>
+        </div>
+        <div class="lvl-row">
+          <div class="lvl-tag">Practitioner</div>
+          <div class="lvl-tools"><span>AuditBoard</span><span>Workiva</span></div>
+          <div class="lvl-cert"><b>CISA</b> (ISACA)</div>
+        </div>
+        <div class="lvl-row">
+          <div class="lvl-tag">Advanced</div>
+          <div class="lvl-tools"><span>Enterprise GRC suites</span></div>
+          <div class="lvl-cert"><b>CISA</b> + <b>CIA</b> (Certified Internal Auditor)</div>
+        </div>
+      </div>
+      <div class="free-box">
+        <div class="free-label">Learn it for free</div>
+        <div class="free-grid">
+          <div class="free-col">
+            <div class="free-col-label">YouTube</div>
+            <ul><li>GRC Academy</li><li>GRC Uncensored (podcast, also on YT)</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Reddit / forums</div>
+            <ul><li>r/GRC</li><li>r/cybersecurity</li><li>ISACA community forums (free tier)</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Read free</div>
+            <ul><li>NIST 800-53 (free, public)</li><li>IIA free practice guides</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. GRC -->
+  <div class="specialty">
+    <div class="spec-head">
+      <div class="spec-num">05</div>
+      <div>
+        <div class="spec-title">GRC</div>
+        <div class="spec-sub">governance, risk &amp; compliance</div>
+      </div>
+    </div>
+    <div class="spec-body">
+      <div class="levels">
+        <div class="lvl-row">
+          <div class="lvl-tag">Foundation</div>
+          <div class="lvl-tools"><span>Policy templates</span><span>Vanta / Drata</span></div>
+          <div class="lvl-cert"><b>ISC2 CC</b></div>
+        </div>
+        <div class="lvl-row">
+          <div class="lvl-tag">Practitioner</div>
+          <div class="lvl-tools"><span>Vanta</span><span>OneTrust</span><span>ServiceNow GRC</span></div>
+          <div class="lvl-cert"><b>CRISC</b> · or ISO 27001 Lead Implementer</div>
+        </div>
+        <div class="lvl-row">
+          <div class="lvl-tag">Advanced</div>
+          <div class="lvl-tools"><span>RSA Archer</span><span>MetricStream</span></div>
+          <div class="lvl-cert"><b>CGEIT</b> · or advanced CRISC practice</div>
+        </div>
+      </div>
+      <div class="free-box">
+        <div class="free-label">Learn it for free</div>
+        <div class="free-grid">
+          <div class="free-col">
+            <div class="free-col-label">YouTube</div>
+            <ul><li>GRC Academy</li><li>Security in Five (short daily videos)</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Reddit</div>
+            <ul><li>r/GRC</li><li>r/cybersecurity</li><li>r/SecurityCareerAdvice</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Read free</div>
+            <ul><li>NIST CSF 2.0 (free, public)</li><li>Vanta &amp; Drata trust-center blogs</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. CLOUD SECURITY -->
+  <div class="specialty">
+    <div class="spec-head">
+      <div class="spec-num">06</div>
+      <div>
+        <div class="spec-title">Cloud Security</div>
+        <div class="spec-sub">AWS / Azure / GCP</div>
+      </div>
+    </div>
+    <div class="spec-body">
+      <div class="levels">
+        <div class="lvl-row">
+          <div class="lvl-tag">Foundation</div>
+          <div class="lvl-tools"><span>AWS/Azure free tier</span><span>CloudTrail</span></div>
+          <div class="lvl-cert"><b>AWS Cloud Practitioner</b></div>
+        </div>
+        <div class="lvl-row">
+          <div class="lvl-tag">Practitioner</div>
+          <div class="lvl-tools"><span>Prowler</span><span>ScoutSuite</span><span>IAM policy tools</span></div>
+          <div class="lvl-cert"><b>CCSK</b></div>
+        </div>
+        <div class="lvl-row">
+          <div class="lvl-tag">Advanced</div>
+          <div class="lvl-tools"><span>Wiz</span><span>Terraform + OPA</span></div>
+          <div class="lvl-cert"><b>AWS Security Specialty</b> · or CCSP</div>
+        </div>
+      </div>
+      <div class="free-box">
+        <div class="free-label">Learn it for free</div>
+        <div class="free-grid">
+          <div class="free-col">
+            <div class="free-col-label">YouTube</div>
+            <ul><li>freeCodeCamp (full AWS courses)</li><li>NetworkChuck</li><li>Adrian Cantrill (free samples)</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Reddit</div>
+            <ul><li>r/aws</li><li>r/AWSCertifications</li><li>r/cloudsecurity</li></ul>
+          </div>
+          <div class="free-col">
+            <div class="free-col-label">Practice free</div>
+            <ul><li>AWS Skill Builder (free tier)</li><li>Google Cloud Skills Boost (free courses)</li><li>Prowler / ScoutSuite (open source)</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="note">Free tracks get you to job-ready; certifications and paid labs (HTB Pro, TCM's paid tier, SANS) are where you go once a specific role or client demands the credential — not a prerequisite to start learning.</footer>
+
+</div>
+</body>
+</html>

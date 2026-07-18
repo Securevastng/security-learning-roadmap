@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Security Learning Roadmap</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@700&display=swap');
+:root{
+  --navy:#0F2340; --navy-deep:#0A1930; --trace:#5FD4D0; --amber:#F2A93B;
+  --paper:#EDEDE3; --paper-dim:#B9C2D0; --line:rgba(95,212,208,0.25);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--navy);
+  background-image: radial-gradient(circle at 1px 1px, rgba(95,212,208,0.09) 1px, transparent 1px);
+  background-size:28px 28px;
+  color:var(--paper); font-family:'IBM Plex Sans', sans-serif;
+  display:flex; align-items:center; justify-content:center; min-height:100vh;
+}
+.wrap{max-width:640px; padding: 40px 28px;}
+.eyebrow{font-family:'IBM Plex Mono', monospace; color:var(--trace); font-size:12px; letter-spacing:2.5px; text-transform:uppercase; display:flex; align-items:center; gap:10px;}
+.eyebrow::before{content:''; width:8px; height:8px; background:var(--trace); box-shadow:0 0 8px var(--trace);}
+h1{font-family:'IBM Plex Sans Condensed', sans-serif; font-size:32px; margin:14px 0 24px;}
+.card{
+  display:block; text-decoration:none; color:var(--paper);
+  border:1px solid var(--line); border-left:3px solid var(--amber);
+  background: rgba(20,42,74,0.5);
+  padding: 18px 20px; margin-bottom: 14px;
+  transition: background 0.15s;
+}
+.card:hover{background: rgba(95,212,208,0.08);}
+.card b{font-family:'IBM Plex Sans Condensed', sans-serif; font-size:17px; display:block; margin-bottom:4px;}
+.card span{font-size:13px; color:var(--paper-dim);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Security Learning Roadmap</div>
+  <h1>Pick a view</h1>
+
+  <a class="card" href="company-stage-roadmap.html">
+    <b>Company-Stage Roadmap →</b>
+    <span>CEO/COO learning path mapped to Seed → Series A → Growth → Pre-IPO, with a cert ladder per stage.</span>
+  </a>
+
+  <a class="card" href="skill-tree-roadmap.html">
+    <b>Specialty Skill Tree →</b>
+    <span>Branches into Pentest, Network, SOC Analyst, Auditing, GRC, Cloud Security — tools + certs per level.</span>
+  </a>
+
+  <a class="card" href="skill-tree-free-resources.html">
+    <b>Free Learning Resources →</b>
+    <span>Same six specialties, with free YouTube channels, subreddits, and practice platforms for each.</span>
+  </a>
+</div>
+</body>
+</html>

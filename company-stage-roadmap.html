@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Security Fluency Roadmap — CEO &amp; COO</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@500;600;700&display=swap');
+
+:root{
+  --navy: #0F2340;
+  --navy-deep: #0A1930;
+  --trace: #5FD4D0;
+  --amber: #F2A93B;
+  --paper: #EDEDE3;
+  --paper-dim: #B9C2D0;
+  --line: rgba(95,212,208,0.28);
+  --red-flag: #E2604F;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background: var(--navy);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(95,212,208,0.10) 1px, transparent 1px);
+  background-size: 28px 28px;
+  color: var(--paper);
+  font-family: 'IBM Plex Sans', sans-serif;
+  line-height: 1.5;
+}
+
+.wrap{max-width: 980px; margin: 0 auto; padding: 56px 32px 100px;}
+
+/* HEADER */
+header{
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 32px;
+  margin-bottom: 8px;
+}
+.eyebrow{
+  font-family:'IBM Plex Mono', monospace;
+  color: var(--trace);
+  font-size: 12px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.eyebrow::before{
+  content:'';
+  width:8px;height:8px;
+  background: var(--trace);
+  display:inline-block;
+  box-shadow: 0 0 8px var(--trace);
+}
+h1{
+  font-family:'IBM Plex Sans Condensed', sans-serif;
+  font-weight:700;
+  font-size: 44px;
+  letter-spacing: -0.5px;
+  margin: 14px 0 10px;
+  color: var(--paper);
+}
+h1 span{color: var(--amber);}
+.subhead{
+  color: var(--paper-dim);
+  font-size: 16px;
+  max-width: 640px;
+}
+
+/* LEGEND */
+.legend{
+  display:flex;
+  gap: 22px;
+  margin: 26px 0 10px;
+  flex-wrap: wrap;
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  color: var(--paper-dim);
+}
+.legend div{display:flex; align-items:center; gap:8px;}
+.dot{width:10px; height:10px; border-radius:50%;}
+
+/* TIMELINE */
+.timeline{
+  position: relative;
+  margin-top: 50px;
+  padding-left: 46px;
+}
+.spine{
+  position: absolute;
+  left: 14px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--trace) 0px, var(--trace) 6px, transparent 6px, transparent 12px
+  );
+  opacity: 0.55;
+}
+
+.stage{
+  position: relative;
+  margin-bottom: 64px;
+}
+.stage:last-child{margin-bottom: 0;}
+
+.node{
+  position: absolute;
+  left: -46px;
+  top: 4px;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--navy-deep);
+  border: 2px solid var(--trace);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'IBM Plex Mono', monospace;
+  font-weight:700;
+  font-size: 13px;
+  color: var(--trace);
+  box-shadow: 0 0 0 6px var(--navy), 0 0 14px rgba(95,212,208,0.35);
+}
+
+.stage-card{
+  background: rgba(20,42,74,0.55);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--amber);
+  padding: 26px 28px;
+  position: relative;
+}
+
+.stage-top{
+  display:flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.stage-title{
+  font-family:'IBM Plex Sans Condensed', sans-serif;
+  font-weight:700;
+  font-size: 22px;
+  color: var(--paper);
+}
+.stage-tag{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--navy-deep);
+  background: var(--amber);
+  padding: 3px 9px;
+}
+.stage-meta{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--trace);
+  margin-bottom: 18px;
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+@media (max-width: 700px){ .grid2{grid-template-columns: 1fr;} }
+
+.col-label{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  margin-bottom: 10px;
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 6px;
+}
+ul.checklist{
+  list-style: none;
+  margin: 0; padding: 0;
+}
+ul.checklist li{
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 9px;
+  font-size: 14.5px;
+  color: var(--paper);
+}
+ul.checklist li::before{
+  content:'▸';
+  position:absolute; left:0; top:0;
+  color: var(--trace);
+}
+
+.readouts{
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+  font-size: 13px;
+  color: var(--paper-dim);
+}
+.readouts b{color: var(--amber); font-weight:600;}
+
+/* CERT TRACK */
+.cert-track{
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line);
+}
+.cert-track .col-label{border-bottom:none; padding-bottom:0; margin-bottom:12px;}
+.cert-list{
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cert{
+  display:grid;
+  grid-template-columns: 108px 1fr;
+  gap: 14px;
+  align-items: start;
+  font-size: 13.5px;
+}
+@media (max-width:600px){ .cert{grid-template-columns: 1fr;} }
+.cert-badge{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--trace);
+  padding: 4px 8px;
+  height: fit-content;
+  white-space: nowrap;
+}
+.cert-badge.hands-on{background: var(--amber);}
+.cert-body b{color: var(--paper); font-weight:600;}
+.cert-body{color: var(--paper-dim);}
+
+/* EXIT CRITERIA STRIP */
+.exit{
+  margin-top: 16px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  color: var(--red-flag);
+  background: rgba(226,96,79,0.08);
+  border: 1px solid rgba(226,96,79,0.3);
+  padding: 8px 12px;
+}
+.exit b{color:#fff;}
+
+/* HABIT LOOP FOOTER */
+.loop{
+  margin-top: 70px;
+  border: 1px solid var(--line);
+  padding: 30px 28px;
+  background: rgba(20,42,74,0.35);
+}
+.loop h2{
+  font-family:'IBM Plex Sans Condensed', sans-serif;
+  font-size: 20px;
+  color: var(--amber);
+  margin: 0 0 18px;
+  letter-spacing: 0.5px;
+}
+.loop-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+@media (max-width: 700px){ .loop-grid{grid-template-columns: 1fr 1fr;} }
+.loop-item{
+  font-size: 13px;
+  color: var(--paper-dim);
+}
+.loop-item b{
+  display:block;
+  color: var(--trace);
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing:1px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+footer.note{
+  margin-top: 40px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--paper-dim);
+  opacity: 0.7;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Executive Track / Security Fluency</div>
+    <h1>From founder instinct to <span>board‑level command</span></h1>
+    <p class="subhead">A stage-by-stage path for a CEO and COO to build real security fluency as the company grows — not to become engineers, but to make good calls, ask the right questions, and speak the customer's language.</p>
+
+    <div class="legend">
+      <div><span class="dot" style="background:var(--trace)"></span> Stage checkpoint</div>
+      <div><span class="dot" style="background:var(--amber)"></span> Company stage tag</div>
+      <div><span class="dot" style="background:var(--red-flag)"></span> Don't advance until…</div>
+      <div><span class="dot" style="background:var(--trace)"></span> Credential / knowledge cert</div>
+      <div><span class="dot" style="background:var(--amber)"></span> Hands-on / practical course</div>
+    </div>
+  </header>
+
+  <div class="timeline">
+    <div class="spine"></div>
+
+    <!-- STAGE 1 -->
+    <div class="stage">
+      <div class="node">01</div>
+      <div class="stage-card">
+        <div class="stage-top">
+          <div class="stage-title">Security Literacy</div>
+          <div class="stage-tag">Pre‑seed / Seed</div>
+        </div>
+        <div class="stage-meta">~1–10 people · no dedicated security hire yet</div>
+
+        <div class="grid2">
+          <div>
+            <div class="col-label">Learn</div>
+            <ul class="checklist">
+              <li>Core vocabulary: CIA triad, threat vs. vulnerability vs. risk</li>
+              <li>The threat landscape for your own product category</li>
+              <li>NIST CSF at a glance — the 5 functions, not the detail</li>
+              <li>What "shared responsibility" means with your cloud provider</li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-label">Do</div>
+            <ul class="checklist">
+              <li>Turn on MFA everywhere, enforce a password manager company-wide</li>
+              <li>Write a one-page incident response plan — who calls whom</li>
+              <li>Sit in on your first pen test or security review, even silently</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cert-track">
+          <div class="col-label">Course / certification ladder</div>
+          <div class="cert-list">
+            <div class="cert">
+              <span class="cert-badge">Credential</span>
+              <div class="cert-body"><b>ISC2 Certified in Cybersecurity (CC)</b> — free exam, entry-level vocabulary and frameworks. Good first cert for a non-technical exec, ~2 weeks of self-study.</div>
+            </div>
+            <div class="cert">
+              <span class="cert-badge hands-on">Hands-on</span>
+              <div class="cert-body"><b>TCM Security — Practical Ethical Hacking (PEH)</b> — optional, if you want to actually see how an attack works instead of just reading about it. Self-paced, ~20–25 hrs, no prerequisites.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="readouts">Signal you're ready to move on: <b>you can explain your own product's threat model in two minutes, unaided.</b></div>
+      </div>
+    </div>
+
+    <!-- STAGE 2 -->
+    <div class="stage">
+      <div class="node">02</div>
+      <div class="stage-card">
+        <div class="stage-top">
+          <div class="stage-title">Operational Fluency</div>
+          <div class="stage-tag">Series A</div>
+        </div>
+        <div class="stage-meta">first security/compliance hire · first enterprise customers</div>
+
+        <div class="grid2">
+          <div>
+            <div class="col-label">Learn</div>
+            <ul class="checklist">
+              <li>SOC 2 and ISO 27001 — what auditors actually check, and why customers ask</li>
+              <li>Vendor & third-party risk basics (you're now both vendor and buyer)</li>
+              <li>How to read a penetration test report and a risk register</li>
+              <li>Data classification: what "sensitive" means for your customers' data</li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-label">Do</div>
+            <ul class="checklist">
+              <li>Run your first tabletop incident-response exercise, COO facilitates</li>
+              <li>Build a security answers doc for sales — stop reinventing it per deal</li>
+              <li>Set a cadence: monthly 30-min security review with the exec team</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cert-track">
+          <div class="col-label">Course / certification ladder</div>
+          <div class="cert-list">
+            <div class="cert">
+              <span class="cert-badge">Credential</span>
+              <div class="cert-body"><b>CompTIA Security+</b> — the standard baseline cert for anyone touching security decisions. Signals fluency to auditors and enterprise customers alike.</div>
+            </div>
+            <div class="cert">
+              <span class="cert-badge hands-on">Hands-on</span>
+              <div class="cert-body"><b>TCM Security — Practical Junior Penetration Tester (PJPT)</b> — a step up from PEH, builds on it. Worth it if you or the COO want direct credibility when reviewing pen test findings, not just a summary from the vendor.</div>
+            </div>
+            <div class="cert">
+              <span class="cert-badge">Credential</span>
+              <div class="cert-body"><b>ISO/IEC 27001 Foundation</b> — 1–2 day course, gives you the audit's actual structure before your first certification cycle.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="exit">⚠ <b>Don't advance until:</b> you can walk a customer's security questionnaire without handing it entirely to engineering.</div>
+      </div>
+    </div>
+
+    <!-- STAGE 3 -->
+    <div class="stage">
+      <div class="node">03</div>
+      <div class="stage-card">
+        <div class="stage-top">
+          <div class="stage-title">Strategic Command</div>
+          <div class="stage-tag">Growth stage</div>
+        </div>
+        <div class="stage-meta">security team of its own · regulated or enterprise customers</div>
+
+        <div class="grid2">
+          <div>
+            <div class="col-label">Learn</div>
+            <ul class="checklist">
+              <li>Regulatory landscape relevant to your customers: GDPR, CCPA, HIPAA, PCI-DSS</li>
+              <li>Zero-trust architecture, at the concept level — why it changes buying decisions</li>
+              <li>Cyber insurance: what's covered, what voids a claim</li>
+              <li>Security due diligence as it applies to fundraising and M&A</li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-label">Do</div>
+            <ul class="checklist">
+              <li>Own the security narrative in the data room for your next raise</li>
+              <li>Bring the CISO/security lead into board prep, not just the demo</li>
+              <li>Benchmark your posture against 2–3 competitors' public trust pages</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cert-track">
+          <div class="col-label">Course / certification ladder</div>
+          <div class="cert-list">
+            <div class="cert">
+              <span class="cert-badge hands-on">Hands-on</span>
+              <div class="cert-body"><b>TCM Security — Practical Network Penetration Tester (PNPT)</b> — the credential-grade cert in their line, full network compromise + reporting. Optional at this stage, but strong if either of you wants a genuine practitioner-level credential rather than an executive-briefing level of knowledge.</div>
+            </div>
+            <div class="cert">
+              <span class="cert-badge">Credential</span>
+              <div class="cert-body"><b>CISM or CRISC (ISACA)</b> — built for people who manage security risk and programs rather than configure firewalls. Closer to your actual day job than CISSP is.</div>
+            </div>
+            <div class="cert">
+              <span class="cert-badge">Credential</span>
+              <div class="cert-body"><b>ISO/IEC 27001 Lead Implementer</b> — useful once you're the one deciding how the ISMS gets built, not just reading the audit output.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="readouts">Signal you're ready to move on: <b>a regulator or enterprise auditor could ask you a direct question and get a straight answer, not a deflection to engineering.</b></div>
+      </div>
+    </div>
+
+    <!-- STAGE 4 -->
+    <div class="stage">
+      <div class="node">04</div>
+      <div class="stage-card">
+        <div class="stage-top">
+          <div class="stage-title">Executive Mastery</div>
+          <div class="stage-tag">Scale / Pre‑IPO</div>
+        </div>
+        <div class="stage-meta">board reporting on cyber risk is routine · public scrutiny is real</div>
+
+        <div class="grid2">
+          <div>
+            <div class="col-label">Learn</div>
+            <ul class="checklist">
+              <li>Board-level cyber risk governance — what a director should be asking you</li>
+              <li>Breach disclosure law: SEC 8-K rules, state notification timelines</li>
+              <li>Crisis communications for a live incident — internal, customer, press, all at once</li>
+              <li>Executive programs worth the time: SANS "Security Leadership" tracks, Harvard/MIT exec cyber programs</li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-label">Do</div>
+            <ul class="checklist">
+              <li>Run a full-scale breach simulation with legal, comms, and the board observing</li>
+              <li>Present cyber risk as a standing board agenda item, quarterly</li>
+              <li>Represent the company publicly on security — panels, customer advisory boards</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cert-track">
+          <div class="col-label">Course / certification ladder</div>
+          <div class="cert-list">
+            <div class="cert">
+              <span class="cert-badge">Credential</span>
+              <div class="cert-body"><b>NACD Cyber-Risk Oversight Certificate</b> — built specifically for boards and C-suite, the closest thing to a required credential at this stage.</div>
+            </div>
+            <div class="cert">
+              <span class="cert-badge">Credential</span>
+              <div class="cert-body"><b>CISSP</b> (concepts, not necessarily the exam) — the common language your CISO and every enterprise auditor already speaks; worth knowing even secondhand.</div>
+            </div>
+            <div class="cert">
+              <span class="cert-badge hands-on">Hands-on</span>
+              <div class="cert-body"><b>SANS MGT/LEG-series executive courses</b> (e.g. cyber law, security leadership) — short, expensive, built for exactly this seat.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="readouts">The bar here: <b>you could brief the board mid-incident, live, without a script — and they'd trust the read.</b></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="loop">
+    <h2>The habit loop — running at every stage in parallel</h2>
+    <div class="loop-grid">
+      <div class="loop-item"><b>Weekly</b>15-minute threat brief from your security lead — headlines, not detail</div>
+      <div class="loop-item"><b>Monthly</b>Exec-team security review — open items, incidents, near-misses</div>
+      <div class="loop-item"><b>Quarterly</b>Tabletop exercise, rotating scenarios — ransomware, insider, vendor breach</div>
+      <div class="loop-item"><b>Yearly</b>One conference or peer network touchpoint — RSA, Black Hat, a local CISO roundtable</div>
+    </div>
+  </div>
+
+  <footer class="note">Roadmap calibrated for a cybersecurity-sector startup — earlier and deeper security fluency is expected of leadership than in most other verticals, since it's the product, not just the plumbing.</footer>
+
+</div>
+</body>
+</html>
