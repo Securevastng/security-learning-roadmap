@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Security Glossary</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@700&display=swap');
+:root{
+  --navy:#0F2340; --navy-deep:#0A1930; --trace:#5FD4D0; --amber:#F2A93B;
+  --paper:#EDEDE3; --paper-dim:#B9C2D0; --line:rgba(95,212,208,0.25);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--navy);
+  background-image: radial-gradient(circle at 1px 1px, rgba(95,212,208,0.09) 1px, transparent 1px);
+  background-size:28px 28px;
+  color:var(--paper); font-family:'IBM Plex Sans', sans-serif; line-height:1.5;
+}
+.wrap{max-width:820px; margin:0 auto; padding:52px 24px 90px;}
+.eyebrow{font-family:'IBM Plex Mono', monospace; color:var(--trace); font-size:12px; letter-spacing:2.5px; text-transform:uppercase; display:flex; align-items:center; gap:10px;}
+.eyebrow::before{content:''; width:8px; height:8px; background:var(--trace); box-shadow:0 0 8px var(--trace);}
+h1{font-family:'IBM Plex Sans Condensed', sans-serif; font-size:34px; margin:14px 0 10px;}
+.subhead{color:var(--paper-dim); font-size:15px; max-width:640px; margin-bottom:26px;}
+
+/* SEARCH FILTER */
+#search{
+  width:100%; padding:12px 16px; margin-bottom:28px;
+  background: rgba(20,42,74,0.5); border:1px solid var(--line);
+  color:var(--paper); font-family:'IBM Plex Mono', monospace; font-size:13px;
+}
+#search::placeholder{color:var(--paper-dim);}
+#search:focus{outline:none; border-color:var(--trace);}
+
+/* SECTION */
+.section-label{
+  font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--amber); margin: 30px 0 12px;
+  border-bottom:1px dashed var(--line); padding-bottom:6px;
+}
+.section-label:first-of-type{margin-top:0;}
+
+.entry{
+  display:grid; grid-template-columns: 130px 1fr;
+  gap:16px; padding:10px 0;
+  border-bottom: 1px solid rgba(95,212,208,0.1);
+}
+@media (max-width:600px){ .entry{grid-template-columns:1fr; gap:2px;} }
+.term{
+  font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:13.5px;
+  color:var(--trace);
+}
+.def{font-size:13.5px; color:var(--paper);}
+.entry.hidden{display:none;}
+
+footer.note{
+  margin-top:40px; font-family:'IBM Plex Mono', monospace; font-size:11px;
+  color:var(--paper-dim); opacity:0.75;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Security Learning Roadmap</div>
+  <h1>Glossary</h1>
+  <p class="subhead">Plain-English definitions for every acronym used across the roadmap docs. Type to filter.</p>
+
+  <input type="text" id="search" placeholder="Search a term… (e.g. SOC 2, CVE, MFA)">
+
+  <div id="entries">
+
+    <div class="section-label">Frameworks &amp; Standards</div>
+    <div class="entry"><div class="term">NIST CSF</div><div class="def">The National Institute of Standards and Technology's Cybersecurity Framework — five plain-language functions (Govern, Identify, Protect, Detect, Respond, Recover) most companies use as a common map of "are we covering the basics."</div></div>
+    <div class="entry"><div class="term">SOC 2</div><div class="def">An audit report proving a company's security controls actually work, not just exist on paper. The one enterprise customers ask for before they'll sign a contract.</div></div>
+    <div class="entry"><div class="term">ISO 27001</div><div class="def">An international certification for having a formal Information Security Management System (ISMS) — heavier and more globally recognized than SOC 2, common outside the US.</div></div>
+    <div class="entry"><div class="term">GDPR</div><div class="def">EU law governing how personal data is collected, stored, and used. Applies if you have any EU users, regardless of where your company is based.</div></div>
+    <div class="entry"><div class="term">CCPA</div><div class="def">California's version of GDPR — gives California residents rights over their personal data.</div></div>
+    <div class="entry"><div class="term">HIPAA</div><div class="def">US law protecting health data. Relevant if you touch anything medical, even indirectly (e.g. a health-tech vendor).</div></div>
+    <div class="entry"><div class="term">PCI-DSS</div><div class="def">The standard for handling credit card data. Applies if you process, store, or transmit card payments.</div></div>
+    <div class="entry"><div class="term">RMF</div><div class="def">NIST's Risk Management Framework — a formal, step-by-step process (mostly used by government and contractors) for authorizing a system as secure enough to operate.</div></div>
+
+    <div class="section-label">Core Concepts</div>
+    <div class="entry"><div class="term">CIA Triad</div><div class="def">Confidentiality, Integrity, Availability — the three things every security control is ultimately protecting.</div></div>
+    <div class="entry"><div class="term">MFA</div><div class="def">Multi-Factor Authentication — requiring more than a password to log in (e.g. password + phone code). The single highest-impact control most companies can turn on immediately.</div></div>
+    <div class="entry"><div class="term">Zero Trust</div><div class="def">A security model that assumes no user or device is automatically trusted, even inside the company network — every request gets verified.</div></div>
+    <div class="entry"><div class="term">CVE</div><div class="def">Common Vulnerabilities and Exposures — a public ID number given to a specific known security flaw (e.g. "CVE-2024-1234"), so everyone can reference the same bug.</div></div>
+    <div class="entry"><div class="term">EDR</div><div class="def">Endpoint Detection and Response — software installed on laptops/servers that watches for and can automatically respond to suspicious activity.</div></div>
+    <div class="entry"><div class="term">SIEM</div><div class="def">Security Information and Event Management — a system that collects logs from everywhere (servers, apps, network gear) into one place so analysts can spot patterns.</div></div>
+    <div class="entry"><div class="term">IAM</div><div class="def">Identity and Access Management — the systems and policies controlling who can access what.</div></div>
+    <div class="entry"><div class="term">DFIR</div><div class="def">Digital Forensics and Incident Response — the discipline of figuring out what happened after a breach and preserving evidence properly.</div></div>
+    <div class="entry"><div class="term">GRC</div><div class="def">Governance, Risk, and Compliance — the function that translates security work into policy, risk register entries, and audit-ready documentation.</div></div>
+    <div class="entry"><div class="term">C2</div><div class="def">Command and Control — the infrastructure an attacker (or a red teamer simulating one) uses to remotely control a compromised machine.</div></div>
+
+    <div class="section-label">Certifications</div>
+    <div class="entry"><div class="term">ISC2 CC</div><div class="def">Certified in Cybersecurity — ISC2's free, entry-level cert. Good first credential for anyone non-technical.</div></div>
+    <div class="entry"><div class="term">Security+</div><div class="def">CompTIA's baseline cert, widely recognized as the industry-standard starting credential.</div></div>
+    <div class="entry"><div class="term">CISSP</div><div class="def">Certified Information Systems Security Professional — the broad, senior-level cert most CISOs hold. Requires years of experience to actually sit the exam.</div></div>
+    <div class="entry"><div class="term">CISM / CISA / CRISC / CGEIT</div><div class="def">ISACA's suite of certs — CISM (security management), CISA (auditing), CRISC (risk), CGEIT (IT governance). Aimed at people who manage programs, not configure tools.</div></div>
+    <div class="entry"><div class="term">OSCP</div><div class="def">Offensive Security Certified Professional — the widely respected, fully hands-on penetration testing certification. You have to actually hack a live environment to pass.</div></div>
+    <div class="entry"><div class="term">PEH / PJPT / PNPT</div><div class="def">TCM Security's practical pentesting ladder — Practical Ethical Hacking (course), Practical Junior Penetration Tester, Practical Network Penetration Tester (certs), each fully hands-on.</div></div>
+    <div class="entry"><div class="term">GCFA / GCFE / GNFA</div><div class="def">SANS/GIAC forensics certifications — GCFE (examiner, more foundational), GCFA (forensic analyst), GNFA (network forensics), each progressively deeper.</div></div>
+    <div class="entry"><div class="term">CCNA / CCNP</div><div class="def">Cisco's networking certification ladder — CCNA is the standard entry cert, CCNP is the advanced/specialist tier (e.g. CCNP Security).</div></div>
+    <div class="entry"><div class="term">CCSK / CCSP</div><div class="def">Cloud security certs — CCSK (Certificate of Cloud Security Knowledge, vendor-neutral, more foundational) and CCSP (Certified Cloud Security Professional, ISC2's advanced cert).</div></div>
+
+    <div class="section-label">Tools</div>
+    <div class="entry"><div class="term">Nmap</div><div class="def">Free tool for scanning a network to see what devices and services are exposed — the standard first step in almost any security assessment.</div></div>
+    <div class="entry"><div class="term">Wireshark</div><div class="def">Free tool for capturing and inspecting network traffic packet-by-packet.</div></div>
+    <div class="entry"><div class="term">Metasploit</div><div class="def">A framework of pre-built exploits used by penetration testers to test whether known vulnerabilities are actually exploitable.</div></div>
+    <div class="entry"><div class="term">Burp Suite</div><div class="def">The standard tool for testing web application security — intercepts and lets you manipulate traffic between browser and server.</div></div>
+    <div class="entry"><div class="term">Splunk</div><div class="def">A widely used SIEM platform for searching and visualizing log data at scale.</div></div>
+    <div class="entry"><div class="term">Volatility</div><div class="def">A free tool for analyzing a computer's memory (RAM) after an incident, to see what was running at the time of compromise.</div></div>
+    <div class="entry"><div class="term">Terraform</div><div class="def">A tool for defining cloud infrastructure as code — relevant to security because misconfigurations can be caught before they're ever deployed.</div></div>
+
+  </div>
+
+  <footer class="note">Missing a term you keep running into? Add it here and open a pull request, or flag it as an issue in the repo.</footer>
+</div>
+
+<script>
+document.getElementById('search').addEventListener('input', function(e){
+  const q = e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.entry').forEach(function(entry){
+    const text = entry.textContent.toLowerCase();
+    entry.classList.toggle('hidden', q.length > 0 && !text.includes(q));
+  });
+  document.querySelectorAll('.section-label').forEach(function(label){
+    let node = label.nextElementSibling;
+    let anyVisible = false;
+    while(node && !node.classList.contains('section-label')){
+      if(!node.classList.contains('hidden')) anyVisible = true;
+      node = node.nextElementSibling;
+    }
+    label.classList.toggle('hidden', q.length > 0 && !anyVisible);
+  });
+});
+</script>
+</body>
+</html>
