@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Certificate of Completion</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap');
+
+:root{
+  --bg: #F5F6FB;
+  --surface: #FFFFFF;
+  --surface-alt: #F0F1FA;
+  --accent: #4640DE;
+  --accent-soft: #EDEDFB;
+  --ink: #14142B;
+  --ink-dim: #6E7191;
+  --line: #E9E9F5;
+  --highlight: #F2994A;
+  --gold: #C9A44C;
+  --shadow: 0 16px 40px rgba(20,20,43,0.08);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background: var(--bg);
+  color: var(--ink);
+  font-family:'Plus Jakarta Sans', sans-serif;
+  min-height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  padding: 40px 20px;
+}
+
+.stage{max-width: 780px; width:100%;}
+
+.topline{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom: 18px; flex-wrap:wrap; gap:10px;
+}
+.eyebrow{
+  color:var(--accent); font-weight:700; font-size:12.5px;
+  letter-spacing:1px; text-transform:uppercase;
+  display:flex; align-items:center; gap:8px;
+}
+.eyebrow::before{content:''; width:7px; height:7px; border-radius:50%; background:var(--accent);}
+.back-link{font-size:13px; color:var(--ink-dim); text-decoration:none; font-weight:600;}
+.back-link:hover{color:var(--accent);}
+
+/* LOCKED STATE */
+.locked-card{
+  background:var(--surface); border:1px solid var(--line); border-radius:20px;
+  box-shadow:var(--shadow); padding: 40px 36px; text-align:center;
+}
+.locked-card h2{font-size:22px; font-weight:800; margin:0 0 10px;}
+.locked-card p{color:var(--ink-dim); font-size:14.5px; max-width:440px; margin:0 auto 22px; line-height:1.6;}
+.locked-progress-track{width:100%; max-width:320px; height:10px; border-radius:999px; background:var(--surface-alt); margin:0 auto 10px; overflow:hidden;}
+.locked-progress-fill{height:100%; background:linear-gradient(90deg, var(--accent), #8B7BFF); border-radius:999px;}
+.locked-pct{font-size:13px; font-weight:700; color:var(--accent); margin-bottom:24px;}
+.cta{
+  display:inline-block; background:var(--accent); color:#fff; text-decoration:none;
+  padding:12px 24px; border-radius:999px; font-weight:700; font-size:13.5px;
+}
+
+.path-picker{
+  display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:24px;
+}
+.path-picker a{
+  font-size:12.5px; font-weight:600; color:var(--ink-dim);
+  border:1px solid var(--line); border-radius:999px; padding:7px 14px; text-decoration:none;
+}
+.path-picker a.done{color:var(--accent); border-color:var(--accent); background:var(--accent-soft);}
+
+/* NAME INPUT */
+.name-input-wrap{
+  background:var(--surface); border:1px solid var(--line); border-radius:16px;
+  box-shadow:var(--shadow); padding:18px 22px; margin-bottom:22px;
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+}
+.name-input-wrap label{font-size:13px; font-weight:700; color:var(--ink-dim); white-space:nowrap;}
+.name-input-wrap input{
+  flex:1; min-width:200px; border:1px solid var(--line); border-radius:10px;
+  padding:10px 14px; font-family:inherit; font-size:14px; color:var(--ink);
+}
+.name-input-wrap input:focus{outline:none; border-color:var(--accent);}
+.print-btn{
+  background:var(--ink); color:#fff; border:none; border-radius:999px;
+  padding:10px 20px; font-family:inherit; font-weight:700; font-size:13px; cursor:pointer;
+  white-space:nowrap;
+}
+
+/* CERTIFICATE */
+.cert{
+  background: var(--surface);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  padding: 8px;
+}
+.cert-inner{
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  padding: 46px 50px 38px;
+  position: relative;
+  background:
+    radial-gradient(circle at top left, rgba(201,164,76,0.06), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(70,64,222,0.05), transparent 40%);
+}
+.cert-inner::before{
+  content:'';
+  position:absolute; inset:8px;
+  border: 1px solid rgba(201,164,76,0.35);
+  border-radius: 10px;
+  pointer-events:none;
+}
+.cert-issuer{
+  text-align:center; font-size:11.5px; font-weight:700; letter-spacing:2px;
+  text-transform:uppercase; color:var(--ink-dim); margin-bottom:6px;
+}
+.cert-title{
+  font-family:'Playfair Display', serif; font-weight:700; font-style:italic;
+  font-size:34px; text-align:center; color:var(--ink); margin: 4px 0 22px;
+}
+.cert-lead{ text-align:center; font-size:13.5px; color:var(--ink-dim); margin-bottom:6px;}
+.cert-name{
+  text-align:center; font-family:'Playfair Display', serif; font-weight:700;
+  font-size:30px; color:var(--accent); margin: 8px 0 18px;
+  border-bottom: 2px solid var(--gold); display:block; padding-bottom:10px;
+}
+.cert-body{ text-align:center; font-size:14px; color:var(--ink); line-height:1.7; max-width:560px; margin: 0 auto 26px;}
+.cert-body b{color:var(--accent);}
+
+.cert-stats{
+  display:flex; justify-content:center; gap:34px; margin-bottom:30px; flex-wrap:wrap;
+}
+.cert-stat{text-align:center;}
+.cert-stat b{display:block; font-size:20px; font-weight:800; color:var(--ink);}
+.cert-stat span{font-size:10.5px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:0.5px;}
+
+.cert-footer{
+  display:flex; justify-content:space-between; align-items:flex-end; margin-top:20px; flex-wrap:wrap; gap:20px;
+}
+.cert-sig{text-align:center;}
+.cert-sig-line{
+  font-family:'Playfair Display', serif; font-style:italic; font-size:20px; color:var(--ink);
+  border-bottom: 1px solid var(--line); padding-bottom:6px; margin-bottom:6px; min-width:170px;
+}
+.cert-sig-label{font-size:10.5px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:0.5px;}
+.cert-meta{text-align:right; font-size:11px; color:var(--ink-dim);}
+.cert-meta div{margin-bottom:3px;}
+
+.disclaimer{
+  margin-top: 18px; text-align:center; font-size:11px; color:var(--ink-dim); max-width:560px; margin-left:auto; margin-right:auto;
+}
+
+@media print{
+  body{background:#fff; padding:0; display:block;}
+  .topline, .name-input-wrap, .path-picker, .back-link{display:none !important;}
+  .stage{max-width:none;}
+  .cert{box-shadow:none; border-radius:0; padding:0;}
+  .cert-inner{border-radius:0;}
+}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="topline">
+    <div class="eyebrow">Security Learning Roadmap</div>
+    <a class="back-link" href="tracker.html">← Back to tracker</a>
+  </div>
+
+  <div id="lockedView" style="display:none;">
+    <div class="locked-card">
+      <h2 id="lockedHeading">Path not finished yet</h2>
+      <p id="lockedText">Based on the progress saved in this browser, this path isn't fully checked off yet. Finish every item in the tracker and come back — the certificate unlocks automatically.</p>
+      <div class="locked-progress-track"><div class="locked-progress-fill" id="lockedFill"></div></div>
+      <div class="locked-pct" id="lockedPct"></div>
+      <a class="cta" href="tracker.html">Go finish it →</a>
+      <div class="path-picker" id="pathPicker"></div>
+    </div>
+  </div>
+
+  <div id="certView" style="display:none;">
+    <div class="name-input-wrap">
+      <label for="nameInput">Recipient name</label>
+      <input type="text" id="nameInput" placeholder="Type your name…">
+      <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+
+    <div class="cert">
+      <div class="cert-inner">
+        <div class="cert-issuer">Security Learning Roadmap · Internal Recognition</div>
+        <div class="cert-title">Certificate of Completion</div>
+        <div class="cert-lead">This certifies that</div>
+        <div class="cert-name" id="certName">Your Name</div>
+        <div class="cert-body">has completed every step of the <b id="certPathName">—</b> track — hands-on tools, the recognized certification pathway, and the free-resource study plan — as tracked in the Security Learning Roadmap.</div>
+
+        <div class="cert-stats">
+          <div class="cert-stat"><b id="statTools">0</b><span>Tools practiced</span></div>
+          <div class="cert-stat"><b id="statCerts">0</b><span>Certs targeted</span></div>
+          <div class="cert-stat"><b id="statRes">0</b><span>Free resources</span></div>
+        </div>
+
+        <div class="cert-footer">
+          <div class="cert-sig">
+            <div class="cert-sig-line">Security Learning Roadmap</div>
+            <div class="cert-sig-label">Issuing Program</div>
+          </div>
+          <div class="cert-meta">
+            <div>Completed: <span id="certDate">—</span></div>
+            <div>Certificate ID: <span id="certId">—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="disclaimer">This is an internal recognition of self-study progress, not an accredited or industry-issued certification. The real credentials referenced in this track (e.g. OSCP, CCNA, CISA) are earned separately through their official certifying bodies.</div>
+  </div>
+
+</div>
+
+<script>
+const PATHS = [
+  { id: "pentest", name: "Penetration Testing", items: 15 },
+  { id: "network", name: "Network Engineering", items: 14 },
+  { id: "soc", name: "Cybersecurity Analyst", items: 14 },
+  { id: "audit", name: "Auditing", items: 9 },
+  { id: "grc", name: "GRC", items: 10 },
+  { id: "cloud", name: "Cloud Security", items: 12 },
+  { id: "dfir", name: "Incident Response", items: 12 },
+];
+
+const STORAGE_KEY = "sec-roadmap-tracker";
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch(e){ return {}; }
+}
+
+function simpleHash(str){
+  let h = 0;
+  for(let i=0; i<str.length; i++){
+    h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
+  }
+  return Math.abs(h).toString(36).toUpperCase().slice(0,8);
+}
+
+function countByTag(state, pathId, tag, allIds){
+  // allIds not tracked here directly; we approximate by counting checked keys with given tag prefix
+  return null;
+}
+
+const params = new URLSearchParams(window.location.search);
+const requestedId = params.get('path');
+const state = loadState();
+
+function progressFor(pathId, totalItems){
+  const prefix = pathId + ":";
+  const keys = Object.keys(state).filter(k => k.startsWith(prefix) && !k.includes('_completedAt'));
+  const done = keys.filter(k => state[k]).length;
+  return { done, total: totalItems, pct: totalItems ? Math.round((done/totalItems)*100) : 0 };
+}
+
+function renderPathPicker(){
+  const wrap = document.getElementById('pathPicker');
+  PATHS.forEach(p => {
+    const prog = progressFor(p.id, p.items);
+    const a = document.createElement('a');
+    a.href = 'certificate.html?path=' + p.id;
+    a.textContent = p.name + ' (' + prog.pct + '%)';
+    if(prog.pct === 100) a.classList.add('done');
+    wrap.appendChild(a);
+  });
+}
+
+const activePath = PATHS.find(p => p.id === requestedId);
+
+if(!activePath){
+  document.getElementById('lockedView').style.display = 'block';
+  document.getElementById('lockedHeading').textContent = 'Pick a path to view its certificate';
+  document.getElementById('lockedText').textContent = 'Choose a specialty below — certificates unlock automatically once every item in the tracker is checked off.';
+  document.querySelector('.locked-progress-track').style.display = 'none';
+  document.getElementById('lockedPct').style.display = 'none';
+  document.querySelector('.locked-card .cta').style.display = 'none';
+  renderPathPicker();
+} else {
+  const prog = progressFor(activePath.id, activePath.items);
+
+  if(prog.pct < 100){
+    document.getElementById('lockedView').style.display = 'block';
+    document.getElementById('lockedHeading').textContent = activePath.name + ' isn\'t finished yet';
+    document.getElementById('lockedFill').style.width = prog.pct + '%';
+    document.getElementById('lockedPct').textContent = prog.pct + '% complete (' + prog.done + '/' + prog.total + ')';
+    renderPathPicker();
+  } else {
+    document.getElementById('certView').style.display = 'block';
+
+    // Tool/cert/resource breakdown, approximated from key naming convention (f/p/a = tools+certs, r = free resources)
+    const prefix = activePath.id + ":";
+    const keys = Object.keys(state).filter(k => k.startsWith(prefix) && state[k]);
+    const toolCount = keys.filter(k => /:[fpa]\d/.test(k)).length;
+    const resCount = keys.filter(k => /:r\d/.test(k)).length;
+
+    document.getElementById('certPathName').textContent = activePath.name;
+    document.getElementById('statTools').textContent = toolCount || activePath.items - resCount;
+    document.getElementById('statCerts').textContent = '3';
+    document.getElementById('statRes').textContent = resCount || 3;
+
+    let completedAt = state[activePath.id + ':_completedAt'];
+    if(!completedAt){
+      completedAt = new Date().toISOString();
+      state[activePath.id + ':_completedAt'] = completedAt;
+      try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e){}
+    }
+    const d = new Date(completedAt);
+    document.getElementById('certDate').textContent = d.toLocaleDateString(undefined, {year:'numeric', month:'long', day:'numeric'});
+
+    const nameInput = document.getElementById('nameInput');
+    const savedName = localStorage.getItem(STORAGE_KEY + ':name') || '';
+    nameInput.value = savedName;
+    function updateName(){
+      const val = nameInput.value.trim();
+      document.getElementById('certName').textContent = val || 'Your Name';
+      localStorage.setItem(STORAGE_KEY + ':name', val);
+      document.getElementById('certId').textContent = simpleHash(activePath.id + '|' + val + '|' + completedAt);
+    }
+    nameInput.addEventListener('input', updateName);
+    updateName();
+  }
+}
+</script>
+</body>
+</html>

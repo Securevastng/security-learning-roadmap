@@ -10,6 +10,7 @@ Internal reference for how leadership and the security team build cybersecurity 
 - **`skill-tree-free-resources.html`** — same branches, with free YouTube channels, subreddits, and free practice platforms for each, plus a full price-sorted ladder of every recognized cert in that field (cheapest → priciest) with the one that matters most to employers flagged, and a budget note per branch (what to skip, cheapest path to the top cert).
 - **`glossary.html`** — searchable plain-English definitions for every acronym used across these docs (SOC 2, CVE, MFA, etc.).
 - **`tracker.html`** — pick a specialty and check off tools, certs, and free resources as they're actually completed. Progress is saved in the browser's `localStorage` — no account, no backend, doesn't sync across devices.
+- **`certificate.html`** — unlocks once a path in `tracker.html` hits 100%. Lets the person type their name and print/save a completion certificate (with a generated certificate ID and completion date). Clearly labeled as internal recognition, not an accredited credential.
 
 ## Viewing
 

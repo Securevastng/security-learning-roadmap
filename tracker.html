@@ -428,8 +428,12 @@ function renderPanel(){
 
   const milestone = document.createElement('div');
   if(prog.pct === 100){
+    if(!state[path.id + ':_completedAt']){
+      state[path.id + ':_completedAt'] = new Date().toISOString();
+      saveState(state);
+    }
     milestone.className = 'milestone';
-    milestone.innerHTML = `<b>All steps checked.</b>&nbsp;This path is as complete as this list gets — time to look for the role, or pick another branch.`;
+    milestone.innerHTML = `<b>All steps checked.</b>&nbsp;This path is as complete as this list gets — <a href="certificate.html?path=${path.id}" style="color:var(--accent); font-weight:700;">get your certificate →</a>`;
   } else if(prog.pct >= 60){
     milestone.className = 'milestone';
     milestone.innerHTML = `<b>Getting close.</b>&nbsp;Advanced tier is what's left — that's usually the cert that actually opens doors.`;
