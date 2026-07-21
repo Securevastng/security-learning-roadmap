@@ -3,19 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <title>Security Skill Tree — Specialization Branches</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="theme-color" content="#111114">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sec Roadmap">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root{
-  --bg: #F5F6FB;
+  --bg: #F4F4F6;
   --surface: #FFFFFF;
-  --surface-alt: #F0F1FA;
-  --accent: #4640DE;
-  --accent-soft: #EDEDFB;
-  --ink: #14142B;
-  --ink-dim: #6E7191;
-  --line: #E9E9F5;
-  --highlight: #F2994A;
+  --surface-alt: #F5F5F7;
+  --accent: #1C9A5D;
+  --accent-soft: #E3F9EC;
+  --ink: #111114;
+  --ink-dim: #8A8A93;
+  --line: #EEEEF1;
+  --highlight: #1C9A5D;
   --shadow: 0 12px 30px rgba(20,20,43,0.06);
 }
 *{box-sizing:border-box;}
@@ -23,7 +30,7 @@ html,body{margin:0;padding:0;}
 body{
   background: var(--bg);
   color: var(--ink);
-  font-family:'Plus Jakarta Sans', sans-serif;
+  font-family:'Inter', sans-serif;
   line-height:1.5;
 }
 .wrap{max-width: 1240px; margin:0 auto; padding: 52px 28px 90px;}
@@ -432,6 +439,13 @@ footer.note{
     el._settleTimer = setTimeout(settle, 90);
   }, {passive:false});
 })();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+  });
+}
 </script>
 </body>
 </html>

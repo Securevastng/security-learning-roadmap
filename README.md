@@ -11,6 +11,7 @@ Internal reference for how leadership and the security team build cybersecurity 
 - **`glossary.html`** — searchable plain-English definitions for every acronym used across these docs (SOC 2, CVE, MFA, etc.).
 - **`tracker.html`** — pick a specialty and check off tools, certs, and free resources as they're actually completed. Progress is saved in the browser's `localStorage` — no account, no backend, doesn't sync across devices.
 - **`certificate.html`** — unlocks once a path in `tracker.html` hits 100%. Lets the person type their name and print/save a completion certificate (with a generated certificate ID and completion date). Clearly labeled as internal recognition, not an accredited credential.
+- **`manifest.json` / `service-worker.js` / `icons/`** — makes the whole site an installable PWA. Once hosted over HTTPS (GitHub Pages qualifies), visiting on a phone and using "Add to Home Screen" (iOS Safari) or the install prompt (Android Chrome) installs it with a real icon, opens full-screen without browser chrome, and caches pages for offline use.
 
 ## Viewing
 
@@ -24,7 +25,18 @@ https://YOUR-ORG.github.io/security-learning-roadmap/
 
 `index.html` loads first and links out to the rest.
 
-## Repo home: GitHub Organization
+## Installing it on a phone (PWA)
+
+Once this is hosted over HTTPS (GitHub Pages works — see below), it can be installed like a real app:
+
+- **iOS (Safari)**: open the site → tap the Share icon → **Add to Home Screen**.
+- **Android (Chrome)**: open the site → Chrome will usually show an **Install app** prompt automatically, or tap the ⋮ menu → **Install app**.
+
+It'll appear on the home screen with the icon from `icons/`, open full-screen with no browser address bar, and keep working offline for pages already visited (via `service-worker.js`).
+
+**Note**: PWAs installed this way don't require Apple/Google approval and aren't listed in the App Store or Play Store — they're a direct install from the browser. Publishing an actual App Store/Play Store listing is a separate, heavier process (wrapping the site with something like Capacitor, paying the developer account fees, going through app review).
+
+
 
 This repo should live under the company's GitHub **Organization**, not a personal account — that way ownership stays with the company if people join or leave.
 
