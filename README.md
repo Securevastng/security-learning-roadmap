@@ -20,7 +20,7 @@ Open any `.html` file directly in a browser — single-file, no build step, no d
 If GitHub Pages is enabled (Settings → Pages → Deploy from branch → `main` → `/root`), the whole thing is served at:
 
 ```
-https://YOUR-ORG.github.io/security-learning-roadmap/
+https://securevast.github.io/security-learning-roadmap/
 ```
 
 `index.html` loads first and links out to the rest.
@@ -43,7 +43,7 @@ This repo should live under the company's GitHub **Organization**, not a persona
 If you haven't pointed this at the org yet:
 
 ```bash
-git remote set-url origin https://github.com/YOUR-ORG/security-learning-roadmap.git
+git remote set-url origin https://github.com/securevastng/security-learning-roadmap.git
 git push -u origin main
 ```
 
