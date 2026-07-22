@@ -1,14 +1,17 @@
-// Firebase project config — replace with YOUR project's values.
-// Get these from: Firebase Console → Project settings → General → "Your apps" → Web app → SDK setup and configuration
-//
-// This file is safe to be public / committed to the repo. Firebase web config values
-// are not secret — access is controlled by Firestore Security Rules, not by hiding this file.
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "REPLACE_WITH_YOUR_API_KEY",
-  authDomain: "REPLACE_WITH_YOUR_PROJECT.firebaseapp.com",
-  projectId: "REPLACE_WITH_YOUR_PROJECT_ID",
-  storageBucket: "REPLACE_WITH_YOUR_PROJECT.appspot.com",
-  messagingSenderId: "REPLACE_WITH_YOUR_SENDER_ID",
-  appId: "REPLACE_WITH_YOUR_APP_ID"
+  apiKey: "AIzaSyBe5Qnhw-CKyrsi_yWeyBZ9KLYe1h46UgM",
+  authDomain: "test-7501f.firebaseapp.com",
+  projectId: "test-7501f",
+  storageBucket: "test-7501f.firebasestorage.app",
+  messagingSenderId: "370658887911",
+  appId: "1:370658887911:web:bbe51dbd3b66c32cfa3a42"
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
