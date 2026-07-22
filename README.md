@@ -20,7 +20,7 @@ Open any `.html` file directly in a browser — single-file, no build step, no d
 If GitHub Pages is enabled (Settings → Pages → Deploy from branch → `main` → `/root`), the whole thing is served at:
 
 ```
-https://securevast.github.io/security-learning-roadmap/
+https://securevastng.github.io/security-learning-roadmap/
 ```
 
 `index.html` loads first and links out to the rest.
