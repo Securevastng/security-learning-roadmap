@@ -1,4 +1,4 @@
-const CACHE_NAME = "sec-roadmap-v1";
+const CACHE_NAME = "sec-roadmap-v2";
 const CORE_FILES = [
   "./index.html",
   "./company-stage-roadmap.html",
@@ -7,6 +7,8 @@ const CORE_FILES = [
   "./glossary.html",
   "./tracker.html",
   "./certificate.html",
+  "./about.html",
+  "./404.html",
   "./manifest.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png"

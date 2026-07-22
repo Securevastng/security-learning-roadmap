@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Security Skill Tree — Free Learning Paths</title>
+<meta property="og:title" content="Free Resources & Cert Pricing — Security Learning Roadmap">
+<meta property="og:description" content="Every specialty with free YouTube/Reddit/practice resources, plus every recognized cert ranked cheapest to priciest with the one that matters most flagged.">
+<meta property="og:image" content="icons/icon-512.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="Every specialty with free YouTube/Reddit/practice resources, plus every recognized cert ranked cheapest to priciest with the one that matters most flagged.">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
@@ -131,7 +137,7 @@ h1 span{color:var(--accent);}
 }
 .certladder-head{
   display:grid;
-  grid-template-columns: 1fr 90px 1fr 110px;
+  grid-template-columns: 1fr 108px 1fr 110px;
   gap:10px;
   padding: 10px 14px;
   background: var(--surface-alt);
@@ -140,13 +146,20 @@ h1 span{color:var(--accent);}
 }
 .certrow{
   display:grid;
-  grid-template-columns: 1fr 90px 1fr 110px;
+  grid-template-columns: 1fr 108px 1fr 110px;
   gap:10px;
   align-items:center;
   padding: 11px 14px;
   border-top: 1px solid var(--line);
   font-size:12.5px;
   background: var(--surface);
+}
+.ngn-sub{
+  display:block;
+  font-size:10px;
+  color: var(--ink-dim);
+  font-weight:500;
+  margin-top:2px;
 }
 @media (max-width:680px){
   .certladder-head{display:none;}
@@ -170,6 +183,21 @@ h1 span{color:var(--accent);}
   letter-spacing:1px; text-transform:uppercase;
   color: var(--highlight); margin: 4px 0 8px; font-weight:700;
 }
+
+/* CAREER CONTEXT */
+.career-note{
+  margin-bottom: 20px;
+  background: var(--surface-alt);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+}
+.career-note .figure{ flex-shrink:0; }
+.career-note .figure b{ display:block; font-size:19px; font-weight:800; color:var(--ink); }
+.career-note .figure span.figure-ngn{ display:block; font-size:10px; color:var(--ink-dim); font-weight:600; margin-top:1px; }
+.career-note .figure span:not(.figure-ngn){ font-size:9.5px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:0.5px; }
+.career-note .detail{ font-size:12px; color:var(--ink-dim); flex:1; min-width:180px; }
+.career-note .detail b{ color:var(--ink); font-weight:600; }
 
 /* BUDGET NOTE */
 .budget-note{
@@ -236,7 +264,7 @@ footer.note{
       <div><span class="chip" style="background:rgba(237,237,227,0.06); border:1px solid var(--line)"></span> Tool in active use</div>
       <div><span class="chip" style="background:rgba(242,169,59,0.15); border:1px dashed var(--amber)"></span> Free or low-cost resource</div>
     </div>
-    <div class="root-note" style="margin-top:16px;"><b>On prices:</b> vendor exam fees change often and vary by region/currency — treat every figure below as an approximate 2026 US-list-price ballpark, and confirm the current number on the vendor's site before you pay.</div>
+    <div class="root-note" style="margin-top:16px;"><b>On prices:</b> vendor exam fees change often and vary by region/currency — treat every figure below as an approximate 2026 US-list-price ballpark, and confirm the current number on the vendor's site before you pay. Naira figures use the mid-market rate (~₦1,380/$1) as of July 2026 — banks and transfer services will charge above this rate, so budget for some margin.</div>
   </header>
 
   <div class="root-note"><b>Trunk everyone starts from:</b> CIA triad, basic networking, Linux fundamentals, common frameworks (NIST CSF). Free: <b>professormesser.com</b> (Security+ material, fully free), <b>r/CompTIA</b>, <b>r/cybersecurity</b> for orientation.</div>
@@ -269,16 +297,21 @@ footer.note{
         </div>
       </div>
 
-      <div class="certladder-label">Full cert ladder — cheapest → priciest</div>
+      <div class="certladder-label">Full cert ladder — cheapest → priciest <span style="color:var(--ink-dim); font-weight:500; text-transform:none; letter-spacing:0;">· prices verified Jul 2026</span></div>
       <div class="certladder">
         <div class="certladder-head"><div>Cert</div><div>Cost</div><div>Why it's on the list</div><div>Matters most</div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>TCM PJPT</b></div><div class="certrow-cost" data-label="Cost">~$249</div><div class="certrow-note" data-label="Note">Cheapest practical proof you can run an internal pentest</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>eJPT</b> (INE)</div><div class="certrow-cost" data-label="Cost">~$249</div><div class="certrow-note" data-label="Note">Fully hands-on, no theory questions, never expires</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CompTIA PenTest+</b></div><div class="certrow-cost" data-label="Cost">~$425</div><div class="certrow-note" data-label="Note">Vendor-neutral, DoD 8570-approved, HR keyword match</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>HTB CPTS</b></div><div class="certrow-cost" data-label="Cost">~$490/yr</div><div class="certrow-note" data-label="Note">Practical, 10-day exam, fast-growing recognition</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>TCM PNPT</b></div><div class="certrow-cost" data-label="Cost">~$499</div><div class="certrow-note" data-label="Note">Best value-to-realism ratio; strong at smaller firms</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CEH</b> (EC-Council)</div><div class="certrow-cost" data-label="Cost">~$1,199</div><div class="certrow-note" data-label="Note">Weakest technically, but the most HR job-listing keyword hits</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow matters"><div class="certrow-name" data-label="Cert"><b>OSCP</b> (OffSec)</div><div class="certrow-cost" data-label="Cost">~$1,749</div><div class="certrow-note" data-label="Note">Universal gold standard — the one every hiring manager recognizes</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>TCM PJPT</b></div><div class="certrow-cost" data-label="Cost">~$249<br><span class="ngn-sub">≈₦343,620</span></div><div class="certrow-note" data-label="Note">Cheapest practical proof you can run an internal pentest</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>eJPT</b> (INE)</div><div class="certrow-cost" data-label="Cost">~$249<br><span class="ngn-sub">≈₦343,620</span></div><div class="certrow-note" data-label="Note">Fully hands-on, no theory questions, never expires</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CompTIA PenTest+</b></div><div class="certrow-cost" data-label="Cost">~$425<br><span class="ngn-sub">≈₦586,500</span></div><div class="certrow-note" data-label="Note">Vendor-neutral, DoD 8570-approved, HR keyword match</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>HTB CPTS</b></div><div class="certrow-cost" data-label="Cost">~$490/yr<br><span class="ngn-sub">≈₦676,200/yr</span></div><div class="certrow-note" data-label="Note">Practical, 10-day exam, fast-growing recognition</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>TCM PNPT</b></div><div class="certrow-cost" data-label="Cost">~$499<br><span class="ngn-sub">≈₦688,620</span></div><div class="certrow-note" data-label="Note">Best value-to-realism ratio; strong at smaller firms</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CEH</b> (EC-Council)</div><div class="certrow-cost" data-label="Cost">~$1,199<br><span class="ngn-sub">≈₦1.65M</span></div><div class="certrow-note" data-label="Note">Weakest technically, but the most HR job-listing keyword hits</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow matters"><div class="certrow-name" data-label="Cert"><b>OSCP</b> (OffSec)</div><div class="certrow-cost" data-label="Cost">~$1,749<br><span class="ngn-sub">≈₦2.41M</span></div><div class="certrow-note" data-label="Note">Universal gold standard — the one every hiring manager recognizes</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
+      </div>
+
+      <div class="career-note">
+        <div class="figure"><b>$85K–$150K</b><span class="figure-ngn">≈₦117.3M–₦207M</span><span>US base, mid-career</span></div>
+        <div class="detail">Penetration Tester / Ethical Hacker. Senior and Red Team Operator roles often clear <b>$150K–$200K+</b>. Entry-level (0–1 yr) typically starts $85K–$95K.</div>
       </div>
 
       <div class="budget-note">
@@ -338,14 +371,19 @@ footer.note{
         </div>
       </div>
 
-      <div class="certladder-label">Full cert ladder — cheapest → priciest</div>
+      <div class="certladder-label">Full cert ladder — cheapest → priciest <span style="color:var(--ink-dim); font-weight:500; text-transform:none; letter-spacing:0;">· prices verified Jul 2026</span></div>
       <div class="certladder">
         <div class="certladder-head"><div>Cert</div><div>Cost</div><div>Why it's on the list</div><div>Matters most</div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Azure Network Engineer</b> (AZ-700)</div><div class="certrow-cost" data-label="Cost">~$165</div><div class="certrow-note" data-label="Note">Cheapest recognized option, if your shop is Azure-heavy</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Cisco CCNA</b></div><div class="certrow-cost" data-label="Cost">~$300</div><div class="certrow-note" data-label="Note">Appears in more networking job postings than any other cert</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CompTIA Network+</b></div><div class="certrow-cost" data-label="Cost">~$390</div><div class="certrow-note" data-label="Note">Vendor-neutral fallback if you're not committed to Cisco</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Cisco CCNP</b> (core + concentration)</div><div class="certrow-cost" data-label="Cost">~$700</div><div class="certrow-note" data-label="Note">Mid-career depth; Security concentration maps to this tree</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Cisco CCIE</b> (written + lab)</div><div class="certrow-cost" data-label="Cost">~$2,300+</div><div class="certrow-note" data-label="Note">Expert tier — rare, elite, usually employer-funded</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Azure Network Engineer</b> (AZ-700)</div><div class="certrow-cost" data-label="Cost">~$165<br><span class="ngn-sub">≈₦227,700</span></div><div class="certrow-note" data-label="Note">Cheapest recognized option, if your shop is Azure-heavy</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Cisco CCNA</b></div><div class="certrow-cost" data-label="Cost">~$300<br><span class="ngn-sub">≈₦414,000</span></div><div class="certrow-note" data-label="Note">Appears in more networking job postings than any other cert</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CompTIA Network+</b></div><div class="certrow-cost" data-label="Cost">~$390<br><span class="ngn-sub">≈₦538,200</span></div><div class="certrow-note" data-label="Note">Vendor-neutral fallback if you're not committed to Cisco</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Cisco CCNP</b> (core + concentration)</div><div class="certrow-cost" data-label="Cost">~$700<br><span class="ngn-sub">≈₦966,000</span></div><div class="certrow-note" data-label="Note">Mid-career depth; Security concentration maps to this tree</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Cisco CCIE</b> (written + lab)</div><div class="certrow-cost" data-label="Cost">~$2,300+<br><span class="ngn-sub">≈₦3.17M+</span></div><div class="certrow-note" data-label="Note">Expert tier — rare, elite, usually employer-funded</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+      </div>
+
+      <div class="career-note">
+        <div class="figure"><b>$90K–$150K</b><span class="figure-ngn">≈₦124.2M–₦207M</span><span>US base, mid-career</span></div>
+        <div class="detail">Network Security Engineer. BLS median for the broader role sits around <b>$119K</b>; CCNP-level and SD-WAN/Zero Trust specialists push toward <b>$150K–$190K</b>.</div>
       </div>
 
       <div class="budget-note">
@@ -405,15 +443,20 @@ footer.note{
         </div>
       </div>
 
-      <div class="certladder-label">Full cert ladder — cheapest → priciest</div>
+      <div class="certladder-label">Full cert ladder — cheapest → priciest <span style="color:var(--ink-dim); font-weight:500; text-transform:none; letter-spacing:0;">· prices verified Jul 2026</span></div>
       <div class="certladder">
         <div class="certladder-head"><div>Cert</div><div>Cost</div><div>Why it's on the list</div><div>Matters most</div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>ISC2 CC</b></div><div class="certrow-cost" data-label="Cost">$199+$50/yr</div><div class="certrow-note" data-label="Note">Cheapest formal entry point since ISC2's free program closed</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Blue Team Level 1</b></div><div class="certrow-cost" data-label="Cost">~$400</div><div class="certrow-note" data-label="Note">Fully hands-on SOC-analyst simulation, growing fast in recognition</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow matters"><div class="certrow-name" data-label="Cert"><b>CompTIA Security+</b></div><div class="certrow-cost" data-label="Cost">~$425</div><div class="certrow-note" data-label="Note">DoD 8570-mandated, the single most-requested baseline cert in job postings</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CompTIA CySA+</b></div><div class="certrow-cost" data-label="Cost">~$425</div><div class="certrow-note" data-label="Note">SOC-specific step up once Security+ is done</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>GCIH</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999</div><div class="certrow-note" data-label="Note">SANS-backed, respected for incident handling roles</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>GCFA</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999</div><div class="certrow-note" data-label="Note">Senior analyst / forensics-adjacent ceiling</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>ISC2 CC</b></div><div class="certrow-cost" data-label="Cost">$199+$50/yr<br><span class="ngn-sub">≈₦274,620 + ₦69,000/yr</span></div><div class="certrow-note" data-label="Note">Cheapest formal entry point since ISC2's free program closed</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Blue Team Level 1</b></div><div class="certrow-cost" data-label="Cost">~$400<br><span class="ngn-sub">≈₦552,000</span></div><div class="certrow-note" data-label="Note">Fully hands-on SOC-analyst simulation, growing fast in recognition</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow matters"><div class="certrow-name" data-label="Cert"><b>CompTIA Security+</b></div><div class="certrow-cost" data-label="Cost">~$425<br><span class="ngn-sub">≈₦586,500</span></div><div class="certrow-note" data-label="Note">DoD 8570-mandated, the single most-requested baseline cert in job postings</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CompTIA CySA+</b></div><div class="certrow-cost" data-label="Cost">~$425<br><span class="ngn-sub">≈₦586,500</span></div><div class="certrow-note" data-label="Note">SOC-specific step up once Security+ is done</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>GCIH</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999<br><span class="ngn-sub">≈₦1.38M</span></div><div class="certrow-note" data-label="Note">SANS-backed, respected for incident handling roles</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>GCFA</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999<br><span class="ngn-sub">≈₦1.38M</span></div><div class="certrow-note" data-label="Note">Senior analyst / forensics-adjacent ceiling</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+      </div>
+
+      <div class="career-note">
+        <div class="figure"><b>$70K–$140K</b><span class="figure-ngn">≈₦96.6M–₦193.2M</span><span>US base, mid-career</span></div>
+        <div class="detail">SOC Analyst / Cybersecurity Analyst. Entry (Tier 1) typically $65K–$90K; Tier 3/senior analysts and threat hunters reach <b>$120K–$140K+</b>.</div>
       </div>
 
       <div class="budget-note">
@@ -473,13 +516,18 @@ footer.note{
         </div>
       </div>
 
-      <div class="certladder-label">Full cert ladder — cheapest → priciest</div>
+      <div class="certladder-label">Full cert ladder — cheapest → priciest <span style="color:var(--ink-dim); font-weight:500; text-transform:none; letter-spacing:0;">· prices verified Jul 2026</span></div>
       <div class="certladder">
         <div class="certladder-head"><div>Cert</div><div>Cost</div><div>Why it's on the list</div><div>Matters most</div></div>
-        <div class="certrow matters"><div class="certrow-name" data-label="Cert"><b>CISA</b> (ISACA)</div><div class="certrow-cost" data-label="Cost">$575–$760</div><div class="certrow-note" data-label="Note">The global standard credential for IT audit — near-mandatory for the title</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CRISC</b> (ISACA, crossover)</div><div class="certrow-cost" data-label="Cost">$575–$760</div><div class="certrow-note" data-label="Note">Useful if your audits lean risk-focused rather than compliance-only</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CGEIT</b> (ISACA, crossover)</div><div class="certrow-cost" data-label="Cost">$575–$760</div><div class="certrow-note" data-label="Note">IT governance angle, useful for audit leadership roles</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CIA</b> (IIA)</div><div class="certrow-cost" data-label="Cost">$990–$1,515</div><div class="certrow-note" data-label="Note">Broader internal-audit credential beyond just IT systems</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow matters"><div class="certrow-name" data-label="Cert"><b>CISA</b> (ISACA)</div><div class="certrow-cost" data-label="Cost">$575–$760<br><span class="ngn-sub">≈₦793,500–₦1.05M</span></div><div class="certrow-note" data-label="Note">The global standard credential for IT audit — near-mandatory for the title</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CRISC</b> (ISACA, crossover)</div><div class="certrow-cost" data-label="Cost">$575–$760<br><span class="ngn-sub">≈₦793,500–₦1.05M</span></div><div class="certrow-note" data-label="Note">Useful if your audits lean risk-focused rather than compliance-only</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CGEIT</b> (ISACA, crossover)</div><div class="certrow-cost" data-label="Cost">$575–$760<br><span class="ngn-sub">≈₦793,500–₦1.05M</span></div><div class="certrow-note" data-label="Note">IT governance angle, useful for audit leadership roles</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CIA</b> (IIA)</div><div class="certrow-cost" data-label="Cost">$990–$1,515<br><span class="ngn-sub">≈₦1.37M–₦2.09M</span></div><div class="certrow-note" data-label="Note">Broader internal-audit credential beyond just IT systems</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+      </div>
+
+      <div class="career-note">
+        <div class="figure"><b>$95K–$150K</b><span class="figure-ngn">≈₦131.1M–₦207M</span><span>US base, mid-career</span></div>
+        <div class="detail">IT Auditor / Compliance Auditor. Robert Half's 2026 benchmark for IT auditors runs <b>$108K–$152K</b>; senior/lead auditors and those holding both CISA + CIA sit at the top of that range.</div>
       </div>
 
       <div class="budget-note">
@@ -539,15 +587,20 @@ footer.note{
         </div>
       </div>
 
-      <div class="certladder-label">Full cert ladder — cheapest → priciest</div>
+      <div class="certladder-label">Full cert ladder — cheapest → priciest <span style="color:var(--ink-dim); font-weight:500; text-transform:none; letter-spacing:0;">· prices verified Jul 2026</span></div>
       <div class="certladder">
         <div class="certladder-head"><div>Cert</div><div>Cost</div><div>Why it's on the list</div><div>Matters most</div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>ISC2 CC</b></div><div class="certrow-cost" data-label="Cost">$199+$50/yr</div><div class="certrow-note" data-label="Note">Cheapest entry, covers the shared vocabulary</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CDPSE</b> (ISACA, privacy)</div><div class="certrow-cost" data-label="Cost">$575–$760</div><div class="certrow-note" data-label="Note">Worth it if privacy/data-protection is a big part of the GRC role</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CRISC</b> (ISACA)</div><div class="certrow-cost" data-label="Cost">$575–$760</div><div class="certrow-note" data-label="Note">The most directly risk-titled credential in the field</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>ISO 27001 Lead Implementer</b></div><div class="certrow-cost" data-label="Cost">$500–$3,000</div><div class="certrow-note" data-label="Note">Practical ISMS-building skill; price swings hugely by provider</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow matters"><div class="certrow-name" data-label="Cert"><b>CISM</b> (ISACA)</div><div class="certrow-cost" data-label="Cost">$575–$760</div><div class="certrow-note" data-label="Note">Broadest recognition for security-management/GRC leadership roles</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CGEIT</b> (ISACA)</div><div class="certrow-cost" data-label="Cost">$575–$760</div><div class="certrow-note" data-label="Note">IT-governance ceiling, most relevant once you're setting policy org-wide</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>ISC2 CC</b></div><div class="certrow-cost" data-label="Cost">$199+$50/yr<br><span class="ngn-sub">≈₦274,620 + ₦69,000/yr</span></div><div class="certrow-note" data-label="Note">Cheapest entry, covers the shared vocabulary</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CDPSE</b> (ISACA, privacy)</div><div class="certrow-cost" data-label="Cost">$575–$760<br><span class="ngn-sub">≈₦793,500–₦1.05M</span></div><div class="certrow-note" data-label="Note">Worth it if privacy/data-protection is a big part of the GRC role</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CRISC</b> (ISACA)</div><div class="certrow-cost" data-label="Cost">$575–$760<br><span class="ngn-sub">≈₦793,500–₦1.05M</span></div><div class="certrow-note" data-label="Note">The most directly risk-titled credential in the field</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>ISO 27001 Lead Implementer</b></div><div class="certrow-cost" data-label="Cost">$500–$3,000<br><span class="ngn-sub">≈₦690,000–₦4.14M</span></div><div class="certrow-note" data-label="Note">Practical ISMS-building skill; price swings hugely by provider</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow matters"><div class="certrow-name" data-label="Cert"><b>CISM</b> (ISACA)</div><div class="certrow-cost" data-label="Cost">$575–$760<br><span class="ngn-sub">≈₦793,500–₦1.05M</span></div><div class="certrow-note" data-label="Note">Broadest recognition for security-management/GRC leadership roles</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CGEIT</b> (ISACA)</div><div class="certrow-cost" data-label="Cost">$575–$760<br><span class="ngn-sub">≈₦793,500–₦1.05M</span></div><div class="certrow-note" data-label="Note">IT-governance ceiling, most relevant once you're setting policy org-wide</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+      </div>
+
+      <div class="career-note">
+        <div class="figure"><b>$80K–$145K</b><span class="figure-ngn">≈₦110.4M–₦200.1M</span><span>US base, mid-career</span></div>
+        <div class="detail">GRC Analyst. Figures vary widely by title inconsistency alone — some sources show averages near $95K, others (senior GRC/security-management titles) well past <b>$150K</b>.</div>
       </div>
 
       <div class="budget-note">
@@ -607,14 +660,19 @@ footer.note{
         </div>
       </div>
 
-      <div class="certladder-label">Full cert ladder — cheapest → priciest</div>
+      <div class="certladder-label">Full cert ladder — cheapest → priciest <span style="color:var(--ink-dim); font-weight:500; text-transform:none; letter-spacing:0;">· prices verified Jul 2026</span></div>
       <div class="certladder">
         <div class="certladder-head"><div>Cert</div><div>Cost</div><div>Why it's on the list</div><div>Matters most</div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>AWS Cloud Practitioner</b></div><div class="certrow-cost" data-label="Cost">~$100</div><div class="certrow-note" data-label="Note">Cheapest entry, non-technical overview</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Azure Security Engineer</b> (AZ-500)</div><div class="certrow-cost" data-label="Cost">~$165</div><div class="certrow-note" data-label="Note">Cheap and strong if your org runs on Azure</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>AWS Security Specialty</b></div><div class="certrow-cost" data-label="Cost">~$300</div><div class="certrow-note" data-label="Note">Deep AWS-specific credential; AWS still has the largest market share</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CCSK</b> (Cloud Security Alliance)</div><div class="certrow-cost" data-label="Cost">~$445</div><div class="certrow-note" data-label="Note">Vendor-neutral, good if you work across AWS/Azure/GCP</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow matters"><div class="certrow-name" data-label="Cert"><b>CCSP</b> (ISC2)</div><div class="certrow-cost" data-label="Cost">~$599</div><div class="certrow-note" data-label="Note">The broadest, vendor-neutral senior/architect credential — the "CISSP of cloud"</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>AWS Cloud Practitioner</b></div><div class="certrow-cost" data-label="Cost">~$100<br><span class="ngn-sub">≈₦138,000</span></div><div class="certrow-note" data-label="Note">Cheapest entry, non-technical overview</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Azure Security Engineer</b> (AZ-500)</div><div class="certrow-cost" data-label="Cost">~$165<br><span class="ngn-sub">≈₦227,700</span></div><div class="certrow-note" data-label="Note">Cheap and strong if your org runs on Azure</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>AWS Security Specialty</b></div><div class="certrow-cost" data-label="Cost">~$300<br><span class="ngn-sub">≈₦414,000</span></div><div class="certrow-note" data-label="Note">Deep AWS-specific credential; AWS still has the largest market share</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>CCSK</b> (Cloud Security Alliance)</div><div class="certrow-cost" data-label="Cost">~$445<br><span class="ngn-sub">≈₦614,100</span></div><div class="certrow-note" data-label="Note">Vendor-neutral, good if you work across AWS/Azure/GCP</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow matters"><div class="certrow-name" data-label="Cert"><b>CCSP</b> (ISC2)</div><div class="certrow-cost" data-label="Cost">~$599<br><span class="ngn-sub">≈₦826,620</span></div><div class="certrow-note" data-label="Note">The broadest, vendor-neutral senior/architect credential — the "CISSP of cloud"</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
+      </div>
+
+      <div class="career-note">
+        <div class="figure"><b>$110K–$180K</b><span class="figure-ngn">≈₦151.8M–₦248.4M</span><span>US base, mid-career</span></div>
+        <div class="detail">Cloud Security Engineer. Cloud specialists typically command a ~25% premium over general security-engineer pay, with senior/architect-level roles pushing past <b>$180K</b>.</div>
       </div>
 
       <div class="budget-note">
@@ -674,14 +732,19 @@ footer.note{
         </div>
       </div>
 
-      <div class="certladder-label">Full cert ladder — cheapest → priciest</div>
+      <div class="certladder-label">Full cert ladder — cheapest → priciest <span style="color:var(--ink-dim); font-weight:500; text-transform:none; letter-spacing:0;">· prices verified Jul 2026</span></div>
       <div class="certladder">
         <div class="certladder-head"><div>Cert</div><div>Cost</div><div>Why it's on the list</div><div>Matters most</div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Blue Team Level 2</b></div><div class="certrow-cost" data-label="Cost">~$800–1,200</div><div class="certrow-note" data-label="Note">Practical step up from BTL1, DFIR-flavored SOC work</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>GCFE</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999</div><div class="certrow-note" data-label="Note">Forensic examiner entry point into the GIAC ladder</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow matters"><div class="certrow-name" data-label="Cert"><b>GCFA</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999</div><div class="certrow-note" data-label="Note">The most recognized standalone DFIR credential in hiring</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>GNFA</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999</div><div class="certrow-note" data-label="Note">Network-forensics specialty, useful alongside GCFA</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
-        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>GREM</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999</div><div class="certrow-note" data-label="Note">Malware reverse-engineering specialty, for the deepest cases</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>Blue Team Level 2</b></div><div class="certrow-cost" data-label="Cost">~$800–1,200<br><span class="ngn-sub">≈₦1.10M–₦1.66M</span></div><div class="certrow-note" data-label="Note">Practical step up from BTL1, DFIR-flavored SOC work</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>GCFE</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999<br><span class="ngn-sub">≈₦1.38M</span></div><div class="certrow-note" data-label="Note">Forensic examiner entry point into the GIAC ladder</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow matters"><div class="certrow-name" data-label="Cert"><b>GCFA</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999<br><span class="ngn-sub">≈₦1.38M</span></div><div class="certrow-note" data-label="Note">The most recognized standalone DFIR credential in hiring</div><div data-label="Flag"><span class="matters-badge">★ Matters most</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>GNFA</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999<br><span class="ngn-sub">≈₦1.38M</span></div><div class="certrow-note" data-label="Note">Network-forensics specialty, useful alongside GCFA</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+        <div class="certrow"><div class="certrow-name" data-label="Cert"><b>GREM</b> (GIAC)</div><div class="certrow-cost" data-label="Cost">~$999<br><span class="ngn-sub">≈₦1.38M</span></div><div class="certrow-note" data-label="Note">Malware reverse-engineering specialty, for the deepest cases</div><div data-label="Flag"><span class="no-badge">—</span></div></div>
+      </div>
+
+      <div class="career-note">
+        <div class="figure"><b>$105K–$170K</b><span class="figure-ngn">≈₦144.9M–₦234.6M</span><span>US base, mid-career</span></div>
+        <div class="detail">Digital Forensics Examiner / Incident Responder. Median sits around <b>$105K–$125K</b>; incident response carries a real premium for those who've handled an actual breach under pressure.</div>
       </div>
 
       <div class="budget-note">

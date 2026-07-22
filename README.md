@@ -12,6 +12,11 @@ Internal reference for how leadership and the security team build cybersecurity 
 - **`tracker.html`** — pick a specialty and check off tools, certs, and free resources as they're actually completed. Progress is saved in the browser's `localStorage` — no account, no backend, doesn't sync across devices.
 - **`certificate.html`** — unlocks once a path in `tracker.html` hits 100%. Lets the person type their name and print/save a completion certificate (with a generated certificate ID and completion date). Clearly labeled as internal recognition, not an accredited credential.
 - **`manifest.json` / `service-worker.js` / `icons/`** — makes the whole site an installable PWA. Once hosted over HTTPS (GitHub Pages qualifies), visiting on a phone and using "Add to Home Screen" (iOS Safari) or the install prompt (Android Chrome) installs it with a real icon, opens full-screen without browser chrome, and caches pages for offline use.
+- **`about.html`** — methodology page: how the 7 specialties and "★ Matters Most" certs were chosen, where prices and salary ranges were sourced, and update cadence.
+- **`CHANGELOG.md`** — dated history of what's changed.
+- **`404.html`** — custom not-found page, styled to match the rest of the site (set automatically by GitHub Pages if present at repo root).
+
+`skill-tree-free-resources.html` also now includes, per specialty: a "last verified" date on each cert ladder, a career-context box with a US salary range and typical job title, and a Naira (₦) equivalent alongside every USD figure (mid-market rate, noted on the page).
 
 ## Viewing
 
@@ -20,7 +25,7 @@ Open any `.html` file directly in a browser — single-file, no build step, no d
 If GitHub Pages is enabled (Settings → Pages → Deploy from branch → `main` → `/root`), the whole thing is served at:
 
 ```
-https://securevastng.github.io/security-learning-roadmap/
+https://YOUR-ORG.github.io/security-learning-roadmap/
 ```
 
 `index.html` loads first and links out to the rest.
@@ -43,7 +48,7 @@ This repo should live under the company's GitHub **Organization**, not a persona
 If you haven't pointed this at the org yet:
 
 ```bash
-git remote set-url origin https://github.com/securevastng/security-learning-roadmap.git
+git remote set-url origin https://github.com/YOUR-ORG/security-learning-roadmap.git
 git push -u origin main
 ```
 

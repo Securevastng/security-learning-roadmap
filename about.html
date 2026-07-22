@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Methodology — Security Learning Roadmap</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="theme-color" content="#111114">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sec Roadmap">
+
+<meta property="og:title" content="Methodology — Security Learning Roadmap">
+<meta property="og:description" content="How specialties, certifications, prices, and salary data in this roadmap were chosen and sourced.">
+<meta property="og:image" content="icons/icon-512.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+:root{
+  --bg:#F4F4F6; --surface:#FFFFFF; --surface-alt:#F5F5F7;
+  --accent:#1C9A5D; --accent-soft:#E3F9EC;
+  --ink:#111114; --ink-dim:#8A8A93; --line:#EEEEF1;
+  --highlight:#1C9A5D; --shadow:0 10px 26px rgba(20,20,43,0.06);
+}
+*{box-sizing:border-box;}
+body{ margin:0; background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.6; }
+.wrap{max-width:760px; margin:0 auto; padding:52px 24px 90px;}
+.eyebrow{color:var(--accent); font-weight:700; font-size:12.5px; letter-spacing:1px; text-transform:uppercase; display:flex; align-items:center; gap:8px;}
+.eyebrow::before{content:''; width:7px; height:7px; border-radius:50%; background:var(--accent);}
+h1{font-size:32px; font-weight:800; margin:14px 0 10px; letter-spacing:-0.5px;}
+.subhead{color:var(--ink-dim); font-size:15px; max-width:640px; margin-bottom:10px;}
+.back-link{font-size:13px; color:var(--ink-dim); text-decoration:none; font-weight:600;}
+.back-link:hover{color:var(--accent);}
+
+.section{ margin-top:34px; }
+.section h2{ font-size:19px; font-weight:800; margin:0 0 10px; }
+.section p{ font-size:14px; color:var(--ink); margin:0 0 12px; }
+.section ul{ margin:0 0 12px; padding-left:20px; }
+.section li{ font-size:14px; color:var(--ink); margin-bottom:8px; }
+.card{
+  background:var(--surface); border:1px solid var(--line); border-radius:16px;
+  box-shadow:var(--shadow); padding:20px 22px; margin-bottom:16px;
+}
+.card b{color:var(--accent);}
+
+.source-list{ display:flex; flex-direction:column; gap:8px; margin-top:8px; }
+.source-item{ font-size:12.5px; color:var(--ink-dim); background:var(--surface-alt); border-radius:10px; padding:8px 12px; }
+.source-item b{ color:var(--ink); }
+
+.disclaimer{
+  margin-top:30px; background:var(--accent-soft); border-radius:14px; padding:16px 18px;
+  font-size:13px; color:var(--ink);
+}
+footer.note{margin-top:36px; font-size:12px; color:var(--ink-dim);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+    <div class="eyebrow">Security Learning Roadmap</div>
+    <a class="back-link" href="index.html">← Back home</a>
+  </div>
+  <h1>How this was built</h1>
+  <p class="subhead">The judgment calls behind this roadmap, made explicit — what "matters most" means, where the numbers come from, and what to trust vs. verify yourself.</p>
+
+  <div class="section">
+    <h2>How the seven specialties were chosen</h2>
+    <p>These map to how security teams are actually structured at most companies, not an exhaustive list of every possible title: Penetration Testing, Network Engineering, Cybersecurity Analyst (SOC/Blue Team), Auditing, GRC, Cloud Security, and Incident Response/DFIR. Adjacent specialties (e.g. AppSec, malware reverse engineering) were folded into the closest branch rather than adding more parallel tracks, to keep the roadmap usable rather than encyclopedic.</p>
+  </div>
+
+  <div class="section">
+    <h2>How "★ Matters Most" was decided</h2>
+    <p>For each specialty, one certification is flagged as the one that carries the most weight with hiring managers. This call was made by weighing:</p>
+    <ul>
+      <li><b>Frequency in job postings</b> — certs that show up repeatedly as either required or preferred across postings for that role.</li>
+      <li><b>Practitioner consensus</b> — how the cert is discussed in communities like r/AskNetsec, r/GRC, r/blueteamsec, and similar, where practitioners are candid about which credentials actually opened doors versus which just cost money.</li>
+      <li><b>Hands-on weight</b> — certifications that require demonstrating a skill (like OSCP's live exploitation exam) were weighted higher than pure multiple-choice credentials, since they signal more to an employer.</li>
+      <li><b>Body reputation</b> — how established and respected the certifying body is within that specific specialty (ISACA for GRC/audit, GIAC/SANS for DFIR, OffSec/TCM for offensive security, etc).</li>
+    </ul>
+    <p>This is a judgment call, not a formula — reasonable people in the field would flag some of these differently, especially at the margins (CEH vs. PenTest+, for instance). Treat the flag as a strong default, not gospel.</p>
+  </div>
+
+  <div class="section">
+    <h2>Where the prices come from</h2>
+    <p>Certification costs were checked against each certifying body's official pricing page (ISC2, ISACA, CompTIA, OffSec, TCM Security, GIAC, Cisco, AWS, CSA) rather than third-party aggregators, which are frequently stale. Figures are approximate US-list prices in USD and will drift — exam fees change, regional pricing varies, and bundled training costs (especially GIAC/SANS) can multiply the sticker price several times over.</p>
+    <div class="card">Rule of thumb: if a price here is more than 6 months old by the time you're reading this, confirm it directly on the vendor's site before budgeting or paying.</div>
+  </div>
+
+  <div class="section">
+    <h2>Where the salary ranges come from</h2>
+    <p>Salary context is synthesized from multiple 2026 sources rather than any single number, because job-title inconsistency across the industry makes any one source unreliable on its own (a "GRC Analyst" doing spreadsheet work and a "GRC Analyst" running enterprise risk programs can differ by $80K+ under the identical title).</p>
+    <div class="source-list">
+      <div class="source-item"><b>Glassdoor</b> — self-reported salaries by role, 2026</div>
+      <div class="source-item"><b>ZipRecruiter</b> — aggregated job-posting salary data, 2026</div>
+      <div class="source-item"><b>U.S. Bureau of Labor Statistics (BLS)</b> — Occupational Employment and Wage Statistics, most recent available</div>
+      <div class="source-item"><b>Robert Half Technology Salary Guide</b> — 2026 starting-salary benchmarks</div>
+    </div>
+    <p style="margin-top:12px;">Ranges shown are broad on purpose — they represent US base salary, before bonus/equity, and can vary 20–30% by metro area alone (SF/NYC typically run well above national average). Treat these as a sanity check for negotiation, not a promise.</p>
+  </div>
+
+  <div class="section">
+    <h2>Update cadence</h2>
+    <p>This roadmap should be reviewed at least quarterly — security tools, certifications, and their pricing shift faster than most reference material. See <code>CHANGELOG.md</code> in the repo for a dated history of what's changed.</p>
+  </div>
+
+  <div class="disclaimer">
+    <b>What this is and isn't:</b> this is a self-study and hiring-reference tool built from public information and practitioner consensus, not an official standard from any certifying body, employer, or industry association. It's meant to save someone hours of scattered research, not to replace their own judgment about their specific market, region, or career stage.
+  </div>
+
+  <footer class="note">Maintained internally — see the repo README for who owns keeping this current.</footer>
+</div>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
