@@ -15,6 +15,8 @@ Internal reference for how leadership and the security team build cybersecurity 
 - **`about.html`** — methodology page: how the 7 specialties and "★ Matters Most" certs were chosen, where prices and salary ranges were sourced, and update cadence.
 - **`CHANGELOG.md`** — dated history of what's changed.
 - **`404.html`** — custom not-found page, styled to match the rest of the site (set automatically by GitHub Pages if present at repo root).
+- **`admin.html`** — login-protected dashboard showing every certificate anyone has generated (name, specialty, date, cert ID). Requires Firebase setup — see below.
+- **`firebase-config.js`** — placeholder for your Firebase project credentials. Safe to commit publicly (access is controlled by Firestore rules, not by hiding this file).
 
 `skill-tree-free-resources.html` also now includes, per specialty: a "last verified" date on each cert ladder, a career-context box with a US salary range and typical job title, and a Naira (₦) equivalent alongside every USD figure (mid-market rate, noted on the page).
 
@@ -25,7 +27,7 @@ Open any `.html` file directly in a browser — single-file, no build step, no d
 If GitHub Pages is enabled (Settings → Pages → Deploy from branch → `main` → `/root`), the whole thing is served at:
 
 ```
-https://securevastng.github.io/security-learning-roadmap/
+https://YOUR-ORG.github.io/security-learning-roadmap/
 ```
 
 `index.html` loads first and links out to the rest.
@@ -48,9 +50,45 @@ This repo should live under the company's GitHub **Organization**, not a persona
 If you haven't pointed this at the org yet:
 
 ```bash
-git remote set-url origin https://github.com/securevastng/security-learning-roadmap.git
+git remote set-url origin https://github.com/YOUR-ORG/security-learning-roadmap.git
 git push -u origin main
 ```
+
+## Admin dashboard (see who's generated certificates)
+
+`admin.html` is a login-protected dashboard showing every certificate anyone has generated (name, specialty, completion date, certificate ID). This requires a free Firebase project — takes about 5 minutes to set up:
+
+1. **Create the project**: go to [console.firebase.google.com](https://console.firebase.google.com) → **Add project** → give it any name → you can skip Google Analytics.
+2. **Register a web app**: in the project overview, click the **</>** (web) icon → give it a nickname → you don't need Firebase Hosting → copy the `firebaseConfig` object it shows you.
+3. **Paste your config**: open `firebase-config.js` in this repo and replace the placeholder values with the ones you just copied.
+4. **Turn on Authentication**: in the Firebase console, go to **Build → Authentication → Get started** → enable the **Email/Password** sign-in method.
+5. **Create your admin login**: still in Authentication, go to the **Users** tab → **Add user** → enter the email/password you'll use to sign into `admin.html`. (There's no separate "admin" role — anyone with a valid login in this project can see the dashboard, so only create accounts for people who should have access.)
+6. **Turn on Firestore** (the database): go to **Build → Firestore Database → Create database** → start in **production mode** → pick any region.
+7. **Set the security rules**: in Firestore, go to the **Rules** tab and replace the contents with:
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /certificates/{certId} {
+      allow create: if request.resource.data.keys().hasAll(['name','pathId','completedAt','certId'])
+                    && request.resource.data.name is string
+                    && request.resource.data.name.size() < 200;
+      allow update: if request.auth != null; // only signed-in admins can edit existing records
+      allow read: if request.auth != null;   // only signed-in admins can view the list
+      allow delete: if request.auth != null;
+    }
+  }
+}
+```
+
+   This lets anyone generating a certificate write their own record, but only someone signed in (you) can read the full list. Click **Publish**.
+8. **Push the updated files** (`firebase-config.js`, `certificate.html`, `admin.html`) to your repo as usual.
+9. Visit `https://YOUR-ORG.github.io/security-learning-roadmap/admin.html` and sign in with the account you created in step 5.
+
+Until `firebase-config.js` is filled in, `certificate.html` works exactly as before (no saving), and `admin.html` shows a setup notice instead of a login form — nothing breaks in the meantime.
+
+**A privacy note**: this stores whatever name someone types into the certificate generator. If that matters for your organization, mention it somewhere people will see before they use the tracker (e.g. in the tracker or certificate page copy).
 
 ## Updating
 

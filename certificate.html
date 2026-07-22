@@ -195,6 +195,7 @@ body{
     <div class="name-input-wrap">
       <label for="nameInput">Recipient name</label>
       <input type="text" id="nameInput" placeholder="Type your name…">
+      <span id="saveStatus" style="font-size:11.5px; color:var(--ink-dim); white-space:nowrap;"></span>
       <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
     </div>
 
@@ -231,6 +232,11 @@ body{
 
 </div>
 
+<!-- Firebase (for admin dashboard sync — see firebase-config.js) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+
 <script>
 const PATHS = [
   { id: "pentest", name: "Penetration Testing", items: 15 },
@@ -243,6 +249,44 @@ const PATHS = [
 ];
 
 const STORAGE_KEY = "sec-roadmap-tracker";
+
+// --- Firebase setup (admin dashboard sync) ---
+let db = null;
+let firebaseReady = false;
+try{
+  if(typeof firebaseConfig !== 'undefined' && firebaseConfig.apiKey && !firebaseConfig.apiKey.startsWith('REPLACE')){
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+    firebaseReady = true;
+  }
+} catch(e){ console.warn('Firebase not configured yet:', e); }
+
+let saveTimer = null;
+function saveCertificateRecord(record){
+  const statusEl = document.getElementById('saveStatus');
+  if(!firebaseReady){
+    if(statusEl) statusEl.textContent = '';
+    return;
+  }
+  if(statusEl) statusEl.textContent = 'Saving…';
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    db.collection('certificates').doc(record.certId).set({
+      name: record.name,
+      pathId: record.pathId,
+      pathName: record.pathName,
+      completedAt: record.completedAt,
+      certId: record.certId,
+      savedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true }).then(() => {
+      if(statusEl) statusEl.textContent = 'Saved ✓';
+    }).catch(err => {
+      console.warn('Could not save certificate record:', err);
+      if(statusEl) statusEl.textContent = '';
+    });
+  }, 700);
+}
+// --- end Firebase setup ---
 
 function loadState(){
   try{
@@ -336,7 +380,17 @@ if(!activePath){
       const val = nameInput.value.trim();
       document.getElementById('certName').textContent = val || 'Your Name';
       localStorage.setItem(STORAGE_KEY + ':name', val);
-      document.getElementById('certId').textContent = simpleHash(activePath.id + '|' + val + '|' + completedAt);
+      const certId = simpleHash(activePath.id + '|' + val + '|' + completedAt);
+      document.getElementById('certId').textContent = certId;
+      if(val){
+        saveCertificateRecord({
+          name: val,
+          pathId: activePath.id,
+          pathName: activePath.name,
+          completedAt: completedAt,
+          certId: certId
+        });
+      }
     }
     nameInput.addEventListener('input', updateName);
     updateName();

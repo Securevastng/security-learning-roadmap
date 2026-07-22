@@ -2,6 +2,11 @@
 
 All notable changes to the Security Learning Roadmap are logged here, newest first.
 
+## 2026-07-22 (2)
+- Added `admin.html` — login-protected dashboard (Firebase Auth) showing every certificate generated across the site.
+- `certificate.html` now saves a record (name, path, completion date, cert ID) to Firestore when someone generates a certificate, once `firebase-config.js` is filled in. No-ops safely until then.
+- Added `firebase-config.js` placeholder and full setup instructions in the README.
+
 ## 2026-07-22
 - Added Naira (₦) equivalents alongside every USD price in `skill-tree-free-resources.html` — the full cert price ladder and the career-context salary figures. Conversion uses the mid-market USD/NGN rate (~₦1,380/$1) as of July 2026; noted in-page that banks/transfer services will charge above this rate.
 

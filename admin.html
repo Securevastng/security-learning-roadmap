@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Admin — Security Learning Roadmap</title>
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<meta name="robots" content="noindex, nofollow">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+:root{
+  --bg:#F4F4F6; --surface:#FFFFFF; --surface-alt:#F5F5F7;
+  --accent:#1C9A5D; --accent-soft:#E3F9EC;
+  --ink:#111114; --ink-dim:#8A8A93; --line:#EEEEF1;
+  --red:#E8483B; --shadow:0 12px 30px rgba(20,20,43,0.06);
+}
+*{box-sizing:border-box;}
+body{ margin:0; background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; }
+
+/* LOGIN */
+.login-wrap{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+.login-card{
+  background:var(--surface); border:1px solid var(--line); border-radius:20px; box-shadow:var(--shadow);
+  padding:36px 32px; max-width:360px; width:100%;
+}
+.login-card h1{ font-size:20px; font-weight:800; margin:0 0 6px; }
+.login-card p{ font-size:13px; color:var(--ink-dim); margin:0 0 22px; }
+.field{ margin-bottom:14px; }
+.field label{ display:block; font-size:12px; font-weight:700; color:var(--ink-dim); margin-bottom:6px; }
+.field input{
+  width:100%; padding:11px 14px; border:1px solid var(--line); border-radius:10px;
+  font-family:inherit; font-size:14px; color:var(--ink);
+}
+.field input:focus{ outline:none; border-color:var(--accent); }
+.login-btn{
+  width:100%; background:var(--ink); color:#fff; border:none; border-radius:999px;
+  padding:12px 0; font-family:inherit; font-weight:700; font-size:14px; cursor:pointer; margin-top:6px;
+}
+.login-error{ font-size:12.5px; color:var(--red); margin-top:10px; display:none; }
+
+/* DASHBOARD */
+.dash{ display:none; max-width:980px; margin:0 auto; padding:40px 24px 80px; }
+.dash-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; flex-wrap:wrap; gap:12px; }
+.dash-head h1{ font-size:24px; font-weight:800; margin:0; }
+.dash-head .sub{ font-size:13px; color:var(--ink-dim); margin-top:4px; }
+.logout-btn{
+  background:var(--surface-alt); border:1px solid var(--line); color:var(--ink);
+  border-radius:999px; padding:9px 18px; font-family:inherit; font-weight:600; font-size:13px; cursor:pointer;
+}
+
+.stat-strip{ display:flex; gap:14px; margin-bottom:22px; flex-wrap:wrap; }
+.stat-box{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px 18px; box-shadow:var(--shadow); min-width:140px; }
+.stat-box b{ display:block; font-size:22px; font-weight:800; }
+.stat-box span{ font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:0.5px; }
+
+.controls{ display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
+.controls input{
+  flex:1; min-width:200px; padding:10px 14px; border:1px solid var(--line); border-radius:10px;
+  font-family:inherit; font-size:13.5px;
+}
+.controls select{
+  padding:10px 14px; border:1px solid var(--line); border-radius:10px; font-family:inherit; font-size:13.5px; background:#fff;
+}
+
+.table-wrap{ background:var(--surface); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); overflow:hidden; }
+table{ width:100%; border-collapse:collapse; font-size:13px; }
+th{ text-align:left; padding:12px 16px; background:var(--surface-alt); font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--ink-dim); font-weight:700; }
+td{ padding:12px 16px; border-top:1px solid var(--line); color:var(--ink); }
+tr:hover td{ background:var(--accent-soft); }
+.path-pill{ display:inline-block; background:var(--accent-soft); color:var(--accent); font-size:11px; font-weight:700; padding:3px 10px; border-radius:999px; }
+.empty-state{ padding:50px 20px; text-align:center; color:var(--ink-dim); font-size:14px; }
+.cert-id{ font-family:monospace; font-size:12px; color:var(--ink-dim); }
+
+.setup-note{
+  max-width:500px; margin:60px auto; text-align:center; background:var(--surface);
+  border:1px solid var(--line); border-radius:16px; padding:30px; box-shadow:var(--shadow); font-size:13.5px; color:var(--ink-dim); line-height:1.7;
+}
+</style>
+</head>
+<body>
+
+<div id="loginWrap" class="login-wrap">
+  <div class="login-card">
+    <h1>Admin sign-in</h1>
+    <p>See every certificate people have generated across the roadmap.</p>
+    <div class="field">
+      <label for="emailInput">Email</label>
+      <input type="email" id="emailInput" autocomplete="username">
+    </div>
+    <div class="field">
+      <label for="passInput">Password</label>
+      <input type="password" id="passInput" autocomplete="current-password">
+    </div>
+    <button class="login-btn" id="loginBtn">Sign in</button>
+    <div class="login-error" id="loginError">Wrong email or password.</div>
+  </div>
+</div>
+
+<div id="setupNote" class="setup-note" style="display:none;">
+  Firebase isn't connected yet — fill in <code>firebase-config.js</code> with your project's credentials to enable admin login and certificate storage.
+</div>
+
+<div id="dash" class="dash">
+  <div class="dash-head">
+    <div>
+      <h1>Certificates</h1>
+      <div class="sub" id="dashSub">Loading…</div>
+    </div>
+    <button class="logout-btn" id="logoutBtn">Sign out</button>
+  </div>
+
+  <div class="stat-strip" id="statStrip"></div>
+
+  <div class="controls">
+    <input type="text" id="searchBox" placeholder="Search by name…">
+    <select id="pathFilter"><option value="">All specialties</option></select>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Name</th><th>Specialty</th><th>Completed</th><th>Certificate ID</th></tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <div class="empty-state" id="emptyState" style="display:none;">No certificates generated yet.</div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+const PATH_NAMES = {
+  pentest: "Penetration Testing", network: "Network Engineering", soc: "Cybersecurity Analyst",
+  audit: "Auditing", grc: "GRC", cloud: "Cloud Security", dfir: "Incident Response"
+};
+
+let allRecords = [];
+
+if(typeof firebaseConfig === 'undefined' || !firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith('REPLACE')){
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('setupNote').style.display = 'block';
+} else {
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  document.getElementById('loginBtn').addEventListener('click', () => {
+    const email = document.getElementById('emailInput').value.trim();
+    const pass = document.getElementById('passInput').value;
+    document.getElementById('loginError').style.display = 'none';
+    auth.signInWithEmailAndPassword(email, pass).catch(() => {
+      document.getElementById('loginError').style.display = 'block';
+    });
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', () => auth.signOut());
+
+  auth.onAuthStateChanged(user => {
+    if(user){
+      document.getElementById('loginWrap').style.display = 'none';
+      document.getElementById('dash').style.display = 'block';
+      attachListener();
+    } else {
+      document.getElementById('loginWrap').style.display = 'flex';
+      document.getElementById('dash').style.display = 'none';
+    }
+  });
+
+  function attachListener(){
+    db.collection('certificates').orderBy('savedAt', 'desc').onSnapshot(snap => {
+      allRecords = snap.docs.map(d => d.data());
+      renderDashboard();
+    }, err => {
+      document.getElementById('dashSub').textContent = 'Could not load records: ' + err.message;
+    });
+  }
+
+  function renderDashboard(){
+    document.getElementById('dashSub').textContent = allRecords.length + ' certificate' + (allRecords.length === 1 ? '' : 's') + ' generated';
+
+    // stat strip: count per path
+    const counts = {};
+    allRecords.forEach(r => { counts[r.pathId] = (counts[r.pathId] || 0) + 1; });
+    const statStrip = document.getElementById('statStrip');
+    statStrip.innerHTML = `<div class="stat-box"><b>${allRecords.length}</b><span>Total</span></div>` +
+      Object.keys(PATH_NAMES).map(id => `<div class="stat-box"><b>${counts[id] || 0}</b><span>${PATH_NAMES[id]}</span></div>`).join('');
+
+    // path filter options (once)
+    const filter = document.getElementById('pathFilter');
+    if(filter.options.length === 1){
+      Object.keys(PATH_NAMES).forEach(id => {
+        const opt = document.createElement('option');
+        opt.value = id; opt.textContent = PATH_NAMES[id];
+        filter.appendChild(opt);
+      });
+    }
+
+    applyFilters();
+  }
+
+  function applyFilters(){
+    const q = document.getElementById('searchBox').value.trim().toLowerCase();
+    const pathFilter = document.getElementById('pathFilter').value;
+    const filtered = allRecords.filter(r =>
+      (!q || (r.name || '').toLowerCase().includes(q)) &&
+      (!pathFilter || r.pathId === pathFilter)
+    );
+
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = '';
+    document.getElementById('emptyState').style.display = filtered.length ? 'none' : 'block';
+
+    filtered.forEach(r => {
+      const tr = document.createElement('tr');
+      const dateStr = r.completedAt ? new Date(r.completedAt).toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'}) : '—';
+      tr.innerHTML = `
+        <td><b>${escapeHtml(r.name || 'Unknown')}</b></td>
+        <td><span class="path-pill">${PATH_NAMES[r.pathId] || r.pathId}</span></td>
+        <td>${dateStr}</td>
+        <td class="cert-id">${escapeHtml(r.certId || '—')}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  document.getElementById('searchBox').addEventListener('input', applyFilters);
+  document.getElementById('pathFilter').addEventListener('change', applyFilters);
+
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+}
+</script>
+</body>
+</html>
