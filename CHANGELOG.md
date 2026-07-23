@@ -2,6 +2,13 @@
 
 All notable changes to the Security Learning Roadmap are logged here, newest first.
 
+## 2026-07-23 (2)
+- `skill-tree-roadmap.html`: every Foundation/Practitioner/Advanced card is now clickable, opening a roadmap.sh-style slide-in panel with a plain-English explanation of that level, the certification to earn, and free resources (articles/videos/practice platforms) — 21 panels total across all 7 specialties.
+
+## 2026-07-23
+- Rolled back the admin dashboard / Firebase backend (`admin.html`, `firebase-config.js`, and the certificate-saving logic in `certificate.html`) — reverted to a fully static site with no backend dependency.
+- Added a dark/light mode toggle across all pages, saved per-browser.
+
 ## 2026-07-22 (2)
 - Added `admin.html` — login-protected dashboard (Firebase Auth) showing every certificate generated across the site.
 - `certificate.html` now saves a record (name, path, completion date, cert ID) to Firestore when someone generates a certificate, once `firebase-config.js` is filled in. No-ops safely until then.

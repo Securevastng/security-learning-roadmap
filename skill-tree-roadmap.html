@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+(function(){
+  try{
+    var saved = localStorage.getItem('sec-roadmap-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e){}
+})();
+</script>
+
 <meta charset="UTF-8">
 <title>Security Skill Tree — Specialization Branches</title>
 <meta property="og:title" content="Specialty Skill Tree — Security Learning Roadmap">
@@ -31,6 +41,19 @@
   --highlight: #1C9A5D;
   --shadow: 0 12px 30px rgba(20,20,43,0.06);
 }
+html[data-theme="dark"]{
+  --bg: #101012;
+  --surface: #1A1A1D;
+  --surface-alt: #232327;
+  --accent: #3DDC84;
+  --accent-soft: #163625;
+  --ink: #F2F2F0;
+  --ink-dim: #9A9AA3;
+  --line: #2A2A2F;
+  --highlight: #3DDC84;
+  --shadow: 0 12px 30px rgba(0,0,0,0.45);
+}
+
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 body{
@@ -167,9 +190,106 @@ footer.note{
   font-size:12px; color:var(--ink-dim);
   max-width: 720px;
 }
+
+/* CLICKABLE LEVEL CARDS */
+.clickable-level{ cursor:pointer; transition: transform 0.12s ease, box-shadow 0.12s ease; }
+.clickable-level:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px rgba(20,20,43,0.1); }
+.clickable-level::after{
+  content: '→'; position:absolute; top:10px; right:12px;
+  font-size:13px; color: var(--ink-dim); opacity:0.5;
+}
+
+/* DETAIL PANEL */
+.panel-overlay{
+  position:fixed; inset:0; background: rgba(12,12,14,0.35);
+  display:none; z-index:1000;
+}
+.panel-overlay.open{ display:block; }
+.detail-panel{
+  position:fixed; top:0; right:-460px; width:100%; max-width:460px; height:100%;
+  background: var(--surface); box-shadow: -20px 0 50px rgba(12,12,14,0.2);
+  z-index:1001; transition: right 0.25s ease;
+  overflow-y:auto; padding: 26px 26px 60px;
+}
+.detail-panel.open{ right:0; }
+.panel-topline{ display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
+.panel-tag{
+  font-size:10.5px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+  color: var(--accent); background: var(--accent-soft); padding:4px 10px; border-radius:999px;
+}
+.panel-close{
+  width:30px; height:30px; border-radius:50%; border:1px solid var(--line); background:var(--surface-alt);
+  display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--ink); flex-shrink:0;
+}
+.panel-title{ font-size:24px; font-weight:800; margin: 4px 0 16px; }
+.panel-blurb{ font-size:14.5px; color:var(--ink); line-height:1.7; margin-bottom:24px; }
+
+.panel-section{
+  border-radius:14px; padding:16px 18px; margin-bottom:16px;
+}
+.panel-section.resources{ background: var(--accent-soft); }
+.panel-section.cert{ background: var(--surface-alt); }
+.panel-section-title{
+  font-size:13px; font-weight:800; color:var(--ink); margin-bottom:10px;
+  display:flex; align-items:center; gap:6px;
+}
+.res-link{ display:flex; align-items:center; gap:10px; margin-bottom:9px; font-size:13px; }
+.res-link:last-child{ margin-bottom:0; }
+.res-badge{
+  font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;
+  padding:3px 8px; border-radius:5px; flex-shrink:0; min-width:44px; text-align:center;
+}
+.res-badge.article{ background:#FFE8A3; color:#5C4400; }
+.res-badge.video{ background:#E3D7FF; color:#3D1F8C; }
+.res-badge.practice{ background:#D8F5E3; color:#0E6B3C; }
+.res-link a{ color:var(--ink); text-decoration:underline; }
+.res-link a:hover{ color:var(--accent); }
+
+.cert-row{ display:flex; align-items:center; justify-content:space-between; font-size:13.5px; }
+.cert-row b{ color:var(--ink); }
+.cert-row span{ color:var(--ink-dim); font-size:12px; }
+
+.theme-toggle{
+  width:38px; height:38px; border-radius:50%;
+  background:var(--surface); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:var(--shadow);
+  color:var(--ink); flex-shrink:0; padding:0;
+}
+.theme-toggle svg{ width:17px; height:17px; }
+.theme-toggle .icon-moon{ display:none; }
+html[data-theme="dark"] .theme-toggle .icon-sun{ display:none; }
+html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
+.theme-toggle.floating{ position:fixed; top:16px; right:16px; z-index:999; }
+@media print{ .theme-toggle{ display:none !important; } }
 </style>
 </head>
 <body>
+<button id="themeToggle" class="theme-toggle floating" aria-label="Toggle dark mode" title="Toggle dark mode">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+</button>
+
+<div class="panel-overlay" id="panelOverlay"></div>
+<div class="detail-panel" id="detailPanel">
+  <div class="panel-topline">
+    <span class="panel-tag" id="panelTag">Foundation</span>
+    <div class="panel-close" id="panelClose">✕</div>
+  </div>
+  <div class="panel-title" id="panelTitle">Title</div>
+  <div class="panel-blurb" id="panelBlurb">Blurb</div>
+
+  <div class="panel-section cert">
+    <div class="panel-section-title">🎓 Certification for this level</div>
+    <div class="cert-row"><b id="panelCertName">—</b><span id="panelCertCost">—</span></div>
+  </div>
+
+  <div class="panel-section resources">
+    <div class="panel-section-title">🟢 Free Resources</div>
+    <div id="panelResources"></div>
+  </div>
+</div>
+
 <div class="wrap">
 
   <header>
@@ -200,17 +320,17 @@ footer.note{
       <div class="col-tick"></div>
       <div class="col-header">Penetration Testing</div>
 
-      <div class="level" data-level="Foundation">
+      <div class="level clickable-level" data-level="Foundation" data-key="pentest-foundation" role="button" tabindex="0">
         <ul class="tools"><li>Nmap</li><li>Wireshark</li><li>Burp Suite CE</li></ul>
         <div class="cert-line"><b>TCM Security</b> — Practical Ethical Hacking (PEH)</div>
       </div>
       <div class="stem"></div>
-      <div class="level" data-level="Practitioner">
+      <div class="level clickable-level" data-level="Practitioner" data-key="pentest-practitioner" role="button" tabindex="0">
         <ul class="tools"><li>Metasploit</li><li>Burp Suite Pro</li><li>Nessus</li></ul>
         <div class="cert-line"><b>TCM Security</b> — PJPT · or eJPT</div>
       </div>
       <div class="stem"></div>
-      <div class="level" data-level="Advanced">
+      <div class="level clickable-level" data-level="Advanced" data-key="pentest-advanced" role="button" tabindex="0">
         <ul class="tools"><li>Cobalt Strike</li><li>BloodHound</li><li>C2 frameworks</li></ul>
         <div class="cert-line"><b>TCM Security</b> — PNPT · or OSCP</div>
       </div>
@@ -221,17 +341,17 @@ footer.note{
       <div class="col-tick"></div>
       <div class="col-header">Network Engineering</div>
 
-      <div class="level" data-level="Foundation">
+      <div class="level clickable-level" data-level="Foundation" data-key="network-foundation" role="button" tabindex="0">
         <ul class="tools"><li>Wireshark</li><li>Packet Tracer</li><li>traceroute</li></ul>
         <div class="cert-line"><b>CompTIA Network+</b></div>
       </div>
       <div class="stem"></div>
-      <div class="level" data-level="Practitioner">
+      <div class="level clickable-level" data-level="Practitioner" data-key="network-practitioner" role="button" tabindex="0">
         <ul class="tools"><li>pfSense</li><li>Cisco ASA</li><li>VPN configs</li></ul>
         <div class="cert-line"><b>Cisco CCNA</b></div>
       </div>
       <div class="stem"></div>
-      <div class="level" data-level="Advanced">
+      <div class="level clickable-level" data-level="Advanced" data-key="network-advanced" role="button" tabindex="0">
         <ul class="tools"><li>Cisco ISE</li><li>Zscaler</li><li>SD-WAN</li></ul>
         <div class="cert-line"><b>Cisco CCNP Security</b></div>
       </div>
@@ -242,17 +362,17 @@ footer.note{
       <div class="col-tick"></div>
       <div class="col-header">Cybersecurity Analyst<br><span style="font-weight:400; font-size:11px; opacity:0.7;">(SOC / Blue Team)</span></div>
 
-      <div class="level" data-level="Foundation">
+      <div class="level clickable-level" data-level="Foundation" data-key="soc-foundation" role="button" tabindex="0">
         <ul class="tools"><li>Splunk Free</li><li>Event Viewer</li><li>Wireshark</li></ul>
         <div class="cert-line"><b>ISC2 CC</b> · or Security+</div>
       </div>
       <div class="stem"></div>
-      <div class="level" data-level="Practitioner">
+      <div class="level clickable-level" data-level="Practitioner" data-key="soc-practitioner" role="button" tabindex="0">
         <ul class="tools"><li>Splunk Ent.</li><li>ELK Stack</li><li>EDR (CrowdStrike)</li></ul>
         <div class="cert-line"><b>Blue Team Level 1</b> · or GCIH</div>
       </div>
       <div class="stem"></div>
-      <div class="level" data-level="Advanced">
+      <div class="level clickable-level" data-level="Advanced" data-key="soc-advanced" role="button" tabindex="0">
         <ul class="tools"><li>YARA</li><li>Volatility</li><li>Sysmon + Sigma</li></ul>
         <div class="cert-line"><b>GCFA</b> · or CySA+</div>
       </div>
@@ -263,17 +383,17 @@ footer.note{
       <div class="col-tick"></div>
       <div class="col-header">Auditing</div>
 
-      <div class="level" data-level="Foundation">
+      <div class="level clickable-level" data-level="Foundation" data-key="audit-foundation" role="button" tabindex="0">
         <ul class="tools"><li>Control checklists</li><li>Evidence trackers</li></ul>
         <div class="cert-line"><b>No cert required</b> — learn on real audits</div>
       </div>
       <div class="stem"></div>
-      <div class="level" data-level="Practitioner">
+      <div class="level clickable-level" data-level="Practitioner" data-key="audit-practitioner" role="button" tabindex="0">
         <ul class="tools"><li>AuditBoard</li><li>Workiva</li></ul>
         <div class="cert-line"><b>CISA</b> (ISACA)</div>
       </div>
       <div class="stem"></div>
-      <div class="level" data-level="Advanced">
+      <div class="level clickable-level" data-level="Advanced" data-key="audit-advanced" role="button" tabindex="0">
         <ul class="tools"><li>Enterprise GRC suites</li></ul>
         <div class="cert-line"><b>CISA</b> + <b>CIA</b> (Certified Internal Auditor)</div>
       </div>
@@ -284,17 +404,17 @@ footer.note{
       <div class="col-tick"></div>
       <div class="col-header">GRC</div>
 
-      <div class="level" data-level="Foundation">
+      <div class="level clickable-level" data-level="Foundation" data-key="grc-foundation" role="button" tabindex="0">
         <ul class="tools"><li>Policy templates</li><li>Vanta / Drata</li></ul>
         <div class="cert-line"><b>ISC2 CC</b></div>
       </div>
       <div class="stem"></div>
-      <div class="level" data-level="Practitioner">
+      <div class="level clickable-level" data-level="Practitioner" data-key="grc-practitioner" role="button" tabindex="0">
         <ul class="tools"><li>Vanta</li><li>OneTrust</li><li>ServiceNow GRC</li></ul>
         <div class="cert-line"><b>CRISC</b> · or ISO 27001 Lead Implementer</div>
       </div>
       <div class="stem"></div>
-      <div class="level" data-level="Advanced">
+      <div class="level clickable-level" data-level="Advanced" data-key="grc-advanced" role="button" tabindex="0">
         <ul class="tools"><li>RSA Archer</li><li>MetricStream</li></ul>
         <div class="cert-line"><b>CGEIT</b> · or advanced CRISC practice</div>
       </div>
@@ -305,17 +425,17 @@ footer.note{
       <div class="col-tick"></div>
       <div class="col-header">Cloud Security</div>
 
-      <div class="level" data-level="Foundation">
+      <div class="level clickable-level" data-level="Foundation" data-key="cloud-foundation" role="button" tabindex="0">
         <ul class="tools"><li>AWS/Azure free tier</li><li>CloudTrail</li></ul>
         <div class="cert-line"><b>AWS Cloud Practitioner</b></div>
       </div>
       <div class="stem"></div>
-      <div class="level" data-level="Practitioner">
+      <div class="level clickable-level" data-level="Practitioner" data-key="cloud-practitioner" role="button" tabindex="0">
         <ul class="tools"><li>Prowler</li><li>ScoutSuite</li><li>IAM policy tools</li></ul>
         <div class="cert-line"><b>CCSK</b></div>
       </div>
       <div class="stem"></div>
-      <div class="level" data-level="Advanced">
+      <div class="level clickable-level" data-level="Advanced" data-key="cloud-advanced" role="button" tabindex="0">
         <ul class="tools"><li>Wiz</li><li>Terraform + OPA</li></ul>
         <div class="cert-line"><b>AWS Security Specialty</b> · or CCSP</div>
       </div>
@@ -326,17 +446,17 @@ footer.note{
       <div class="col-tick"></div>
       <div class="col-header">Incident Response<br><span style="font-weight:400; font-size:11px; opacity:0.7;">(DFIR / Forensics)</span></div>
 
-      <div class="level" data-level="Foundation">
+      <div class="level clickable-level" data-level="Foundation" data-key="dfir-foundation" role="button" tabindex="0">
         <ul class="tools"><li>FTK Imager</li><li>Autopsy</li><li>Event Viewer</li></ul>
         <div class="cert-line"><b>No cert required</b> — start with NIST 800-61r2</div>
       </div>
       <div class="stem"></div>
-      <div class="level" data-level="Practitioner">
+      <div class="level clickable-level" data-level="Practitioner" data-key="dfir-practitioner" role="button" tabindex="0">
         <ul class="tools"><li>Velociraptor</li><li>KAPE</li><li>Volatility</li></ul>
         <div class="cert-line"><b>GCFE</b> · or Blue Team Level 2</div>
       </div>
       <div class="stem"></div>
-      <div class="level" data-level="Advanced">
+      <div class="level clickable-level" data-level="Advanced" data-key="dfir-advanced" role="button" tabindex="0">
         <ul class="tools"><li>Chainsaw</li><li>Timesketch</li><li>Rekall</li></ul>
         <div class="cert-line"><b>GCFA</b> · or GNFA / GREM</div>
       </div>
@@ -447,11 +567,282 @@ footer.note{
 })();
 </script>
 <script>
+const LEVEL_DETAILS = {
+  "pentest-foundation": {
+    title: "Penetration Testing — Foundation",
+    blurb: "This is where you build the muscle memory every pentester needs: reading network traffic, scanning for open services, and probing web applications by hand before you ever touch an automated tool. Nmap and Wireshark are the two you'll use daily for the rest of your career, no matter how senior you get.",
+    cert: { name: "TCM Security — Practical Ethical Hacking", cost: "free–$30" },
+    resources: [
+      { type: "video", label: "TCM Security's free full course", url: "https://www.youtube.com/@TCMSecurityAcademy" },
+      { type: "video", label: "IppSec — HackTheBox walkthroughs", url: "https://www.youtube.com/@ippsec" },
+      { type: "practice", label: "TryHackMe — free rooms", url: "https://tryhackme.com" },
+    ]
+  },
+  "pentest-practitioner": {
+    title: "Penetration Testing — Practitioner",
+    blurb: "Here you move from finding weaknesses to actually exploiting them. Metasploit and Burp Suite Pro turn manual probing into a repeatable workflow, and Nessus gives you the vulnerability-scanning backbone most real engagements start with. This is also where clients start expecting a proper written report, not just a list of findings.",
+    cert: { name: "TCM PJPT · or eJPT", cost: "~$249" },
+    resources: [
+      { type: "video", label: "IppSec — practical exploitation walkthroughs", url: "https://www.youtube.com/@ippsec" },
+      { type: "practice", label: "HackTheBox — free tier", url: "https://www.hackthebox.com" },
+      { type: "article", label: "r/AskNetsec — community Q&A", url: "https://www.reddit.com/r/AskNetsec/" },
+    ]
+  },
+  "pentest-advanced": {
+    title: "Penetration Testing — Advanced",
+    blurb: "Advanced engagements stop looking like 'break into one box' and start looking like real adversary simulation: post-exploitation, lateral movement through Active Directory with BloodHound, and running your own command-and-control infrastructure. This is red-team territory, and it's where OSCP-level skill actually gets used day to day.",
+    cert: { name: "TCM PNPT · or OSCP", cost: "~$499–$1,749" },
+    resources: [
+      { type: "practice", label: "TryHackMe — Offensive Pentesting path", url: "https://tryhackme.com" },
+      { type: "video", label: "IppSec — Active Directory attack paths", url: "https://www.youtube.com/@ippsec" },
+      { type: "article", label: "r/oscp — prep discussion", url: "https://www.reddit.com/r/oscp/" },
+    ]
+  },
+  "network-foundation": {
+    title: "Network Engineering — Foundation",
+    blurb: "Before you can secure a network, you have to actually understand how one works — reading packet captures, building topologies, and tracing why a connection is failing. Wireshark and Packet Tracer are the two tools that make 'the network' stop being an abstraction.",
+    cert: { name: "CompTIA Network+", cost: "~$390" },
+    resources: [
+      { type: "video", label: "Jeremy's IT Lab — full free CCNA course", url: "https://www.youtube.com/@JeremysITLab" },
+      { type: "video", label: "NetworkChuck", url: "https://www.youtube.com/@NetworkChuck" },
+      { type: "practice", label: "Cisco Packet Tracer — free download", url: "https://www.netacad.com/courses/packet-tracer" },
+    ]
+  },
+  "network-practitioner": {
+    title: "Network Engineering — Practitioner",
+    blurb: "This is the operational layer: configuring the firewalls, VPNs, and access-control lists that actually stand between an attacker and the internal network. pfSense and Cisco ASA are where most mid-size companies' perimeter security actually lives.",
+    cert: { name: "Cisco CCNA", cost: "~$300" },
+    resources: [
+      { type: "video", label: "Jeremy's IT Lab — CCNA labs", url: "https://www.youtube.com/@JeremysITLab" },
+      { type: "article", label: "r/networking", url: "https://www.reddit.com/r/networking/" },
+      { type: "practice", label: "GNS3 — free network simulator", url: "https://www.gns3.com" },
+    ]
+  },
+  "network-advanced": {
+    title: "Network Engineering — Advanced",
+    blurb: "At this level you're not just configuring devices, you're designing the architecture — zero trust segmentation, SD-WAN across multiple sites, identity-based network access with Cisco ISE. This is the difference between a network administrator and a network security architect.",
+    cert: { name: "Cisco CCNP Security", cost: "~$700" },
+    resources: [
+      { type: "video", label: "David Bombal — enterprise networking", url: "https://www.youtube.com/@davidbombal" },
+      { type: "article", label: "r/ccna — advanced discussion", url: "https://www.reddit.com/r/ccna/" },
+      { type: "practice", label: "Cisco Networking Academy — free courses", url: "https://www.netacad.com" },
+    ]
+  },
+  "soc-foundation": {
+    title: "Cybersecurity Analyst — Foundation",
+    blurb: "Day one of SOC work is log literacy: can you look at a Windows Event Viewer entry or a Splunk search and tell what actually happened? This level is about pattern recognition — knowing what normal looks like so abnormal stands out.",
+    cert: { name: "ISC2 CC · or CompTIA Security+", cost: "$199–$425" },
+    resources: [
+      { type: "video", label: "professormesser.com — free Security+ material", url: "https://www.professormesser.com" },
+      { type: "video", label: "John Hammond", url: "https://www.youtube.com/@_JohnHammond" },
+      { type: "article", label: "r/AskNetsec", url: "https://www.reddit.com/r/AskNetsec/" },
+    ]
+  },
+  "soc-practitioner": {
+    title: "Cybersecurity Analyst — Practitioner",
+    blurb: "This is triage and response: building real detections in Splunk or the ELK stack, and working inside an EDR console when an alert actually needs investigating instead of just closing. Tier 2 analyst work lives here.",
+    cert: { name: "Blue Team Level 1 · or GCIH", cost: "~$400–$999" },
+    resources: [
+      { type: "practice", label: "LetsDefend — free tier", url: "https://letsdefend.io" },
+      { type: "practice", label: "CyberDefenders", url: "https://cyberdefenders.org" },
+      { type: "article", label: "r/blueteamsec", url: "https://www.reddit.com/r/blueteamsec/" },
+    ]
+  },
+  "soc-advanced": {
+    title: "Cybersecurity Analyst — Advanced",
+    blurb: "Advanced blue-team work is proactive, not reactive — writing YARA rules to catch malware before it's flagged, pulling apart memory dumps with Volatility, and building Sigma detection rules instead of just responding to someone else's. This is threat-hunting territory.",
+    cert: { name: "GCFA · or CompTIA CySA+", cost: "~$425–$999" },
+    resources: [
+      { type: "video", label: "13Cubed — DFIR & forensics", url: "https://www.youtube.com/@13Cubed" },
+      { type: "practice", label: "Blue Team Labs Online", url: "https://blueteamlabs.online" },
+      { type: "article", label: "r/netsecstudents", url: "https://www.reddit.com/r/netsecstudents/" },
+    ]
+  },
+  "audit-foundation": {
+    title: "Auditing — Foundation",
+    blurb: "Auditing starts with the unglamorous groundwork: building a control checklist, gathering evidence, and learning to ask 'how do you know that's true?' about every process someone tells you exists.",
+    cert: { name: "No cert required — learn on real audits", cost: "$0" },
+    resources: [
+      { type: "article", label: "NIST SP 800-53 — free, public", url: "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final" },
+      { type: "video", label: "GRC Academy", url: "https://www.youtube.com/@GRC-Academy" },
+      { type: "article", label: "r/GRC", url: "https://www.reddit.com/r/GRC/" },
+    ]
+  },
+  "audit-practitioner": {
+    title: "Auditing — Practitioner",
+    blurb: "This is where audits become a system rather than a spreadsheet — working inside a platform like AuditBoard or Workiva to manage evidence, findings, and remediation tracking across an entire audit cycle.",
+    cert: { name: "CISA (ISACA)", cost: "$575–$760" },
+    resources: [
+      { type: "article", label: "ISACA — free member webinars", url: "https://www.isaca.org" },
+      { type: "video", label: "GRC Uncensored (podcast)", url: "https://www.youtube.com/@GRCUncensored" },
+      { type: "article", label: "r/cybersecurity", url: "https://www.reddit.com/r/cybersecurity/" },
+    ]
+  },
+  "audit-advanced": {
+    title: "Auditing — Advanced",
+    blurb: "At the senior level you're not just executing an audit program, you're running one — coordinating across an enterprise GRC suite, managing external auditor relationships, and reporting findings straight to the board or audit committee.",
+    cert: { name: "CISA + CIA (Certified Internal Auditor)", cost: "~$1,000–1,500" },
+    resources: [
+      { type: "article", label: "IIA — free practice guides", url: "https://www.theiia.org" },
+      { type: "video", label: "GRC Academy", url: "https://www.youtube.com/@GRC-Academy" },
+      { type: "article", label: "r/GRC", url: "https://www.reddit.com/r/GRC/" },
+    ]
+  },
+  "grc-foundation": {
+    title: "GRC — Foundation",
+    blurb: "GRC starts with translation: turning a security control into a policy someone outside security can actually read and follow, and understanding tools like Vanta or Drata that automate a lot of the evidence-gathering.",
+    cert: { name: "ISC2 CC", cost: "$199+$50/yr" },
+    resources: [
+      { type: "video", label: "GRC Academy", url: "https://www.youtube.com/@GRC-Academy" },
+      { type: "video", label: "Security in Five — short daily videos", url: "https://www.youtube.com/@SecurityInFive" },
+      { type: "article", label: "r/GRC", url: "https://www.reddit.com/r/GRC/" },
+    ]
+  },
+  "grc-practitioner": {
+    title: "GRC — Practitioner",
+    blurb: "This level is vendor and program management — running third-party risk assessments in OneTrust or ServiceNow GRC, and starting to map controls to formal frameworks instead of ad hoc checklists.",
+    cert: { name: "CRISC · or ISO 27001 Lead Implementer", cost: "$575–$3,000" },
+    resources: [
+      { type: "article", label: "NIST CSF 2.0 — free, public", url: "https://www.nist.gov/cyberframework" },
+      { type: "article", label: "Vanta & Drata trust-center blogs", url: "https://www.vanta.com/resources" },
+      { type: "article", label: "r/SecurityCareerAdvice", url: "https://www.reddit.com/r/SecurityCareerAdvice/" },
+    ]
+  },
+  "grc-advanced": {
+    title: "GRC — Advanced",
+    blurb: "Enterprise GRC means working in platforms like RSA Archer or MetricStream, reporting risk in the language a board understands, and owning the risk register as a living document instead of an annual exercise.",
+    cert: { name: "CISM · or CGEIT", cost: "$575–$760" },
+    resources: [
+      { type: "article", label: "ISACA — free CPE webinars", url: "https://www.isaca.org" },
+      { type: "video", label: "GRC Academy", url: "https://www.youtube.com/@GRC-Academy" },
+      { type: "article", label: "r/cybersecurity", url: "https://www.reddit.com/r/cybersecurity/" },
+    ]
+  },
+  "cloud-foundation": {
+    title: "Cloud Security — Foundation",
+    blurb: "Cloud security starts with understanding the shared responsibility model: what AWS or Azure secures by default, and what's entirely on you. Setting up a free-tier account and actually reading CloudTrail logs is the fastest way to make that concrete.",
+    cert: { name: "AWS Cloud Practitioner", cost: "~$100" },
+    resources: [
+      { type: "video", label: "freeCodeCamp — full AWS course", url: "https://www.youtube.com/@freecodecamp" },
+      { type: "practice", label: "AWS Skill Builder — free tier", url: "https://skillbuilder.aws" },
+      { type: "article", label: "r/aws", url: "https://www.reddit.com/r/aws/" },
+    ]
+  },
+  "cloud-practitioner": {
+    title: "Cloud Security — Practitioner",
+    blurb: "This is hands-on cloud hardening — running open-source scanners like Prowler or ScoutSuite against a real environment, and writing IAM policies tight enough to actually matter instead of copy-pasted from a tutorial.",
+    cert: { name: "CCSK", cost: "~$445" },
+    resources: [
+      { type: "practice", label: "Prowler & ScoutSuite — open source", url: "https://github.com/prowler-cloud/prowler" },
+      { type: "article", label: "CSA — free CCSK Prep Kit", url: "https://cloudsecurityalliance.org" },
+      { type: "article", label: "r/AWSCertifications", url: "https://www.reddit.com/r/AWSCertifications/" },
+    ]
+  },
+  "cloud-advanced": {
+    title: "Cloud Security — Advanced",
+    blurb: "Advanced cloud security means thinking in code: CNAPP platforms like Wiz for continuous posture management, and policy-as-code with Terraform and OPA so misconfigurations get caught before they're ever deployed, not after.",
+    cert: { name: "AWS Security Specialty · or CCSP", cost: "$300–$599" },
+    resources: [
+      { type: "video", label: "Adrian Cantrill — free samples", url: "https://www.youtube.com/@AdrianCantrill" },
+      { type: "practice", label: "Google Cloud Skills Boost — free courses", url: "https://www.cloudskillsboost.google" },
+      { type: "article", label: "r/cloudsecurity", url: "https://www.reddit.com/r/cloudsecurity/" },
+    ]
+  },
+  "dfir-foundation": {
+    title: "Incident Response — Foundation",
+    blurb: "Incident response starts with evidence handling — imaging a disk properly with FTK Imager so it holds up to scrutiny, and learning to navigate a case in Autopsy without destroying what you're trying to preserve.",
+    cert: { name: "No cert required — start with NIST 800-61r2", cost: "$0" },
+    resources: [
+      { type: "article", label: "NIST SP 800-61r2 — free, public", url: "https://csrc.nist.gov/pubs/sp/800/61/r2/final" },
+      { type: "video", label: "13Cubed — dedicated DFIR channel", url: "https://www.youtube.com/@13Cubed" },
+      { type: "article", label: "r/computerforensics", url: "https://www.reddit.com/r/computerforensics/" },
+    ]
+  },
+  "dfir-practitioner": {
+    title: "Incident Response — Practitioner",
+    blurb: "This level is live response at scale: collecting artifacts across a fleet with KAPE, and running enterprise hunts with Velociraptor when an incident isn't confined to one machine.",
+    cert: { name: "GCFE · or Blue Team Level 2", cost: "~$999" },
+    resources: [
+      { type: "practice", label: "CyberDefenders — DFIR challenges", url: "https://cyberdefenders.org" },
+      { type: "practice", label: "Digital Corpora — free forensic images", url: "https://digitalcorpora.org" },
+      { type: "video", label: "13Cubed", url: "https://www.youtube.com/@13Cubed" },
+    ]
+  },
+  "dfir-advanced": {
+    title: "Incident Response — Advanced",
+    blurb: "Advanced DFIR is reconstruction — parsing Windows event logs at scale with Chainsaw, building a full attack timeline in Timesketch, and understanding memory forensics deeply enough to know what a live system was actually doing at the moment of compromise.",
+    cert: { name: "GCFA · or GNFA / GREM", cost: "~$999" },
+    resources: [
+      { type: "video", label: "13Cubed — advanced forensics", url: "https://www.youtube.com/@13Cubed" },
+      { type: "practice", label: "CyberDefenders", url: "https://cyberdefenders.org" },
+      { type: "article", label: "r/AskNetsec", url: "https://www.reddit.com/r/AskNetsec/" },
+    ]
+  },
+};
+
+(function(){
+  const overlay = document.getElementById('panelOverlay');
+  const panel = document.getElementById('detailPanel');
+  const closeBtn = document.getElementById('panelClose');
+
+  function openPanel(key){
+    const d = LEVEL_DETAILS[key];
+    if(!d) return;
+    document.getElementById('panelTag').textContent = key.split('-')[1].charAt(0).toUpperCase() + key.split('-')[1].slice(1);
+    document.getElementById('panelTitle').textContent = d.title;
+    document.getElementById('panelBlurb').textContent = d.blurb;
+    document.getElementById('panelCertName').textContent = d.cert.name;
+    document.getElementById('panelCertCost').textContent = d.cert.cost;
+
+    const resWrap = document.getElementById('panelResources');
+    resWrap.innerHTML = '';
+    d.resources.forEach(r => {
+      const row = document.createElement('div');
+      row.className = 'res-link';
+      row.innerHTML = `<span class="res-badge ${r.type}">${r.type}</span><a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`;
+      resWrap.appendChild(row);
+    });
+
+    overlay.classList.add('open');
+    panel.classList.add('open');
+  }
+
+  function closePanel(){
+    overlay.classList.remove('open');
+    panel.classList.remove('open');
+  }
+
+  document.querySelectorAll('.clickable-level').forEach(el => {
+    el.addEventListener('click', () => openPanel(el.getAttribute('data-key')));
+    el.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openPanel(el.getAttribute('data-key')); }
+    });
+  });
+
+  overlay.addEventListener('click', closePanel);
+  closeBtn.addEventListener('click', closePanel);
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closePanel(); });
+})();
+</script>
+<script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("./service-worker.js").catch(() => {});
   });
 }
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('themeToggle');
+  if(!btn) return;
+  btn.addEventListener('click', function(){
+    var html = document.documentElement;
+    var current = html.getAttribute('data-theme') || 'light';
+    var next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    try{ localStorage.setItem('sec-roadmap-theme', next); }catch(e){}
+  });
+})();
 </script>
 </body>
 </html>
