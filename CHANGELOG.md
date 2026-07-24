@@ -2,6 +2,13 @@
 
 All notable changes to the Security Learning Roadmap are logged here, newest first.
 
+## 2026-07-23 (4)
+- `skill-tree-roadmap.html`: full redesign to match the roadmap.sh interaction pattern. Every tool (51) and every certification (21), not just the 3 level cards, is now individually clickable — 97 clickable nodes total, each opening the side panel with its own explanation and an official link (tool docs/homepage, or certifying body page). Level headers still open the fuller level overview with free resources.
+- Restructured the visual layout: tools and certs now cascade vertically within each branch with connecting lines, closer to roadmap.sh's flowchart look, instead of a flat chip list.
+
+## 2026-07-23 (3)
+- **Fixed a real bug**: `service-worker.js` was serving cached pages *before* checking the network, so pushed updates could silently never appear for returning visitors (the site would look stuck on an old version indefinitely). Switched to network-first — always fetches the latest when online, only falls back to the cache when actually offline. Bumped cache version to force a clean break from the old broken cache.
+
 ## 2026-07-23 (2)
 - `skill-tree-roadmap.html`: every Foundation/Practitioner/Advanced card is now clickable, opening a roadmap.sh-style slide-in panel with a plain-English explanation of that level, the certification to earn, and free resources (articles/videos/practice platforms) — 21 panels total across all 7 specialties.
 

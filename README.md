@@ -6,7 +6,7 @@ Internal reference for how leadership and the security team build cybersecurity 
 
 - **`index.html`** — landing page linking to everything below.
 - **`company-stage-roadmap.html`** — CEO/COO learning path mapped to company stage (Seed → Series A → Growth → Pre-IPO), with a certification/course ladder at each stage.
-- **`skill-tree-roadmap.html`** — skill tree for the security org, branching into Penetration Testing, Network Engineering, Cybersecurity Analyst (SOC/Blue Team), Auditing, GRC, Cloud Security, and Incident Response/DFIR. Tools + certs at Foundation / Practitioner / Advanced level for each. Branches scroll horizontally with momentum + rubber-band bounce at the edges. **Every level card is clickable** — opens a roadmap.sh-style side panel with a plain-English explanation, the cert to earn, and free resources for that level.
+- **`skill-tree-roadmap.html`** — skill tree for the security org, branching into Penetration Testing, Network Engineering, Cybersecurity Analyst (SOC/Blue Team), Auditing, GRC, Cloud Security, and Incident Response/DFIR. Branches scroll horizontally with momentum + rubber-band bounce at the edges. **Every tool, cert, and level is individually clickable** (97 nodes total) — opens a roadmap.sh-style side panel with an explanation and a link to the official source.
 - **`skill-tree-free-resources.html`** — same branches, with free YouTube channels, subreddits, and free practice platforms for each, plus a full price-sorted ladder of every recognized cert in that field (cheapest → priciest) with the one that matters most to employers flagged, and a budget note per branch (what to skip, cheapest path to the top cert).
 - **`glossary.html`** — searchable plain-English definitions for every acronym used across these docs (SOC 2, CVE, MFA, etc.).
 - **`tracker.html`** — pick a specialty and check off tools, certs, and free resources as they're actually completed. Progress is saved in the browser's `localStorage` — no account, no backend, doesn't sync across devices.
@@ -27,7 +27,7 @@ Open any `.html` file directly in a browser — single-file, no build step, no d
 If GitHub Pages is enabled (Settings → Pages → Deploy from branch → `main` → `/root`), the whole thing is served at:
 
 ```
-https://securevastng.github.io/security-learning-roadmap/
+https://YOUR-ORG.github.io/security-learning-roadmap/
 ```
 
 `index.html` loads first and links out to the rest.
@@ -50,7 +50,7 @@ This repo should live under the company's GitHub **Organization**, not a persona
 If you haven't pointed this at the org yet:
 
 ```bash
-git remote set-url origin https://github.com/securevastng/security-learning-roadmap.git
+git remote set-url origin https://github.com/YOUR-ORG/security-learning-roadmap.git
 git push -u origin main
 ```
 

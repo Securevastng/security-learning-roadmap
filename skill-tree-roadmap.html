@@ -185,6 +185,30 @@ h1 span{color:var(--accent);}
 .legend div{display:flex; align-items:center; gap:8px;}
 .chip{width:14px; height:14px; display:inline-block; border-radius:4px;}
 
+/* CASCADING NODE TREE (tool + cert boxes, roadmap.sh style) */
+.level-group{ margin-bottom:6px; }
+.level-head{
+  background: var(--accent-soft); border:1px solid var(--accent);
+  border-radius:10px; padding:9px 12px; margin-bottom:4px;
+  font-size:11px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase;
+  color: var(--accent); cursor:pointer; text-align:center;
+}
+.node-connector{ width:2px; height:12px; background:var(--line); margin:0 auto; }
+.tool-node, .cert-node{
+  display:block; width:100%; text-align:left;
+  background: var(--surface); border:1px solid var(--line); border-radius:10px;
+  padding:9px 12px; margin-bottom:4px; font-size:12.5px; color:var(--ink);
+  cursor:pointer; font-family:inherit;
+}
+.tool-node:hover, .cert-node:hover, .level-head:hover{
+  border-color: var(--accent); background: var(--accent-soft);
+}
+.cert-node{ background: var(--surface-alt); font-weight:700; }
+.cert-node .cert-cost-tag{
+  float:right; font-size:10px; font-weight:700; color:var(--highlight);
+}
+.level-group-end{ height:2px; }
+
 footer.note{
   margin-top: 44px;
   font-size:12px; color:var(--ink-dim);
@@ -279,12 +303,12 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
   <div class="panel-title" id="panelTitle">Title</div>
   <div class="panel-blurb" id="panelBlurb">Blurb</div>
 
-  <div class="panel-section cert">
+  <div class="panel-section cert" id="certSection">
     <div class="panel-section-title">🎓 Certification for this level</div>
     <div class="cert-row"><b id="panelCertName">—</b><span id="panelCertCost">—</span></div>
   </div>
 
-  <div class="panel-section resources">
+  <div class="panel-section resources" id="resourcesSection">
     <div class="panel-section-title">🟢 Free Resources</div>
     <div id="panelResources"></div>
   </div>
@@ -320,147 +344,278 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
       <div class="col-tick"></div>
       <div class="col-header">Penetration Testing</div>
 
-      <div class="level clickable-level" data-level="Foundation" data-key="pentest-foundation" role="button" tabindex="0">
-        <ul class="tools"><li>Nmap</li><li>Wireshark</li><li>Burp Suite CE</li></ul>
-        <div class="cert-line"><b>TCM Security</b> — Practical Ethical Hacking (PEH)</div>
-      </div>
-      <div class="stem"></div>
-      <div class="level clickable-level" data-level="Practitioner" data-key="pentest-practitioner" role="button" tabindex="0">
-        <ul class="tools"><li>Metasploit</li><li>Burp Suite Pro</li><li>Nessus</li></ul>
-        <div class="cert-line"><b>TCM Security</b> — PJPT · or eJPT</div>
-      </div>
-      <div class="stem"></div>
-      <div class="level clickable-level" data-level="Advanced" data-key="pentest-advanced" role="button" tabindex="0">
-        <ul class="tools"><li>Cobalt Strike</li><li>BloodHound</li><li>C2 frameworks</li></ul>
-        <div class="cert-line"><b>TCM Security</b> — PNPT · or OSCP</div>
-      </div>
-    </div>
+      <div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="pentest-foundation" role="button" tabindex="0">Foundation</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:nmap">Nmap</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:wireshark">Wireshark</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:burp-suite-ce">Burp Suite CE</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:tcm-security-practical-ethical-hacking-peh">🎓 TCM Security — Practical Ethical Hacking (PEH)</button>
+</div>
+<div class="stem"></div>
+<div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="pentest-practitioner" role="button" tabindex="0">Practitioner</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:metasploit">Metasploit</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:burp-suite-pro">Burp Suite Pro</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:nessus">Nessus</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:tcm-security-pjpt-or-ejpt">🎓 TCM Security — PJPT · or eJPT</button>
+</div>
+<div class="stem"></div>
+<div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="pentest-advanced" role="button" tabindex="0">Advanced</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:cobalt-strike">Cobalt Strike</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:bloodhound">BloodHound</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:c2-frameworks">C2 frameworks</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:tcm-security-pnpt-or-oscp">🎓 TCM Security — PNPT · or OSCP</button>
+</div>
+</div>
 
     <!-- BRANCH: NETWORK ENGINEER -->
     <div class="column">
       <div class="col-tick"></div>
       <div class="col-header">Network Engineering</div>
 
-      <div class="level clickable-level" data-level="Foundation" data-key="network-foundation" role="button" tabindex="0">
-        <ul class="tools"><li>Wireshark</li><li>Packet Tracer</li><li>traceroute</li></ul>
-        <div class="cert-line"><b>CompTIA Network+</b></div>
-      </div>
-      <div class="stem"></div>
-      <div class="level clickable-level" data-level="Practitioner" data-key="network-practitioner" role="button" tabindex="0">
-        <ul class="tools"><li>pfSense</li><li>Cisco ASA</li><li>VPN configs</li></ul>
-        <div class="cert-line"><b>Cisco CCNA</b></div>
-      </div>
-      <div class="stem"></div>
-      <div class="level clickable-level" data-level="Advanced" data-key="network-advanced" role="button" tabindex="0">
-        <ul class="tools"><li>Cisco ISE</li><li>Zscaler</li><li>SD-WAN</li></ul>
-        <div class="cert-line"><b>Cisco CCNP Security</b></div>
-      </div>
-    </div>
+      <div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="network-foundation" role="button" tabindex="0">Foundation</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:wireshark">Wireshark</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:packet-tracer">Packet Tracer</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:traceroute">traceroute</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:comptia-network">🎓 CompTIA Network+</button>
+</div>
+<div class="stem"></div>
+<div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="network-practitioner" role="button" tabindex="0">Practitioner</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:pfsense">pfSense</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:cisco-asa">Cisco ASA</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:vpn-configs">VPN configs</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:cisco-ccna">🎓 Cisco CCNA</button>
+</div>
+<div class="stem"></div>
+<div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="network-advanced" role="button" tabindex="0">Advanced</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:cisco-ise">Cisco ISE</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:zscaler">Zscaler</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:sd-wan">SD-WAN</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:cisco-ccnp-security">🎓 Cisco CCNP Security</button>
+</div>
+</div>
 
     <!-- BRANCH: SOC ANALYST -->
     <div class="column">
       <div class="col-tick"></div>
       <div class="col-header">Cybersecurity Analyst<br><span style="font-weight:400; font-size:11px; opacity:0.7;">(SOC / Blue Team)</span></div>
 
-      <div class="level clickable-level" data-level="Foundation" data-key="soc-foundation" role="button" tabindex="0">
-        <ul class="tools"><li>Splunk Free</li><li>Event Viewer</li><li>Wireshark</li></ul>
-        <div class="cert-line"><b>ISC2 CC</b> · or Security+</div>
-      </div>
-      <div class="stem"></div>
-      <div class="level clickable-level" data-level="Practitioner" data-key="soc-practitioner" role="button" tabindex="0">
-        <ul class="tools"><li>Splunk Ent.</li><li>ELK Stack</li><li>EDR (CrowdStrike)</li></ul>
-        <div class="cert-line"><b>Blue Team Level 1</b> · or GCIH</div>
-      </div>
-      <div class="stem"></div>
-      <div class="level clickable-level" data-level="Advanced" data-key="soc-advanced" role="button" tabindex="0">
-        <ul class="tools"><li>YARA</li><li>Volatility</li><li>Sysmon + Sigma</li></ul>
-        <div class="cert-line"><b>GCFA</b> · or CySA+</div>
-      </div>
-    </div>
+      <div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="soc-foundation" role="button" tabindex="0">Foundation</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:splunk-free">Splunk Free</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:event-viewer">Event Viewer</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:wireshark">Wireshark</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:isc2-cc-or-security">🎓 ISC2 CC · or Security+</button>
+</div>
+<div class="stem"></div>
+<div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="soc-practitioner" role="button" tabindex="0">Practitioner</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:splunk-ent">Splunk Ent.</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:elk-stack">ELK Stack</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:edr-crowdstrike">EDR (CrowdStrike)</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:blue-team-level-1-or-gcih">🎓 Blue Team Level 1 · or GCIH</button>
+</div>
+<div class="stem"></div>
+<div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="soc-advanced" role="button" tabindex="0">Advanced</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:yara">YARA</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:volatility">Volatility</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:sysmon-sigma">Sysmon + Sigma</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:gcfa-or-cysa">🎓 GCFA · or CySA+</button>
+</div>
+</div>
 
     <!-- BRANCH: AUDITING -->
     <div class="column">
       <div class="col-tick"></div>
       <div class="col-header">Auditing</div>
 
-      <div class="level clickable-level" data-level="Foundation" data-key="audit-foundation" role="button" tabindex="0">
-        <ul class="tools"><li>Control checklists</li><li>Evidence trackers</li></ul>
-        <div class="cert-line"><b>No cert required</b> — learn on real audits</div>
-      </div>
-      <div class="stem"></div>
-      <div class="level clickable-level" data-level="Practitioner" data-key="audit-practitioner" role="button" tabindex="0">
-        <ul class="tools"><li>AuditBoard</li><li>Workiva</li></ul>
-        <div class="cert-line"><b>CISA</b> (ISACA)</div>
-      </div>
-      <div class="stem"></div>
-      <div class="level clickable-level" data-level="Advanced" data-key="audit-advanced" role="button" tabindex="0">
-        <ul class="tools"><li>Enterprise GRC suites</li></ul>
-        <div class="cert-line"><b>CISA</b> + <b>CIA</b> (Certified Internal Auditor)</div>
-      </div>
-    </div>
+      <div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="audit-foundation" role="button" tabindex="0">Foundation</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:control-checklists">Control checklists</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:evidence-trackers">Evidence trackers</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:no-cert-required-learn-on-real-audits">🎓 No cert required — learn on real audits</button>
+</div>
+<div class="stem"></div>
+<div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="audit-practitioner" role="button" tabindex="0">Practitioner</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:auditboard">AuditBoard</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:workiva">Workiva</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:cisa-isaca">🎓 CISA (ISACA)</button>
+</div>
+<div class="stem"></div>
+<div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="audit-advanced" role="button" tabindex="0">Advanced</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:enterprise-grc-suites">Enterprise GRC suites</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:cisa">🎓 CISA + <b>CIA</b> (Certified Internal Auditor)</button>
+</div>
+</div>
 
     <!-- BRANCH: GRC -->
     <div class="column">
       <div class="col-tick"></div>
       <div class="col-header">GRC</div>
 
-      <div class="level clickable-level" data-level="Foundation" data-key="grc-foundation" role="button" tabindex="0">
-        <ul class="tools"><li>Policy templates</li><li>Vanta / Drata</li></ul>
-        <div class="cert-line"><b>ISC2 CC</b></div>
-      </div>
-      <div class="stem"></div>
-      <div class="level clickable-level" data-level="Practitioner" data-key="grc-practitioner" role="button" tabindex="0">
-        <ul class="tools"><li>Vanta</li><li>OneTrust</li><li>ServiceNow GRC</li></ul>
-        <div class="cert-line"><b>CRISC</b> · or ISO 27001 Lead Implementer</div>
-      </div>
-      <div class="stem"></div>
-      <div class="level clickable-level" data-level="Advanced" data-key="grc-advanced" role="button" tabindex="0">
-        <ul class="tools"><li>RSA Archer</li><li>MetricStream</li></ul>
-        <div class="cert-line"><b>CGEIT</b> · or advanced CRISC practice</div>
-      </div>
-    </div>
+      <div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="grc-foundation" role="button" tabindex="0">Foundation</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:policy-templates">Policy templates</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:vanta-drata">Vanta / Drata</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:isc2-cc">🎓 ISC2 CC</button>
+</div>
+<div class="stem"></div>
+<div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="grc-practitioner" role="button" tabindex="0">Practitioner</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:vanta">Vanta</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:onetrust">OneTrust</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:servicenow-grc">ServiceNow GRC</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:crisc-or-iso-27001-lead-implementer">🎓 CRISC · or ISO 27001 Lead Implementer</button>
+</div>
+<div class="stem"></div>
+<div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="grc-advanced" role="button" tabindex="0">Advanced</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:rsa-archer">RSA Archer</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:metricstream">MetricStream</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:cgeit-or-advanced-crisc-practice">🎓 CGEIT · or advanced CRISC practice</button>
+</div>
+</div>
 
     <!-- BRANCH: CLOUD SECURITY -->
     <div class="column">
       <div class="col-tick"></div>
       <div class="col-header">Cloud Security</div>
 
-      <div class="level clickable-level" data-level="Foundation" data-key="cloud-foundation" role="button" tabindex="0">
-        <ul class="tools"><li>AWS/Azure free tier</li><li>CloudTrail</li></ul>
-        <div class="cert-line"><b>AWS Cloud Practitioner</b></div>
-      </div>
-      <div class="stem"></div>
-      <div class="level clickable-level" data-level="Practitioner" data-key="cloud-practitioner" role="button" tabindex="0">
-        <ul class="tools"><li>Prowler</li><li>ScoutSuite</li><li>IAM policy tools</li></ul>
-        <div class="cert-line"><b>CCSK</b></div>
-      </div>
-      <div class="stem"></div>
-      <div class="level clickable-level" data-level="Advanced" data-key="cloud-advanced" role="button" tabindex="0">
-        <ul class="tools"><li>Wiz</li><li>Terraform + OPA</li></ul>
-        <div class="cert-line"><b>AWS Security Specialty</b> · or CCSP</div>
-      </div>
-    </div>
+      <div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="cloud-foundation" role="button" tabindex="0">Foundation</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:aws-azure-free-tier">AWS/Azure free tier</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:cloudtrail">CloudTrail</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:aws-cloud-practitioner">🎓 AWS Cloud Practitioner</button>
+</div>
+<div class="stem"></div>
+<div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="cloud-practitioner" role="button" tabindex="0">Practitioner</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:prowler">Prowler</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:scoutsuite">ScoutSuite</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:iam-policy-tools">IAM policy tools</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:ccsk">🎓 CCSK</button>
+</div>
+<div class="stem"></div>
+<div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="cloud-advanced" role="button" tabindex="0">Advanced</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:wiz">Wiz</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:terraform-opa">Terraform + OPA</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:aws-security-specialty-or-ccsp">🎓 AWS Security Specialty · or CCSP</button>
+</div>
+</div>
 
     <!-- BRANCH: INCIDENT RESPONSE / DFIR -->
     <div class="column">
       <div class="col-tick"></div>
       <div class="col-header">Incident Response<br><span style="font-weight:400; font-size:11px; opacity:0.7;">(DFIR / Forensics)</span></div>
 
-      <div class="level clickable-level" data-level="Foundation" data-key="dfir-foundation" role="button" tabindex="0">
-        <ul class="tools"><li>FTK Imager</li><li>Autopsy</li><li>Event Viewer</li></ul>
-        <div class="cert-line"><b>No cert required</b> — start with NIST 800-61r2</div>
-      </div>
-      <div class="stem"></div>
-      <div class="level clickable-level" data-level="Practitioner" data-key="dfir-practitioner" role="button" tabindex="0">
-        <ul class="tools"><li>Velociraptor</li><li>KAPE</li><li>Volatility</li></ul>
-        <div class="cert-line"><b>GCFE</b> · or Blue Team Level 2</div>
-      </div>
-      <div class="stem"></div>
-      <div class="level clickable-level" data-level="Advanced" data-key="dfir-advanced" role="button" tabindex="0">
-        <ul class="tools"><li>Chainsaw</li><li>Timesketch</li><li>Rekall</li></ul>
-        <div class="cert-line"><b>GCFA</b> · or GNFA / GREM</div>
-      </div>
-    </div>
+      <div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="dfir-foundation" role="button" tabindex="0">Foundation</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:ftk-imager">FTK Imager</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:autopsy">Autopsy</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:event-viewer">Event Viewer</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:no-cert-required-start-with-nist-800-61r2">🎓 No cert required — start with NIST 800-61r2</button>
+</div>
+<div class="stem"></div>
+<div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="dfir-practitioner" role="button" tabindex="0">Practitioner</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:velociraptor">Velociraptor</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:kape">KAPE</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:volatility">Volatility</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:gcfe-or-blue-team-level-2">🎓 GCFE · or Blue Team Level 2</button>
+</div>
+<div class="stem"></div>
+<div class="level-group">
+  <div class="level-head clickable-node" data-type="level" data-key="dfir-advanced" role="button" tabindex="0">Advanced</div>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:chainsaw">Chainsaw</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:timesketch">Timesketch</button>
+  <div class="node-connector"></div>
+  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:rekall">Rekall</button>
+  <div class="node-connector"></div>
+  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:gcfa-or-gnfa-grem">🎓 GCFA · or GNFA / GREM</button>
+</div>
+</div>
 
   </div>
   </div>
@@ -780,12 +935,90 @@ const LEVEL_DETAILS = {
   },
 };
 
+const TOOL_DETAILS = {
+  "tool:nmap": { name:"Nmap", blurb:"The standard tool for scanning a network to see what devices and services are exposed. Almost every security assessment starts with an Nmap scan.", link:"https://nmap.org" },
+  "tool:wireshark": { name:"Wireshark", blurb:"Captures and inspects network traffic packet-by-packet — the go-to tool whenever you need to see exactly what's happening on the wire.", link:"https://www.wireshark.org" },
+  "tool:burp-suite-ce": { name:"Burp Suite Community Edition", blurb:"The free tier of the industry-standard web app testing tool — intercepts and lets you manipulate traffic between browser and server.", link:"https://portswigger.net/burp/communitydownload" },
+  "tool:burp-suite-pro": { name:"Burp Suite Professional", blurb:"The paid tier of Burp Suite, adding automated scanning and advanced exploitation tooling most professional pentests rely on.", link:"https://portswigger.net/burp/pro" },
+  "tool:metasploit": { name:"Metasploit", blurb:"A framework of pre-built exploits used to test whether known vulnerabilities are actually exploitable in a target environment.", link:"https://www.metasploit.com" },
+  "tool:nessus": { name:"Nessus", blurb:"A vulnerability scanner that's the backbone of most real-world assessments — finds known weaknesses across an entire network fast.", link:"https://www.tenable.com/products/nessus" },
+  "tool:cobalt-strike": { name:"Cobalt Strike", blurb:"Commercial red-team platform for adversary simulation — command-and-control, post-exploitation, and realistic attack emulation.", link:"https://www.cobaltstrike.com" },
+  "tool:bloodhound": { name:"BloodHound", blurb:"Maps Active Directory relationships to reveal hidden attack paths a normal admin would never spot — a red-team staple.", link:"https://bloodhound.specterops.io" },
+  "tool:c2-frameworks": { name:"C2 (Command & Control) frameworks", blurb:"The infrastructure an attacker (or red teamer simulating one) uses to remotely control a compromised machine during an engagement.", link:"" },
+  "tool:packet-tracer": { name:"Cisco Packet Tracer", blurb:"Free network simulation tool from Cisco — build and test virtual topologies without needing real hardware.", link:"https://www.netacad.com/courses/packet-tracer" },
+  "tool:traceroute": { name:"traceroute", blurb:"A built-in command-line tool that maps the path packets take across a network, hop by hop — essential for diagnosing routing issues.", link:"" },
+  "tool:pfsense": { name:"pfSense", blurb:"Free, open-source firewall and router software — how a lot of small-to-mid-size companies actually run their perimeter.", link:"https://www.pfsense.org" },
+  "tool:cisco-asa": { name:"Cisco ASA", blurb:"Cisco's dedicated firewall appliance line — a very common piece of enterprise perimeter hardware.", link:"https://www.cisco.com/c/en/us/products/security/adaptive-security-appliance-asa-software/index.html" },
+  "tool:vpn-configs": { name:"VPN configuration", blurb:"Setting up encrypted tunnels (site-to-site or remote access) so traffic stays private crossing an untrusted network.", link:"" },
+  "tool:cisco-ise": { name:"Cisco ISE", blurb:"Identity Services Engine — enforces who and what is allowed on the network based on identity, not just IP address.", link:"https://www.cisco.com/site/us/en/products/security/identity-services-engine/index.html" },
+  "tool:zscaler": { name:"Zscaler", blurb:"Cloud-delivered zero-trust security platform — routes and inspects traffic without relying on a traditional network perimeter.", link:"https://www.zscaler.com" },
+  "tool:sd-wan": { name:"SD-WAN", blurb:"Software-defined networking that manages traffic across multiple office/data-center sites intelligently, replacing static MPLS links.", link:"" },
+  "tool:splunk-free": { name:"Splunk Free", blurb:"The free tier of Splunk — search and visualize log data at a small scale, the same engine used at enterprise level.", link:"https://www.splunk.com/en_us/download/splunk-free.html" },
+  "tool:event-viewer": { name:"Windows Event Viewer", blurb:"Built into every Windows machine — the first place to look when investigating what actually happened on a system.", link:"https://learn.microsoft.com/en-us/windows/win32/wes/windows-event-log" },
+  "tool:splunk-ent": { name:"Splunk Enterprise", blurb:"The full paid version of Splunk — the SIEM most large security teams actually run their detection program on.", link:"https://www.splunk.com/en_us/products/splunk-enterprise.html" },
+  "tool:elk-stack": { name:"ELK Stack (Elastic)", blurb:"Open-source alternative to Splunk — Elasticsearch, Logstash, and Kibana together form a full log search and dashboard platform.", link:"https://www.elastic.co/elastic-stack" },
+  "tool:edr-crowdstrike": { name:"EDR (e.g. CrowdStrike)", blurb:"Endpoint Detection and Response software watching laptops/servers for suspicious activity and can respond automatically.", link:"https://www.crowdstrike.com" },
+  "tool:yara": { name:"YARA", blurb:"A pattern-matching tool for identifying and classifying malware — write a 'rule' once, scan for that malware family forever.", link:"https://virustotal.github.io/yara/" },
+  "tool:volatility": { name:"Volatility", blurb:"The standard open-source framework for analyzing a computer's memory (RAM) after an incident to see what was actually running.", link:"https://volatilityfoundation.org" },
+  "tool:sysmon-sigma": { name:"Sysmon + Sigma", blurb:"Sysmon logs detailed Windows system activity; Sigma is the open format for writing detection rules that work across SIEMs.", link:"https://github.com/SigmaHQ/sigma" },
+  "tool:control-checklists": { name:"Control checklists", blurb:"The core artifact of any audit — a structured list of what should be true, checked against what actually is.", link:"" },
+  "tool:evidence-trackers": { name:"Evidence trackers", blurb:"Systems (even a well-built spreadsheet) for keeping every piece of audit evidence organized, dated, and traceable back to a specific control.", link:"" },
+  "tool:auditboard": { name:"AuditBoard", blurb:"A dedicated platform for managing audit evidence, findings, and remediation tracking across an entire audit cycle.", link:"https://www.auditboard.com" },
+  "tool:workiva": { name:"Workiva", blurb:"Connected reporting and compliance platform used heavily for SOX and financial-audit workflows.", link:"https://www.workiva.com" },
+  "tool:enterprise-grc-suites": { name:"Enterprise GRC suites", blurb:"Large-scale platforms (Archer, MetricStream, ServiceNow GRC) that run an entire company's audit and risk program in one place.", link:"" },
+  "tool:policy-templates": { name:"Policy templates", blurb:"Starting-point documents for turning a security control into a policy an employee outside security can actually read and follow.", link:"" },
+  "tool:vanta": { name:"Vanta", blurb:"Automates a huge amount of SOC 2 / ISO 27001 evidence-gathering — one of the most widely used compliance-automation platforms.", link:"https://www.vanta.com" },
+  "tool:vanta-drata": { name:"Vanta / Drata", blurb:"The two leading compliance-automation platforms — both automate evidence collection for SOC 2, ISO 27001, and similar frameworks.", link:"https://www.vanta.com" },
+  "tool:onetrust": { name:"OneTrust", blurb:"A major platform for privacy, third-party risk, and GRC program management at larger organizations.", link:"https://www.onetrust.com" },
+  "tool:servicenow-grc": { name:"ServiceNow GRC", blurb:"ServiceNow's governance/risk/compliance module — ties risk management into the same platform running IT service management.", link:"https://www.servicenow.com/products/governance-risk-and-compliance.html" },
+  "tool:rsa-archer": { name:"RSA Archer", blurb:"One of the longest-standing enterprise GRC platforms — used to run risk registers and compliance programs at scale.", link:"https://www.archerirm.com" },
+  "tool:metricstream": { name:"MetricStream", blurb:"Enterprise GRC platform focused on integrated risk management across large, complex organizations.", link:"https://www.metricstream.com" },
+  "tool:aws-azure-free-tier": { name:"AWS / Azure free tier", blurb:"Both major cloud providers offer a genuinely free tier — the fastest way to get real hands-on experience without spending anything.", link:"https://aws.amazon.com/free/" },
+  "tool:cloudtrail": { name:"AWS CloudTrail", blurb:"Logs every API call made in an AWS account — the foundational audit trail for anything that happens in your cloud environment.", link:"https://aws.amazon.com/cloudtrail/" },
+  "tool:prowler": { name:"Prowler", blurb:"Free, open-source tool that scans an AWS/Azure/GCP account against security best practices and compliance frameworks.", link:"https://github.com/prowler-cloud/prowler" },
+  "tool:scoutsuite": { name:"ScoutSuite", blurb:"Open-source multi-cloud security auditing tool — scans a cloud account and highlights misconfigurations.", link:"https://github.com/nccgroup/ScoutSuite" },
+  "tool:iam-policy-tools": { name:"IAM policy tools", blurb:"The interfaces and tooling for writing precise, least-privilege access policies instead of copy-pasting overly broad permissions.", link:"" },
+  "tool:wiz": { name:"Wiz", blurb:"A leading CNAPP (Cloud-Native Application Protection Platform) for continuous cloud security posture management.", link:"https://www.wiz.io" },
+  "tool:terraform-opa": { name:"Terraform + OPA", blurb:"Terraform defines cloud infrastructure as code; Open Policy Agent enforces security rules against that code before it's ever deployed.", link:"https://www.openpolicyagent.org" },
+  "tool:ftk-imager": { name:"FTK Imager", blurb:"Free forensic imaging tool — creates a bit-for-bit copy of a disk that will hold up to scrutiny as evidence.", link:"https://www.exterro.com/digital-forensics-software/ftk-imager" },
+  "tool:autopsy": { name:"Autopsy", blurb:"Free, open-source digital forensics platform for analyzing a disk image without altering the original evidence.", link:"https://www.autopsy.com" },
+  "tool:velociraptor": { name:"Velociraptor", blurb:"Open-source endpoint monitoring and forensics tool built for hunting across an entire fleet, not just one machine.", link:"https://docs.velociraptor.app" },
+  "tool:kape": { name:"KAPE", blurb:"Fast, free forensic artifact collection tool from Eric Zimmerman — pulls the specific evidence you need without imaging an entire disk.", link:"https://ericzimmerman.github.io" },
+  "tool:chainsaw": { name:"Chainsaw", blurb:"Fast open-source tool for searching and parsing Windows event logs at scale during an investigation.", link:"https://github.com/WithSecureLabs/chainsaw" },
+  "tool:timesketch": { name:"Timesketch", blurb:"Open-source tool from Google for building a collaborative timeline of everything that happened during an incident.", link:"https://timesketch.org" },
+  "tool:rekall": { name:"Rekall", blurb:"A memory forensics framework for deep analysis of what a system's RAM reveals about an attacker's activity.", link:"https://github.com/google/rekall" },
+};
+
+const CERT_DETAILS = {
+  "cert:tcm-security-practical-ethical-hacking-peh": { blurb:"TCM Security's foundational pentesting course — fully hands-on, no prerequisites, and free to watch on YouTube.", link:"https://academy.tcm-sec.com" },
+  "cert:tcm-security-pjpt-or-ejpt": { blurb:"Practical Junior Penetration Tester — a hands-on entry credential proving you can run a real internal pentest.", link:"https://certifications.tcm-sec.com/pjpt/" },
+  "cert:tcm-security-pnpt-or-oscp": { blurb:"Practical Network Penetration Tester — full network compromise plus a professional report. OSCP is the pricier, more universally recognized alternative.", link:"https://certifications.tcm-sec.com/pnpt/" },
+  "cert:comptia-network": { blurb:"CompTIA's vendor-neutral networking certification — the standard starting credential before specializing in any vendor's gear.", link:"https://www.comptia.org/certifications/network" },
+  "cert:cisco-ccna": { blurb:"Cisco's entry certification and the single most requested credential in networking job postings.", link:"https://www.cisco.com/site/us/en/learn/training-certifications/certifications/enterprise/ccna/index.html" },
+  "cert:cisco-ccnp-security": { blurb:"Cisco's advanced security specialization — for engineers designing network security architecture, not just configuring it.", link:"https://www.cisco.com/site/us/en/learn/training-certifications/certifications/enterprise/ccnp-security/index.html" },
+  "cert:isc2-cc-or-security": { blurb:"ISC2's entry credential (now a paid exam) or CompTIA Security+, the most universally required baseline cert in security job postings.", link:"https://www.isc2.org/certifications/cc" },
+  "cert:blue-team-level-1-or-gcih": { blurb:"A fully practical SOC-analyst simulation exam, or GIAC's incident-handling credential backed by SANS training.", link:"https://securityblue.team/blue-team-level-1" },
+  "cert:gcfa-or-cysa": { blurb:"GIAC's forensic analyst credential, or CompTIA's SOC-specific step up once Security+ is done.", link:"https://www.giac.org/certifications/certified-forensic-analyst-gcfa/" },
+  "cert:no-cert-required-learn-on-real-audits": { blurb:"There's no gatekeeping credential to start auditing — this is a role you learn by actually doing real audits under someone experienced.", link:"" },
+  "cert:cisa-isaca": { blurb:"The global standard credential for IT audit — near-mandatory for the title, issued by ISACA.", link:"https://www.isaca.org/credentialing/cisa" },
+  "cert:cisa": { blurb:"CISA paired with the IIA's CIA credential — the combination for someone running a full internal-audit program, not just IT systems.", link:"https://www.theiia.org/en/certifications/cia/" },
+  "cert:isc2-cc": { blurb:"ISC2's Certified in Cybersecurity — the cheapest formal entry point into a security-adjacent GRC career.", link:"https://www.isc2.org/certifications/cc" },
+  "cert:crisc-or-iso-27001-lead-implementer": { blurb:"ISACA's risk-focused credential, or a practical certification in actually building an ISO 27001 ISMS from scratch.", link:"https://www.isaca.org/credentialing/crisc" },
+  "cert:cgeit-or-advanced-crisc-practice": { blurb:"ISACA's IT-governance credential — most relevant once you're setting policy across an entire organization, not just one team.", link:"https://www.isaca.org/credentialing/cgeit" },
+  "cert:aws-cloud-practitioner": { blurb:"AWS's entry-level, non-technical overview certification — the cheapest way to prove basic cloud fluency.", link:"https://aws.amazon.com/certification/certified-cloud-practitioner/" },
+  "cert:ccsk": { blurb:"Cloud Security Alliance's vendor-neutral cloud security credential — a good fit if you work across AWS, Azure, and GCP.", link:"https://cloudsecurityalliance.org/education/ccsk/" },
+  "cert:aws-security-specialty-or-ccsp": { blurb:"AWS's deep specialty credential, or ISC2's CCSP — the broader, vendor-neutral senior/architect-level cloud security certification.", link:"https://www.isc2.org/certifications/ccsp" },
+  "cert:no-cert-required-start-with-nist-800-61r2": { blurb:"No credential required to start — NIST's free, public incident-handling guide is the actual foundation everyone builds on.", link:"https://csrc.nist.gov/pubs/sp/800/61/r2/final" },
+  "cert:gcfe-or-blue-team-level-2": { blurb:"GIAC's forensic examiner entry point, or Security Blue Team's practical step up from BTL1 into DFIR-flavored work.", link:"https://www.giac.org/certifications/certified-forensic-examiner-gcfe/" },
+  "cert:gcfa-or-gnfa-grem": { blurb:"GIAC's forensic analyst credential is the most recognized standalone DFIR cert; GNFA and GREM are specialist add-ons for network forensics and malware reversing.", link:"https://www.giac.org/certifications/certified-forensic-analyst-gcfa/" },
+};
+
 (function(){
   const overlay = document.getElementById('panelOverlay');
   const panel = document.getElementById('detailPanel');
   const closeBtn = document.getElementById('panelClose');
 
-  function openPanel(key){
+  function showLevel(key){
     const d = LEVEL_DETAILS[key];
     if(!d) return;
     document.getElementById('panelTag').textContent = key.split('-')[1].charAt(0).toUpperCase() + key.split('-')[1].slice(1);
@@ -793,7 +1026,6 @@ const LEVEL_DETAILS = {
     document.getElementById('panelBlurb').textContent = d.blurb;
     document.getElementById('panelCertName').textContent = d.cert.name;
     document.getElementById('panelCertCost').textContent = d.cert.cost;
-
     const resWrap = document.getElementById('panelResources');
     resWrap.innerHTML = '';
     d.resources.forEach(r => {
@@ -802,7 +1034,55 @@ const LEVEL_DETAILS = {
       row.innerHTML = `<span class="res-badge ${r.type}">${r.type}</span><a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`;
       resWrap.appendChild(row);
     });
+    document.getElementById('certSection').style.display = 'block';
+    document.getElementById('resourcesSection').style.display = 'block';
+  }
 
+  function showTool(key){
+    const d = TOOL_DETAILS[key];
+    if(!d) return;
+    document.getElementById('panelTag').textContent = 'Tool';
+    document.getElementById('panelTitle').textContent = d.name;
+    document.getElementById('panelBlurb').textContent = d.blurb;
+    document.getElementById('certSection').style.display = 'none';
+    const resWrap = document.getElementById('panelResources');
+    resWrap.innerHTML = '';
+    if(d.link){
+      const row = document.createElement('div');
+      row.className = 'res-link';
+      row.innerHTML = `<span class="res-badge article">site</span><a href="${d.link}" target="_blank" rel="noopener">Official site / docs</a>`;
+      resWrap.appendChild(row);
+      document.getElementById('resourcesSection').style.display = 'block';
+    } else {
+      document.getElementById('resourcesSection').style.display = 'none';
+    }
+  }
+
+  function showCert(key){
+    const d = CERT_DETAILS[key];
+    if(!d) return;
+    document.getElementById('panelTag').textContent = 'Certification';
+    document.getElementById('panelTitle').textContent = key.replace('cert:','').split('-').join(' ');
+    document.getElementById('panelBlurb').textContent = d.blurb;
+    document.getElementById('certSection').style.display = 'none';
+    const resWrap = document.getElementById('panelResources');
+    resWrap.innerHTML = '';
+    if(d.link){
+      const row = document.createElement('div');
+      row.className = 'res-link';
+      row.innerHTML = `<span class="res-badge article">site</span><a href="${d.link}" target="_blank" rel="noopener">Certifying body / official page</a>`;
+      resWrap.appendChild(row);
+      document.getElementById('resourcesSection').style.display = 'block';
+    } else {
+      document.getElementById('resourcesSection').style.display = 'none';
+    }
+  }
+
+  function openPanel(type, key){
+    if(type === 'level') showLevel(key);
+    else if(type === 'tool') showTool(key);
+    else if(type === 'cert') showCert(key);
+    else return;
     overlay.classList.add('open');
     panel.classList.add('open');
   }
@@ -812,10 +1092,12 @@ const LEVEL_DETAILS = {
     panel.classList.remove('open');
   }
 
-  document.querySelectorAll('.clickable-level').forEach(el => {
-    el.addEventListener('click', () => openPanel(el.getAttribute('data-key')));
+  document.querySelectorAll('.clickable-node').forEach(el => {
+    const type = el.getAttribute('data-type');
+    const key = el.getAttribute('data-key');
+    el.addEventListener('click', () => openPanel(type, key));
     el.addEventListener('keydown', (e) => {
-      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openPanel(el.getAttribute('data-key')); }
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openPanel(type, key); }
     });
   });
 
