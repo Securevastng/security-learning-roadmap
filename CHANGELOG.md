@@ -2,6 +2,9 @@
 
 All notable changes to the Security Learning Roadmap are logged here, newest first.
 
+## 2026-07-24 (3)
+- Added a smooth fade transition between pages across the whole site: pages fade in on load (CSS animation), and fade out just before navigating to another internal page (JS intercepts internal link clicks, adds a brief opacity transition, then navigates). Respects `prefers-reduced-motion`. Dashboard's two button-based navigations (search box Enter key, "Open tracker" button) route through the same fade helper for consistency. Verified with `node --check` across all touched files. Cache bumped to v8.
+
 ## 2026-07-24 (2)
 - **Fixed a real bug**: `dashboard.html` had a copy-paste duplication (`const PATHS = const PATHS = [...]`) that threw a SyntaxError and silently killed the entire script — every card rendered empty (0%, blank lists) with no visible error on the page itself. Verified the fix with `node --check` on all three inline scripts plus a full mock-DOM execution run. Bumped cache to v7.
 

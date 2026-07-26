@@ -1,4 +1,4 @@
-const CACHE_NAME = "sec-roadmap-v7";
+const CACHE_NAME = "sec-roadmap-v8";
 const CORE_FILES = [
   "./index.html",
   "./dashboard.html",

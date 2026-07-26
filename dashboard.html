@@ -163,6 +163,15 @@ html[data-theme="dark"] .task-level.advanced{ background:#2A1513; color:#F87171;
 .theme-toggle .icon-moon{ display:none; }
 html[data-theme="dark"] .theme-toggle .icon-sun{ display:none; }
 html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
+
+/* PAGE FADE TRANSITION */
+body{ animation: pageFadeIn 0.32s ease; }
+@keyframes pageFadeIn{ from{ opacity:0; } to{ opacity:1; } }
+body.page-fade-out{ opacity:0 !important; transition: opacity 0.22s ease; }
+@media (prefers-reduced-motion: reduce){
+  body{ animation:none; }
+  body.page-fade-out{ transition:none; }
+}
 </style>
 </head>
 <body>
@@ -187,7 +196,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
     <div class="topbar">
       <div class="search-box">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
-        <input type="text" placeholder="Search tools, certs, terms…" onkeydown="if(event.key==='Enter'){window.location.href='search.html'}">
+        <input type="text" placeholder="Search tools, certs, terms…" onkeydown="if(event.key==='Enter'){navigateWithFade('search.html')}">
       </div>
       <div class="topbar-spacer"></div>
       <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
@@ -200,7 +209,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
     <div class="greeting">
       <h1 id="greetingText">Good morning</h1>
       <p>Here's where things stand across all 7 specialties right now.</p>
-      <button class="greeting-btn" onclick="window.location.href='tracker.html'">Open tracker →</button>
+      <button class="greeting-btn" onclick="navigateWithFade('tracker.html')">Open tracker →</button>
     </div>
 
     <div class="content-grid">
@@ -577,6 +586,30 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./service-worker.js").catch(() => {});
   });
 }
+</script>
+<script>
+(function(){
+  function navigateWithFade(href){
+    document.body.classList.add('page-fade-out');
+    setTimeout(function(){ window.location.href = href; }, 220);
+  }
+  window.navigateWithFade = navigateWithFade;
+
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a');
+    if(!a) return;
+    var href = a.getAttribute('href');
+    if(!href) return;
+    if(href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto:')) return;
+    if(a.target === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    navigateWithFade(href);
+  });
+
+  window.addEventListener('pageshow', function(e){
+    if(e.persisted) document.body.classList.remove('page-fade-out');
+  });
+})();
 </script>
 </body>
 </html>
