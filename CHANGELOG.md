@@ -2,6 +2,15 @@
 
 All notable changes to the Security Learning Roadmap are logged here, newest first.
 
+## 2026-07-24 (2)
+- **Fixed a real bug**: `dashboard.html` had a copy-paste duplication (`const PATHS = const PATHS = [...]`) that threw a SyntaxError and silently killed the entire script — every card rendered empty (0%, blank lists) with no visible error on the page itself. Verified the fix with `node --check` on all three inline scripts plus a full mock-DOM execution run. Bumped cache to v7.
+
+## 2026-07-24
+- Added `dashboard.html` — a new landing view (sidebar nav, greeting, task list, stat cards, bar chart) modeled after a typical SaaS dashboard layout. Shows real, live data pulled from the same `localStorage` state as `tracker.html`: next unchecked steps across all 7 specialties, overall % complete, per-specialty progress bars, and the top certs still left to earn. Linked as the featured first card on `index.html`. Cache bumped to v6.
+
+## 2026-07-23 (6)
+- Full palette swap to a dark navy + lime-green theme (dark mode: `#0D0F14` background, `#141824` cards, `#C6F135` lime accent; light mode: warm off-white with an olive-lime accent for readability). Added an `--on-accent` variable so text sitting on accent-colored backgrounds (badges, buttons, tags) stays dark and readable against the bright lime rather than defaulting to white. Bumped service worker cache to v5.
+
 ## 2026-07-23 (5)
 - **Tracker sync**: 70 of the 97 clickable nodes on `skill-tree-roadmap.html` now share a "Mark as done" toggle with `tracker.html` — both read/write the same `localStorage` state, so progress made in either place shows up in both. Synced nodes get a green checkmark. A handful of nodes have no tracker equivalent (extra tools that only exist in the skill tree) and are left unsynced rather than forced into a false match.
 - **Time estimates**: every level (Foundation/Practitioner/Advanced) now shows a rough time-to-complete estimate, both inline on the card and in the detail panel.

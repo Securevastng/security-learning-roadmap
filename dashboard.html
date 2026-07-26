@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>
+(function(){
+  try{
+    var saved = localStorage.getItem('sec-roadmap-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e){}
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard — Security Learning Roadmap</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="theme-color" content="#0D0F14">
+
+<meta property="og:title" content="Dashboard — Security Learning Roadmap">
+<meta property="og:description" content="Your progress across all 7 security specialties in one view.">
+<meta property="og:image" content="icons/icon-512.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+@import url(\'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap\');
+:root{
+  --bg:#F5F5F0; --surface:#FFFFFF; --surface-alt:#EFEFE8;
+  --accent:#7A9900; --on-accent:#14161C; --accent-soft:#EEF7C8; --accent-deep:#5C7300;
+  --ink:#111114; --ink-dim:#8A8A93; --line:#E7E7E0;
+  --shadow:0 10px 26px rgba(20,20,43,0.06);
+}
+html[data-theme="dark"]{
+  --bg:#0D0F14; --surface:#141824; --surface-alt:#1B202C;
+  --accent:#C6F135; --on-accent:#0D0F14; --accent-soft:#23301A; --accent-deep:#A8D62E;
+  --ink:#F2F2F0; --ink-dim:#9A9AA3; --line:#262B38;
+  --shadow:0 12px 30px rgba(0,0,0,0.45);
+}
+*{box-sizing:border-box;}
+body{ margin:0; background:var(--bg); color:var(--ink); font-family:\'Inter\',sans-serif; }
+
+.layout{ display:flex; min-height:100vh; }
+
+/* SIDEBAR */
+.sidebar{
+  width:220px; flex-shrink:0; background:var(--surface); border-right:1px solid var(--line);
+  padding:22px 16px; display:flex; flex-direction:column;
+}
+.sidebar-brand{ display:flex; align-items:center; gap:10px; padding:0 8px 22px; font-weight:800; font-size:15px; }
+.sidebar-brand .dot{ width:10px; height:10px; border-radius:50%; background:var(--accent); }
+.nav-item{
+  display:flex; align-items:center; gap:11px; padding:10px 12px; border-radius:10px;
+  color:var(--ink-dim); text-decoration:none; font-size:13.5px; font-weight:600; margin-bottom:2px;
+}
+.nav-item:hover{ background:var(--surface-alt); color:var(--ink); }
+.nav-item.active{ background:var(--accent-soft); color:var(--accent); }
+.nav-icon{ width:18px; text-align:center; flex-shrink:0; }
+.sidebar-bottom{ margin-top:auto; }
+
+/* MAIN */
+.main{ flex:1; padding:26px 30px; min-width:0; }
+.topbar{ display:flex; align-items:center; gap:16px; margin-bottom:26px; }
+.search-box{
+  flex:1; max-width:340px; display:flex; align-items:center; gap:8px;
+  background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:9px 14px;
+}
+.search-box input{ border:none; outline:none; background:none; font-family:inherit; font-size:13.5px; color:var(--ink); width:100%; }
+.search-box svg{ width:15px; height:15px; color:var(--ink-dim); flex-shrink:0; }
+.topbar-spacer{ flex:1; }
+.icon-btn{
+  width:36px; height:36px; border-radius:50%; background:var(--surface); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center; color:var(--ink); cursor:pointer; flex-shrink:0;
+}
+.avatar{ width:36px; height:36px; border-radius:50%; background:var(--accent); color:var(--on-accent); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; flex-shrink:0; }
+
+.greeting{ margin-bottom:22px; }
+.greeting h1{ font-size:24px; font-weight:800; margin:0 0 6px; }
+.greeting p{ font-size:13.5px; color:var(--ink-dim); margin:0 0 14px; }
+.greeting-btn{
+  background:none; border:1.5px solid var(--accent); color:var(--accent);
+  border-radius:10px; padding:9px 18px; font-family:inherit; font-weight:700; font-size:13px; cursor:pointer;
+}
+
+.content-grid{ display:grid; grid-template-columns: 1fr 320px; gap:22px; align-items:start; }
+@media (max-width: 900px){ .content-grid{ grid-template-columns: 1fr; } .layout{ flex-direction:column; } .sidebar{ width:100%; flex-direction:row; overflow-x:auto; } }
+
+.card{ background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:18px 20px; box-shadow:var(--shadow); }
+.card-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.card-title{ font-size:14.5px; font-weight:800; }
+.card-sub{ font-size:11.5px; color:var(--ink-dim); }
+.see-all{ font-size:12px; color:var(--accent); text-decoration:none; font-weight:700; }
+
+.task-row{ display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); }
+.task-row:last-child{ border-bottom:none; }
+.task-avatar{ width:30px; height:30px; border-radius:8px; background:var(--accent-soft); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex-shrink:0; }
+.task-text{ font-size:13px; font-weight:600; flex:1; }
+.task-text span{ color:var(--ink-dim); font-weight:400; }
+.task-level{ font-size:10px; font-weight:800; text-transform:uppercase; padding:3px 9px; border-radius:999px; flex-shrink:0; }
+.task-level.foundation{ background:#E3F9EC; color:#1C9A5D; }
+.task-level.practitioner{ background:#FFF1D6; color:#B8760A; }
+.task-level.advanced{ background:#FDE2E1; color:#C13B2E; }
+html[data-theme="dark"] .task-level.foundation{ background:#122318; color:#4ADE80; }
+html[data-theme="dark"] .task-level.practitioner{ background:#2B2110; color:#F5B942; }
+html[data-theme="dark"] .task-level.advanced{ background:#2A1513; color:#F87171; }
+
+.mini-row{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap:14px; margin:18px 0; }
+.mini-card{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px 16px; box-shadow:var(--shadow); }
+.mini-card .label{ font-size:11px; color:var(--ink-dim); font-weight:600; margin-bottom:8px; }
+.mini-card .value{ font-size:18px; font-weight:800; }
+.mini-card a{ color:var(--ink); text-decoration:none; }
+.mini-avatars{ display:flex; margin-top:8px; }
+.mini-avatars span{ width:20px; height:20px; border-radius:50%; background:var(--accent-soft); border:2px solid var(--surface); margin-left:-6px; font-size:9px; display:flex; align-items:center; justify-content:center; color:var(--accent); font-weight:800; }
+.mini-avatars span:first-child{ margin-left:0; }
+
+.chart-card .bars{ display:flex; align-items:flex-end; gap:14px; height:150px; margin-top:10px; padding:0 4px; }
+.bar-col{ flex:1; display:flex; flex-direction:column; align-items:center; gap:8px; height:100%; justify-content:flex-end; }
+.bar-track{ width:100%; max-width:26px; height:100%; background:var(--surface-alt); border-radius:8px; display:flex; align-items:flex-end; overflow:hidden; }
+.bar-fill{ width:100%; background:var(--accent); border-radius:8px 8px 0 0; transition: height 0.4s ease; }
+.bar-label{ font-size:10px; color:var(--ink-dim); text-align:center; font-weight:600; }
+.chart-yaxis{ display:flex; justify-content:space-between; font-size:9.5px; color:var(--ink-dim); margin-top:4px; }
+
+/* RIGHT SIDEBAR */
+.right-col{ display:flex; flex-direction:column; gap:18px; }
+.quick-title{ font-size:14.5px; font-weight:800; margin-bottom:12px; }
+.quick-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.quick-card{
+  border-radius:14px; padding:14px; color:#fff; text-decoration:none; display:flex; flex-direction:column;
+  justify-content:space-between; min-height:100px; font-size:11.5px; font-weight:700;
+}
+.quick-card .qtitle{ font-size:12.5px; }
+.quick-card .qsub{ font-weight:400; font-size:10.5px; opacity:0.85; margin-top:2px; }
+.quick-card .qring{
+  align-self:flex-end; width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,0.25);
+  display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800;
+}
+.qc-1{ background:linear-gradient(135deg,#4640DE,#6D63FF); }
+.qc-2{ background:linear-gradient(135deg,var(--accent-deep),var(--accent)); color:var(--on-accent); }
+.qc-3{ background:linear-gradient(135deg,#F2994A,#F5B942); }
+.qc-4{ background:linear-gradient(135deg,#3D8BFF,#63A9FF); }
+
+.pill-strip{ display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; }
+.pill{
+  flex-shrink:0; padding:8px 14px; border-radius:999px; border:1px solid var(--line); background:var(--surface);
+  font-size:12px; font-weight:700; color:var(--ink-dim); cursor:pointer; white-space:nowrap;
+}
+.pill.active{ background:var(--accent); color:var(--on-accent); border-color:var(--accent); }
+
+.cert-row{ display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--line); font-size:12.5px; }
+.cert-row:last-child{ border-bottom:none; }
+.cert-row .cname{ font-weight:700; }
+.cert-row .cspec{ font-size:10.5px; color:var(--ink-dim); }
+.cert-row .cprice{ font-weight:700; color:var(--accent); font-size:12px; }
+
+.theme-toggle{
+  width:36px; height:36px; border-radius:50%;
+  background:var(--surface); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; color:var(--ink); flex-shrink:0;
+}
+.theme-toggle svg{ width:16px; height:16px; }
+.theme-toggle .icon-moon{ display:none; }
+html[data-theme="dark"] .theme-toggle .icon-sun{ display:none; }
+html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-brand"><span class="dot"></span> Sec Roadmap</div>
+    <a class="nav-item active" href="dashboard.html"><span class="nav-icon">&#9635;</span> Dashboard</a>
+    <a class="nav-item" href="skill-tree-roadmap.html"><span class="nav-icon">&#9735;</span> Skill Tree</a>
+    <a class="nav-item" href="skill-tree-free-resources.html"><span class="nav-icon">&#9733;</span> Free Resources</a>
+    <a class="nav-item" href="tracker.html"><span class="nav-icon">&#10003;</span> Tracker</a>
+    <a class="nav-item" href="certificate.html"><span class="nav-icon">&#127891;</span> Certificate</a>
+    <a class="nav-item" href="glossary.html"><span class="nav-icon">&#128214;</span> Glossary</a>
+    <a class="nav-item" href="cheat-sheet.html"><span class="nav-icon">&#128203;</span> Cheat Sheet</a>
+    <div class="sidebar-bottom">
+      <a class="nav-item" href="about.html"><span class="nav-icon">&#9881;</span> Methodology</a>
+      <a class="nav-item" href="index.html"><span class="nav-icon">&#8592;</span> All Views</a>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" placeholder="Search tools, certs, terms…" onkeydown="if(event.key==='Enter'){window.location.href='search.html'}">
+      </div>
+      <div class="topbar-spacer"></div>
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+      <div class="avatar">S</div>
+    </div>
+
+    <div class="greeting">
+      <h1 id="greetingText">Good morning</h1>
+      <p>Here's where things stand across all 7 specialties right now.</p>
+      <button class="greeting-btn" onclick="window.location.href='tracker.html'">Open tracker →</button>
+    </div>
+
+    <div class="content-grid">
+      <div>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">My Next Steps</div>
+              <div class="card-sub" id="nextStepsSub">Across every specialty in progress</div>
+            </div>
+            <a class="see-all" href="tracker.html">See all →</a>
+          </div>
+          <div id="nextStepsList"></div>
+        </div>
+
+        <div class="mini-row">
+          <div class="mini-card">
+            <div class="label">Overall progress</div>
+            <div class="value" id="miniOverall">0%</div>
+            <div class="mini-avatars" id="miniAvatars"></div>
+          </div>
+          <div class="mini-card">
+            <div class="label">Furthest along</div>
+            <div class="value"><a href="tracker.html" id="miniFurthest">—</a></div>
+          </div>
+          <div class="mini-card">
+            <div class="label">Get certificate →</div>
+            <div class="value"><a href="certificate.html">Check status</a></div>
+          </div>
+        </div>
+
+        <div class="card chart-card">
+          <div class="card-head">
+            <div class="card-title">Progress by Specialty</div>
+            <div class="card-sub">% of tracker items completed</div>
+          </div>
+          <div class="bars" id="barsWrap"></div>
+        </div>
+      </div>
+
+      <div class="right-col">
+        <div class="card">
+          <div class="quick-title">Quick actions</div>
+          <div class="quick-grid">
+            <a class="quick-card qc-1" href="skill-tree-roadmap.html">
+              <div><div class="qtitle">Skill Tree</div><div class="qsub">97 clickable nodes</div></div>
+            </a>
+            <a class="quick-card qc-2" href="tracker.html">
+              <div><div class="qtitle">Daily progress</div></div>
+              <div class="qring" id="qcRing">0%</div>
+            </a>
+            <a class="quick-card qc-3" href="skill-tree-free-resources.html">
+              <div><div class="qtitle">Cert Pricing</div><div class="qsub">Cheapest → priciest</div></div>
+            </a>
+            <a class="quick-card qc-4" href="glossary.html">
+              <div><div class="qtitle">Glossary</div><div class="qsub">Find any term</div></div>
+            </a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="margin-bottom:12px;">Specialties</div>
+          <div class="pill-strip" id="pillStrip"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Top Certs Left To Earn</div>
+          </div>
+          <div id="certsList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PATHS = [
+  {
+    id: "pentest", name: "Penetration Testing",
+    sections: [
+      { label: "Foundation", items: [
+        {id:"f1", tag:"tool", text:"Comfortable running Nmap scans"},
+        {id:"f2", tag:"tool", text:"Comfortable reading Wireshark captures"},
+        {id:"f3", tag:"tool", text:"Used Burp Suite Community Edition"},
+        {id:"f4", tag:"cert", text:"Completed TCM Security — Practical Ethical Hacking"},
+      ]},
+      { label: "Practitioner", items: [
+        {id:"p1", tag:"tool", text:"Run an exploit with Metasploit"},
+        {id:"p2", tag:"tool", text:"Used Burp Suite Pro on a real target"},
+        {id:"p3", tag:"tool", text:"Run a Nessus vulnerability scan"},
+        {id:"p4", tag:"cert", text:"Earned TCM PJPT or eJPT"},
+      ]},
+      { label: "Advanced", items: [
+        {id:"a1", tag:"tool", text:"Set up Cobalt Strike or another C2 framework"},
+        {id:"a2", tag:"tool", text:"Used BloodHound for AD attack paths"},
+        {id:"a3", tag:"cert", text:"Earned TCM PNPT or OSCP"},
+      ]},
+      { label: "Free resources", items: [
+        {id:"r1", tag:"free", text:"Watched a TCM Security free course"},
+        {id:"r2", tag:"free", text:"Watched an IppSec HTB walkthrough"},
+        {id:"r3", tag:"free", text:"Joined r/AskNetsec or r/HowToHack"},
+        {id:"r4", tag:"free", text:"Started free rooms on TryHackMe"},
+      ]},
+    ]
+  },
+  {
+    id: "network", name: "Network Engineering",
+    sections: [
+      { label: "Foundation", items: [
+        {id:"f1", tag:"tool", text:"Comfortable reading Wireshark captures"},
+        {id:"f2", tag:"tool", text:"Built a topology in Packet Tracer"},
+        {id:"f3", tag:"tool", text:"Used traceroute/ping to debug a path"},
+        {id:"f4", tag:"cert", text:"Earned CompTIA Network+"},
+      ]},
+      { label: "Practitioner", items: [
+        {id:"p1", tag:"tool", text:"Configured pfSense"},
+        {id:"p2", tag:"tool", text:"Configured a Cisco ASA"},
+        {id:"p3", tag:"tool", text:"Set up a site-to-site VPN"},
+        {id:"p4", tag:"cert", text:"Earned Cisco CCNA"},
+      ]},
+      { label: "Advanced", items: [
+        {id:"a1", tag:"tool", text:"Worked with Cisco ISE for NAC"},
+        {id:"a2", tag:"tool", text:"Configured a Zscaler or SD-WAN policy"},
+        {id:"a3", tag:"cert", text:"Earned Cisco CCNP (Security concentration)"},
+      ]},
+      { label: "Free resources", items: [
+        {id:"r1", tag:"free", text:"Watched Jeremy's IT Lab CCNA series"},
+        {id:"r2", tag:"free", text:"Joined r/networking or r/ccna"},
+        {id:"r3", tag:"free", text:"Installed Packet Tracer or GNS3"},
+      ]},
+    ]
+  },
+  {
+    id: "soc", name: "Cybersecurity Analyst",
+    sections: [
+      { label: "Foundation", items: [
+        {id:"f1", tag:"tool", text:"Ran searches in Splunk Free"},
+        {id:"f2", tag:"tool", text:"Investigated logs in Windows Event Viewer"},
+        {id:"f3", tag:"tool", text:"Comfortable reading Wireshark captures"},
+        {id:"f4", tag:"cert", text:"Earned ISC2 CC or CompTIA Security+"},
+      ]},
+      { label: "Practitioner", items: [
+        {id:"p1", tag:"tool", text:"Built a dashboard in Splunk Enterprise or ELK"},
+        {id:"p2", tag:"tool", text:"Worked with an EDR console"},
+        {id:"p3", tag:"cert", text:"Earned Blue Team Level 1 or GCIH"},
+      ]},
+      { label: "Advanced", items: [
+        {id:"a1", tag:"tool", text:"Written or used a YARA rule"},
+        {id:"a2", tag:"tool", text:"Analyzed memory with Volatility"},
+        {id:"a3", tag:"tool", text:"Written a Sigma rule for Sysmon logs"},
+        {id:"a4", tag:"cert", text:"Earned GCFA or CompTIA CySA+"},
+      ]},
+      { label: "Free resources", items: [
+        {id:"r1", tag:"free", text:"Watched 13Cubed or John Hammond"},
+        {id:"r2", tag:"free", text:"Joined r/blueteamsec or r/netsecstudents"},
+        {id:"r3", tag:"free", text:"Started a free tier on LetsDefend or CyberDefenders"},
+      ]},
+    ]
+  },
+  {
+    id: "audit", name: "Auditing",
+    sections: [
+      { label: "Foundation", items: [
+        {id:"f1", tag:"tool", text:"Built a control checklist for a real audit area"},
+        {id:"f2", tag:"tool", text:"Maintained an evidence tracker"},
+      ]},
+      { label: "Practitioner", items: [
+        {id:"p1", tag:"tool", text:"Worked in AuditBoard or Workiva"},
+        {id:"p2", tag:"cert", text:"Earned CISA"},
+      ]},
+      { label: "Advanced", items: [
+        {id:"a1", tag:"tool", text:"Worked across an enterprise GRC suite"},
+        {id:"a2", tag:"cert", text:"Earned CIA (Certified Internal Auditor)"},
+      ]},
+      { label: "Free resources", items: [
+        {id:"r1", tag:"free", text:"Watched GRC Academy or GRC Uncensored"},
+        {id:"r2", tag:"free", text:"Joined r/GRC or r/cybersecurity"},
+        {id:"r3", tag:"free", text:"Read through NIST SP 800-53"},
+      ]},
+    ]
+  },
+  {
+    id: "grc", name: "GRC",
+    sections: [
+      { label: "Foundation", items: [
+        {id:"f1", tag:"tool", text:"Drafted a security policy from a template"},
+        {id:"f2", tag:"tool", text:"Used Vanta or Drata"},
+        {id:"f3", tag:"cert", text:"Earned ISC2 CC"},
+      ]},
+      { label: "Practitioner", items: [
+        {id:"p1", tag:"tool", text:"Managed vendor risk in OneTrust or ServiceNow GRC"},
+        {id:"p2", tag:"cert", text:"Earned CRISC or ISO 27001 Lead Implementer"},
+      ]},
+      { label: "Advanced", items: [
+        {id:"a1", tag:"tool", text:"Worked in RSA Archer or MetricStream"},
+        {id:"a2", tag:"cert", text:"Earned CISM or CGEIT"},
+      ]},
+      { label: "Free resources", items: [
+        {id:"r1", tag:"free", text:"Watched GRC Academy or Security in Five"},
+        {id:"r2", tag:"free", text:"Joined r/GRC"},
+        {id:"r3", tag:"free", text:"Read NIST CSF 2.0"},
+      ]},
+    ]
+  },
+  {
+    id: "cloud", name: "Cloud Security",
+    sections: [
+      { label: "Foundation", items: [
+        {id:"f1", tag:"tool", text:"Set up an AWS or Azure free-tier account"},
+        {id:"f2", tag:"tool", text:"Reviewed CloudTrail logs"},
+        {id:"f3", tag:"cert", text:"Earned AWS Cloud Practitioner"},
+      ]},
+      { label: "Practitioner", items: [
+        {id:"p1", tag:"tool", text:"Run a scan with Prowler or ScoutSuite"},
+        {id:"p2", tag:"tool", text:"Written an IAM policy from scratch"},
+        {id:"p3", tag:"cert", text:"Earned CCSK"},
+      ]},
+      { label: "Advanced", items: [
+        {id:"a1", tag:"tool", text:"Used Wiz or a similar CNAPP"},
+        {id:"a2", tag:"tool", text:"Written Terraform with policy-as-code (OPA)"},
+        {id:"a3", tag:"cert", text:"Earned AWS Security Specialty or CCSP"},
+      ]},
+      { label: "Free resources", items: [
+        {id:"r1", tag:"free", text:"Watched freeCodeCamp's AWS course"},
+        {id:"r2", tag:"free", text:"Joined r/aws or r/AWSCertifications"},
+        {id:"r3", tag:"free", text:"Used AWS Skill Builder free tier"},
+      ]},
+    ]
+  },
+  {
+    id: "dfir", name: "Incident Response",
+    sections: [
+      { label: "Foundation", items: [
+        {id:"f1", tag:"tool", text:"Imaged a disk with FTK Imager"},
+        {id:"f2", tag:"tool", text:"Explored a case in Autopsy"},
+        {id:"f3", tag:"tool", text:"Read NIST SP 800-61r2"},
+      ]},
+      { label: "Practitioner", items: [
+        {id:"p1", tag:"tool", text:"Collected artifacts with KAPE"},
+        {id:"p2", tag:"tool", text:"Run a hunt with Velociraptor"},
+        {id:"p3", tag:"cert", text:"Earned GCFE or Blue Team Level 2"},
+      ]},
+      { label: "Advanced", items: [
+        {id:"a1", tag:"tool", text:"Parsed logs with Chainsaw"},
+        {id:"a2", tag:"tool", text:"Built a timeline in Timesketch"},
+        {id:"a3", tag:"cert", text:"Earned GCFA, GNFA, or GREM"},
+      ]},
+      { label: "Free resources", items: [
+        {id:"r1", tag:"free", text:"Watched 13Cubed's DFIR series"},
+        {id:"r2", tag:"free", text:"Joined r/computerforensics"},
+        {id:"r3", tag:"free", text:"Tried a CyberDefenders challenge"},
+      ]},
+    ]
+  },
+];
+
+const STORAGE_KEY = "sec-roadmap-tracker";
+function loadState(){
+  try{ const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {}; }
+  catch(e){ return {}; }
+}
+const state = loadState();
+
+function allItems(path){ return path.sections.flatMap(s => s.items.map(it => ({...it, section: s.label}))); }
+function pathProgress(path){
+  const items = allItems(path);
+  const done = items.filter(it => state[path.id + ":" + it.id]).length;
+  return { done, total: items.length, pct: items.length ? Math.round((done/items.length)*100) : 0 };
+}
+
+// Greeting based on time of day
+const hour = new Date().getHours();
+document.getElementById('greetingText').textContent =
+  hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+
+// Bars
+const barsWrap = document.getElementById('barsWrap');
+const progresses = PATHS.map(p => ({ path: p, prog: pathProgress(p) }));
+progresses.forEach(({path, prog}) => {
+  const col = document.createElement('div');
+  col.className = 'bar-col';
+  col.innerHTML = `<div class="bar-track"><div class="bar-fill" style="height:${prog.pct}%"></div></div><div class="bar-label">${path.name.split(' ')[0]}</div>`;
+  barsWrap.appendChild(col);
+});
+
+// Overall stats
+const totalDone = progresses.reduce((s,p) => s + p.prog.done, 0);
+const totalAll = progresses.reduce((s,p) => s + p.prog.total, 0);
+const overallPct = totalAll ? Math.round((totalDone/totalAll)*100) : 0;
+document.getElementById('miniOverall').textContent = overallPct + '%';
+document.getElementById('qcRing').textContent = overallPct + '%';
+
+const furthest = progresses.slice().sort((a,b) => b.prog.pct - a.prog.pct)[0];
+document.getElementById('miniFurthest').textContent = furthest.prog.pct > 0 ? `${furthest.path.name} (${furthest.prog.pct}%)` : 'Not started yet';
+
+// Mini avatars = initials of specialties with any progress
+const started = progresses.filter(p => p.prog.done > 0).slice(0,4);
+document.getElementById('miniAvatars').innerHTML = started.length
+  ? started.map(p => `<span>${p.path.name[0]}</span>`).join('')
+  : '<span style="color:var(--ink-dim);">—</span>';
+
+// Next steps: first unchecked item per specialty, up to 5
+const nextSteps = [];
+progresses.forEach(({path}) => {
+  const items = allItems(path);
+  const next = items.find(it => !state[path.id + ':' + it.id]);
+  if(next) nextSteps.push({ path, item: next });
+});
+const nextStepsList = document.getElementById('nextStepsList');
+if(!nextSteps.length){
+  nextStepsList.innerHTML = '<div style="padding:20px 0; text-align:center; color:var(--ink-dim); font-size:13px;">Everything checked off — nice work.</div>';
+} else {
+  nextSteps.slice(0,5).forEach(({path, item}) => {
+    const row = document.createElement('div');
+    row.className = 'task-row';
+    const levelClass = item.section.toLowerCase().includes('found') ? 'foundation' : item.section.toLowerCase().includes('practit') ? 'practitioner' : item.section.toLowerCase().includes('advanced') ? 'advanced' : 'foundation';
+    row.innerHTML = `
+      <div class="task-avatar">${path.name.slice(0,2).toUpperCase()}</div>
+      <div class="task-text">${item.text} <span>· ${path.name}</span></div>
+      <div class="task-level ${levelClass}">${item.section}</div>
+    `;
+    nextStepsList.appendChild(row);
+  });
+}
+
+// Pill strip
+const pillStrip = document.getElementById('pillStrip');
+progresses.forEach(({path, prog}, i) => {
+  const pill = document.createElement('button');
+  pill.className = 'pill' + (i === 0 ? ' active' : '');
+  pill.textContent = `${path.name.split(' ')[0]} ${prog.pct}%`;
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+  });
+  pillStrip.appendChild(pill);
+});
+
+// Top certs left to earn (first cert-tagged unchecked item per specialty)
+const certsList = document.getElementById('certsList');
+const certsLeft = [];
+progresses.forEach(({path}) => {
+  const items = allItems(path);
+  const nextCert = items.find(it => it.tag === 'cert' && !state[path.id + ':' + it.id]);
+  if(nextCert) certsLeft.push({ path, item: nextCert });
+});
+if(!certsLeft.length){
+  certsList.innerHTML = '<div style="padding:16px 0; text-align:center; color:var(--ink-dim); font-size:13px;">All certs checked off.</div>';
+} else {
+  certsLeft.slice(0,5).forEach(({path, item}) => {
+    const row = document.createElement('div');
+    row.className = 'cert-row';
+    row.innerHTML = `<div><div class="cname">${item.text}</div><div class="cspec">${path.name}</div></div>`;
+    certsList.appendChild(row);
+  });
+}
+
+(function(){
+  var btn = document.getElementById('themeToggle');
+  if(!btn) return;
+  btn.addEventListener('click', function(){
+    var html = document.documentElement;
+    var current = html.getAttribute('data-theme') || 'light';
+    var next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    try{ localStorage.setItem('sec-roadmap-theme', next); }catch(e){}
+  });
+})();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

@@ -30,28 +30,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root{
-  --bg: #F4F4F6;
+  --bg: #F5F5F0;
   --surface: #FFFFFF;
-  --surface-alt: #F5F5F7;
-  --accent: #1C9A5D;
-  --accent-soft: #E3F9EC;
+  --surface-alt: #EFEFE8;
+  --accent: #7A9900; --on-accent:#14161C;
+  --accent-soft: #EEF7C8;
   --ink: #111114;
   --ink-dim: #8A8A93;
-  --line: #EEEEF1;
-  --highlight: #1C9A5D;
+  --line: #E7E7E0;
+  --highlight: #7A9900;
   --red-flag: #E8483B;
   --shadow: 0 12px 30px rgba(20,20,43,0.06);
 }
 html[data-theme="dark"]{
-  --bg: #101012;
-  --surface: #1A1A1D;
-  --surface-alt: #232327;
-  --accent: #3DDC84;
-  --accent-soft: #163625;
+  --bg: #0D0F14;
+  --surface: #141824;
+  --surface-alt: #1B202C;
+  --accent: #C6F135;
+  --on-accent: #0D0F14;
+  --accent-soft: #23301A;
   --ink: #F2F2F0;
   --ink-dim: #9A9AA3;
-  --line: #2A2A2F;
-  --highlight: #3DDC84;
+  --line: #262B38;
+  --highlight: #C6F135;
   --red-flag: #FF6B5B;
   --shadow: 0 12px 30px rgba(0,0,0,0.45);
 }
@@ -184,7 +185,7 @@ h1 span{color: var(--accent);}
   font-weight:700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--on-accent);
   background: var(--accent);
   padding: 4px 11px;
   border-radius: 999px;
@@ -262,7 +263,7 @@ ul.checklist li::before{
   font-weight:700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--on-accent);
   background: var(--accent);
   padding: 4px 9px;
   border-radius: 999px;

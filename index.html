@@ -34,22 +34,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root{
-  --bg:#F4F4F6; --surface:#FFFFFF; --surface-alt:#F5F5F7;
-  --accent:#1C9A5D; --accent-soft:#E3F9EC; --accent-deep:#157A49;
-  --ink:#111114; --ink-dim:#8A8A93; --line:#EEEEF1;
-  --highlight:#1C9A5D; --shadow:0 12px 30px rgba(20,20,43,0.07);
+  --bg:#F5F5F0; --surface:#FFFFFF; --surface-alt:#EFEFE8;
+  --accent:#7A9900; --on-accent:#14161C; --accent-soft:#EEF7C8; --accent-deep:#5C7300;
+  --ink:#111114; --ink-dim:#8A8A93; --line:#E7E7E0;
+  --highlight:#7A9900; --shadow:0 12px 30px rgba(20,20,43,0.07);
 }
 html[data-theme="dark"]{
-  --bg: #101012;
-  --surface: #1A1A1D;
-  --surface-alt: #232327;
-  --accent: #3DDC84;
-  --accent-soft: #163625;
-  --accent-deep: #2ECC71;
+  --bg: #0D0F14;
+  --surface: #141824;
+  --surface-alt: #1B202C;
+  --accent: #C6F135;
+  --on-accent: #0D0F14;
+  --accent-soft: #23301A;
+  --accent-deep: #A8D62E;
   --ink: #F2F2F0;
   --ink-dim: #9A9AA3;
-  --line: #2A2A2F;
-  --highlight: #3DDC84;
+  --line: #262B38;
+  --highlight: #C6F135;
   --shadow: 0 12px 30px rgba(0,0,0,0.45);
 }
 
@@ -68,9 +69,9 @@ body{
 .brand{display:flex; align-items:center; gap:12px;}
 .brand-mark{
   width:38px; height:38px; border-radius:12px;
-  background: linear-gradient(135deg, var(--accent), #8B7BFF);
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
   display:flex; align-items:center; justify-content:center;
-  color:#fff; font-weight:800; font-size:15px;
+  color:var(--on-accent); font-weight:800; font-size:15px;
 }
 .brand-name{font-weight:700; font-size:15px;}
 .brand-sub{font-size:12px; color:var(--ink-dim);}
@@ -154,6 +155,15 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
   </div>
 
   <div class="grid">
+    <a class="card" href="dashboard.html">
+      <div class="card-icon">★</div>
+      <div class="card-body">
+        <b>Dashboard</b>
+        <span>Your real progress across all 7 specialties in one view — next steps, top certs left to earn, and a progress chart, pulled live from your tracker.</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
     <a class="card" href="company-stage-roadmap.html">
       <div class="card-icon">01</div>
       <div class="card-body">

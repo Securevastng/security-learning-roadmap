@@ -28,16 +28,17 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 :root{
-  --bg:#F4F4F6; --surface:#FFFFFF; --surface-alt:#F5F5F7;
-  --accent:#1C9A5D; --accent-soft:#E3F9EC;
-  --ink:#111114; --ink-dim:#8A8A93; --line:#EEEEF1;
-  --highlight:#1C9A5D; --shadow:0 10px 26px rgba(20,20,43,0.06);
+  --bg:#F5F5F0; --surface:#FFFFFF; --surface-alt:#EFEFE8;
+  --accent:#7A9900; --on-accent:#14161C; --accent-soft:#EEF7C8;
+  --ink:#111114; --ink-dim:#8A8A93; --line:#E7E7E0;
+  --highlight:#7A9900; --shadow:0 10px 26px rgba(20,20,43,0.06);
 }
 html[data-theme="dark"]{
-  --bg:#101012; --surface:#1A1A1D; --surface-alt:#232327;
-  --accent:#3DDC84; --accent-soft:#163625;
-  --ink:#F2F2F0; --ink-dim:#9A9AA3; --line:#2A2A2F;
-  --highlight:#3DDC84; --shadow:0 12px 30px rgba(0,0,0,0.45);
+  --bg:#0D0F14; --surface:#141824; --surface-alt:#1B202C;
+  --accent:#C6F135;
+  --on-accent: #0D0F14; --accent-soft:#23301A;
+  --ink:#F2F2F0; --ink-dim:#9A9AA3; --line:#262B38;
+  --highlight:#C6F135; --shadow:0 12px 30px rgba(0,0,0,0.45);
 }
 *{box-sizing:border-box;}
 body{ margin:0; background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; }
@@ -65,7 +66,7 @@ tr:nth-child(even) td{ background: rgba(0,0,0,0.015); }
 .cost{ font-weight:600; }
 .badge{
   display:inline-block; font-size:9px; font-weight:800; text-transform:uppercase;
-  background:var(--accent); color:#fff; padding:2px 7px; border-radius:999px; margin-left:6px;
+  background:var(--accent); color:var(--on-accent); padding:2px 7px; border-radius:999px; margin-left:6px;
 }
 
 .footnote{ margin-top:18px; font-size:11px; color:var(--ink-dim); line-height:1.6; }
