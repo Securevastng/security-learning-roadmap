@@ -55,6 +55,7 @@ html[data-theme="dark"]{
 }
 
 *{box-sizing:border-box;}
+html{overflow-x:hidden; width:100%;}
 body{
   margin:0; background:var(--bg); color:var(--ink);
   font-family:'Inter', sans-serif;
@@ -125,6 +126,20 @@ h1{font-size:34px; font-weight:800; margin:0 0 10px; letter-spacing:-0.5px;}
 html[data-theme="dark"] .theme-toggle .icon-sun{ display:none; }
 html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
 .theme-toggle.floating{ position:fixed; top:16px; right:16px; z-index:999; }
+@media (max-width: 560px){
+  .topbar{ padding:14px 16px; }
+  .brand-name{ font-size:13.5px; }
+  .brand-sub{ display:none; }
+  .brand-mark{ width:32px; height:32px; font-size:13px; }
+  .get-in-touch{ padding:8px 14px; font-size:12px; }
+  .page{ padding:32px 16px 60px; }
+  h1{ font-size:26px; }
+  .card{ padding:16px 16px; gap:12px; }
+  .card-icon{ width:40px; height:40px; font-size:16px; }
+  .card-body b{ font-size:15px; }
+  .card-body span{ font-size:12px; }
+}
+
 @media print{ .theme-toggle{ display:none !important; } }
 
 /* PAGE FADE TRANSITION */

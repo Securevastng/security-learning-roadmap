@@ -41,6 +41,7 @@ html[data-theme="dark"]{
   --highlight:#C6F135; --shadow:0 12px 30px rgba(0,0,0,0.45);
 }
 *{box-sizing:border-box;}
+html{overflow-x:hidden; width:100%;}
 body{ margin:0; background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; }
 .wrap{ max-width:960px; margin:0 auto; padding:40px 24px 60px; }
 
@@ -58,6 +59,8 @@ h1{ font-size:28px; font-weight:800; margin:10px 0 6px; letter-spacing:-0.5px; }
 .back-link{ font-size:13px; color:var(--ink-dim); text-decoration:none; font-weight:600; align-self:center; }
 
 table{ width:100%; border-collapse:collapse; margin-top:20px; background:var(--surface); border-radius:14px; overflow:hidden; box-shadow:var(--shadow); }
+.table-scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; margin-top:20px; border-radius:14px; box-shadow:var(--shadow); }
+.table-scroll table{ margin-top:0; box-shadow:none; min-width:640px; }
 th{ text-align:left; padding:11px 14px; background:var(--surface-alt); font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:var(--ink-dim); font-weight:700; }
 td{ padding:12px 14px; border-top:1px solid var(--line); font-size:12.5px; vertical-align:top; }
 tr:nth-child(even) td{ background: rgba(0,0,0,0.015); }
@@ -96,6 +99,14 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
 body{ animation: pageFadeIn 0.32s ease; }
 @keyframes pageFadeIn{ from{ opacity:0; } to{ opacity:1; } }
 body.page-fade-out{ opacity:0 !important; transition: opacity 0.22s ease; }
+@media (max-width: 560px){
+  .wrap{ padding:24px 16px 40px; }
+  h1{ font-size:22px; }
+  .topline{ flex-direction:column; align-items:flex-start; }
+  .actions{ width:100%; }
+  .print-btn{ flex:1; }
+}
+
 @media (prefers-reduced-motion: reduce){
   body{ animation:none; }
   body.page-fade-out{ transition:none; }
@@ -120,6 +131,7 @@ body.page-fade-out{ opacity:0 !important; transition: opacity 0.22s ease; }
     </div>
   </div>
 
+  <div class="table-scroll">
   <table>
     <thead>
       <tr><th>Specialty</th><th>Cert that matters most</th><th>Cost</th><th>Typical US salary</th><th>Time to get there</th></tr>
@@ -176,6 +188,7 @@ body.page-fade-out{ opacity:0 !important; transition: opacity 0.22s ease; }
       </tr>
     </tbody>
   </table>
+  </div>
 
   <p class="footnote">
     Prices and salary ranges are approximate US figures as of July 2026 and will drift — see <a href="about.html" style="color:var(--accent);">the methodology page</a> for sourcing and update cadence. Naira figures use the mid-market rate (~₦1,380/$1); banks and transfer services will charge above this. "Time to get there" spans all three levels (Foundation → Advanced) at a realistic part-time study pace — see the <a href="skill-tree-roadmap.html" style="color:var(--accent);">specialty skill tree</a> for the per-level breakdown, or the <a href="skill-tree-free-resources.html" style="color:var(--accent);">full cert ladder</a> for every recognized certification in each field, not just the top one.

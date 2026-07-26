@@ -59,6 +59,7 @@ html[data-theme="dark"]{
 
 
 *{box-sizing:border-box;}
+html{overflow-x:hidden; width:100%;}
 html,body{margin:0;padding:0;}
 body{
   background: var(--bg);
@@ -308,6 +309,16 @@ ul.checklist li::before{
   gap: 18px;
 }
 @media (max-width: 700px){ .loop-grid{grid-template-columns: 1fr 1fr;} }
+@media (max-width: 560px){
+  .wrap{ padding:36px 16px 70px; }
+  .timeline{ padding-left:34px; }
+  .node{ left:-34px; width:26px; height:26px; font-size:11px; }
+  .stage-card{ padding:20px 18px; }
+  h1{ font-size:30px; }
+  .stage-title{ font-size:18px; }
+  .loop-grid{ grid-template-columns: 1fr 1fr; gap:12px; }
+  .loop{ padding:22px 18px; }
+}
 .loop-item{
   font-size: 13px;
   color: var(--ink-dim);

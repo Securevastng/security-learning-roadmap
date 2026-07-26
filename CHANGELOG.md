@@ -2,6 +2,9 @@
 
 All notable changes to the Security Learning Roadmap are logged here, newest first.
 
+## 2026-07-24 (4)
+- **Mobile responsiveness pass** across all 12 pages. Fixed real squeeze issues: `dashboard.html`'s sidebar (now a proper horizontal scroll bar under 900px, stat cards stack under 560px/400px), `certificate.html`'s stats/footer/padding (was completely unresponsive), `cheat-sheet.html`'s 5-column table (now scrolls horizontally instead of squeezing), `index.html`'s top bar (brand text was colliding with the toggle/Glossary button under ~400px), `company-stage-roadmap.html` and `skill-tree-roadmap.html`'s padding/timeline indents, `tracker.html`'s panel header, and `search.html`'s result rows (long labels could overflow instead of wrapping). Added `html{overflow-x:hidden}` as a defensive baseline on every page so any future overflow can't force horizontal page scroll. Verified all inline scripts still pass `node --check` after the changes. Cache bumped to v9.
+
 ## 2026-07-24 (3)
 - Added a smooth fade transition between pages across the whole site: pages fade in on load (CSS animation), and fade out just before navigating to another internal page (JS intercepts internal link clicks, adds a brief opacity transition, then navigates). Respects `prefers-reduced-motion`. Dashboard's two button-based navigations (search box Enter key, "Open tracker" button) route through the same fade helper for consistency. Verified with `node --check` across all touched files. Cache bumped to v8.
 

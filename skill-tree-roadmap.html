@@ -56,6 +56,7 @@ html[data-theme="dark"]{
 }
 
 *{box-sizing:border-box;}
+html{overflow-x:hidden; width:100%;}
 html,body{margin:0;padding:0;}
 body{
   background: var(--bg);
@@ -311,6 +312,16 @@ footer.note{
 html[data-theme="dark"] .theme-toggle .icon-sun{ display:none; }
 html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
 .theme-toggle.floating{ position:fixed; top:16px; right:16px; z-index:999; }
+@media (max-width: 560px){
+  .wrap{ padding:36px 16px 70px; }
+  h1{ font-size:26px; }
+  .subhead{ font-size:14px; }
+  .root-node{ padding:12px 20px; font-size:15px; }
+  .col-header{ font-size:13px; }
+  .detail-panel{ padding:20px 18px 50px; }
+  .panel-title{ font-size:19px; }
+}
+
 @media print{ .theme-toggle{ display:none !important; } }
 
 /* PAGE FADE TRANSITION */
