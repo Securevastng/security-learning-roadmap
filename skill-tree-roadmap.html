@@ -193,6 +193,10 @@ h1 span{color:var(--accent);}
   font-size:11px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase;
   color: var(--accent); cursor:pointer; text-align:center;
 }
+.level-time{
+  font-size:9.5px; font-weight:600; letter-spacing:0; text-transform:none;
+  color: var(--ink-dim); opacity:0.85;
+}
 .node-connector{ width:2px; height:12px; background:var(--line); margin:0 auto; }
 .tool-node, .cert-node{
   display:block; width:100%; text-align:left;
@@ -208,6 +212,24 @@ h1 span{color:var(--accent);}
   float:right; font-size:10px; font-weight:700; color:var(--highlight);
 }
 .level-group-end{ height:2px; }
+
+.done-section{ background: none; padding:14px 0 0; border-top:1px solid var(--line); margin-top:4px; }
+.done-toggle{ display:flex; align-items:center; gap:10px; cursor:pointer; font-size:13.5px; color:var(--ink); }
+.done-toggle input[type=checkbox]{
+  appearance:none; -webkit-appearance:none; width:20px; height:20px; flex-shrink:0;
+  border:2px solid var(--line); border-radius:6px; cursor:pointer; position:relative; background:var(--surface);
+}
+.done-toggle input[type=checkbox]:checked{ background: var(--accent); border-color: var(--accent); }
+.done-toggle input[type=checkbox]:checked::after{
+  content:''; position:absolute; left:5px; top:1px; width:5px; height:9px;
+  border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg);
+}
+.tool-node.node-done, .cert-node.node-done{
+  border-color: var(--accent); background: var(--accent-soft);
+}
+.tool-node.node-done::after, .cert-node.node-done::after{
+  content:'✓'; float:right; color: var(--accent); font-weight:800;
+}
 
 footer.note{
   margin-top: 44px;
@@ -240,6 +262,9 @@ footer.note{
 .panel-tag{
   font-size:10.5px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
   color: var(--accent); background: var(--accent-soft); padding:4px 10px; border-radius:999px;
+}
+.panel-time{
+  font-size:11.5px; font-weight:600; color:var(--ink-dim); margin-left:8px; margin-right:auto;
 }
 .panel-close{
   width:30px; height:30px; border-radius:50%; border:1px solid var(--line); background:var(--surface-alt);
@@ -298,6 +323,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
 <div class="detail-panel" id="detailPanel">
   <div class="panel-topline">
     <span class="panel-tag" id="panelTag">Foundation</span>
+    <span class="panel-time" id="panelTime" style="display:none;"></span>
     <div class="panel-close" id="panelClose">✕</div>
   </div>
   <div class="panel-title" id="panelTitle">Title</div>
@@ -311,6 +337,13 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
   <div class="panel-section resources" id="resourcesSection">
     <div class="panel-section-title">🟢 Free Resources</div>
     <div id="panelResources"></div>
+  </div>
+
+  <div class="panel-section done-section" id="doneSection" style="display:none;">
+    <label class="done-toggle">
+      <input type="checkbox" id="doneCheckbox">
+      <span id="doneLabel">Mark as done in my tracker</span>
+    </label>
   </div>
 </div>
 
@@ -345,39 +378,39 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
       <div class="col-header">Penetration Testing</div>
 
       <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="pentest-foundation" role="button" tabindex="0">Foundation</div>
+  <div class="level-head clickable-node" data-type="level" data-key="pentest-foundation" role="button" tabindex="0">Foundation <span class="level-time">~2–3mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:nmap">Nmap</button>
+  <button type="button" class="tool-node clickable-node" data-track="pentest:f1" data-type="tool" data-key="tool:nmap">Nmap</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:wireshark">Wireshark</button>
+  <button type="button" class="tool-node clickable-node" data-track="pentest:f2" data-type="tool" data-key="tool:wireshark">Wireshark</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:burp-suite-ce">Burp Suite CE</button>
+  <button type="button" class="tool-node clickable-node" data-track="pentest:f3" data-type="tool" data-key="tool:burp-suite-ce">Burp Suite CE</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:tcm-security-practical-ethical-hacking-peh">🎓 TCM Security — Practical Ethical Hacking (PEH)</button>
+  <button type="button" class="cert-node clickable-node" data-track="pentest:f4" data-type="cert" data-key="cert:tcm-security-practical-ethical-hacking-peh">🎓 TCM Security — Practical Ethical Hacking (PEH)</button>
 </div>
 <div class="stem"></div>
 <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="pentest-practitioner" role="button" tabindex="0">Practitioner</div>
+  <div class="level-head clickable-node" data-type="level" data-key="pentest-practitioner" role="button" tabindex="0">Practitioner <span class="level-time">~4–6mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:metasploit">Metasploit</button>
+  <button type="button" class="tool-node clickable-node" data-track="pentest:p1" data-type="tool" data-key="tool:metasploit">Metasploit</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:burp-suite-pro">Burp Suite Pro</button>
+  <button type="button" class="tool-node clickable-node" data-track="pentest:p2" data-type="tool" data-key="tool:burp-suite-pro">Burp Suite Pro</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:nessus">Nessus</button>
+  <button type="button" class="tool-node clickable-node" data-track="pentest:p3" data-type="tool" data-key="tool:nessus">Nessus</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:tcm-security-pjpt-or-ejpt">🎓 TCM Security — PJPT · or eJPT</button>
+  <button type="button" class="cert-node clickable-node" data-track="pentest:p4" data-type="cert" data-key="cert:tcm-security-pjpt-or-ejpt">🎓 TCM Security — PJPT · or eJPT</button>
 </div>
 <div class="stem"></div>
 <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="pentest-advanced" role="button" tabindex="0">Advanced</div>
+  <div class="level-head clickable-node" data-type="level" data-key="pentest-advanced" role="button" tabindex="0">Advanced <span class="level-time">~6–12mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:cobalt-strike">Cobalt Strike</button>
+  <button type="button" class="tool-node clickable-node" data-track="pentest:a1" data-type="tool" data-key="tool:cobalt-strike">Cobalt Strike</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:bloodhound">BloodHound</button>
+  <button type="button" class="tool-node clickable-node" data-track="pentest:a2" data-type="tool" data-key="tool:bloodhound">BloodHound</button>
   <div class="node-connector"></div>
   <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:c2-frameworks">C2 frameworks</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:tcm-security-pnpt-or-oscp">🎓 TCM Security — PNPT · or OSCP</button>
+  <button type="button" class="cert-node clickable-node" data-track="pentest:a3" data-type="cert" data-key="cert:tcm-security-pnpt-or-oscp">🎓 TCM Security — PNPT · or OSCP</button>
 </div>
 </div>
 
@@ -387,39 +420,39 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
       <div class="col-header">Network Engineering</div>
 
       <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="network-foundation" role="button" tabindex="0">Foundation</div>
+  <div class="level-head clickable-node" data-type="level" data-key="network-foundation" role="button" tabindex="0">Foundation <span class="level-time">~2–3mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:wireshark">Wireshark</button>
+  <button type="button" class="tool-node clickable-node" data-track="network:f1" data-type="tool" data-key="tool:wireshark">Wireshark</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:packet-tracer">Packet Tracer</button>
+  <button type="button" class="tool-node clickable-node" data-track="network:f2" data-type="tool" data-key="tool:packet-tracer">Packet Tracer</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:traceroute">traceroute</button>
+  <button type="button" class="tool-node clickable-node" data-track="network:f3" data-type="tool" data-key="tool:traceroute">traceroute</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:comptia-network">🎓 CompTIA Network+</button>
+  <button type="button" class="cert-node clickable-node" data-track="network:f4" data-type="cert" data-key="cert:comptia-network">🎓 CompTIA Network+</button>
 </div>
 <div class="stem"></div>
 <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="network-practitioner" role="button" tabindex="0">Practitioner</div>
+  <div class="level-head clickable-node" data-type="level" data-key="network-practitioner" role="button" tabindex="0">Practitioner <span class="level-time">~4–6mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:pfsense">pfSense</button>
+  <button type="button" class="tool-node clickable-node" data-track="network:p1" data-type="tool" data-key="tool:pfsense">pfSense</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:cisco-asa">Cisco ASA</button>
+  <button type="button" class="tool-node clickable-node" data-track="network:p2" data-type="tool" data-key="tool:cisco-asa">Cisco ASA</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:vpn-configs">VPN configs</button>
+  <button type="button" class="tool-node clickable-node" data-track="network:p3" data-type="tool" data-key="tool:vpn-configs">VPN configs</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:cisco-ccna">🎓 Cisco CCNA</button>
+  <button type="button" class="cert-node clickable-node" data-track="network:p4" data-type="cert" data-key="cert:cisco-ccna">🎓 Cisco CCNA</button>
 </div>
 <div class="stem"></div>
 <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="network-advanced" role="button" tabindex="0">Advanced</div>
+  <div class="level-head clickable-node" data-type="level" data-key="network-advanced" role="button" tabindex="0">Advanced <span class="level-time">~6–12mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:cisco-ise">Cisco ISE</button>
+  <button type="button" class="tool-node clickable-node" data-track="network:a1" data-type="tool" data-key="tool:cisco-ise">Cisco ISE</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:zscaler">Zscaler</button>
+  <button type="button" class="tool-node clickable-node" data-track="network:a2" data-type="tool" data-key="tool:zscaler">Zscaler</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:sd-wan">SD-WAN</button>
+  <button type="button" class="tool-node clickable-node" data-track="network:a2" data-type="tool" data-key="tool:sd-wan">SD-WAN</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:cisco-ccnp-security">🎓 Cisco CCNP Security</button>
+  <button type="button" class="cert-node clickable-node" data-track="network:a3" data-type="cert" data-key="cert:cisco-ccnp-security">🎓 Cisco CCNP Security</button>
 </div>
 </div>
 
@@ -429,39 +462,39 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
       <div class="col-header">Cybersecurity Analyst<br><span style="font-weight:400; font-size:11px; opacity:0.7;">(SOC / Blue Team)</span></div>
 
       <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="soc-foundation" role="button" tabindex="0">Foundation</div>
+  <div class="level-head clickable-node" data-type="level" data-key="soc-foundation" role="button" tabindex="0">Foundation <span class="level-time">~2–3mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:splunk-free">Splunk Free</button>
+  <button type="button" class="tool-node clickable-node" data-track="soc:f1" data-type="tool" data-key="tool:splunk-free">Splunk Free</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:event-viewer">Event Viewer</button>
+  <button type="button" class="tool-node clickable-node" data-track="soc:f2" data-type="tool" data-key="tool:event-viewer">Event Viewer</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:wireshark">Wireshark</button>
+  <button type="button" class="tool-node clickable-node" data-track="soc:f3" data-type="tool" data-key="tool:wireshark">Wireshark</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:isc2-cc-or-security">🎓 ISC2 CC · or Security+</button>
+  <button type="button" class="cert-node clickable-node" data-track="soc:f4" data-type="cert" data-key="cert:isc2-cc-or-security">🎓 ISC2 CC · or Security+</button>
 </div>
 <div class="stem"></div>
 <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="soc-practitioner" role="button" tabindex="0">Practitioner</div>
+  <div class="level-head clickable-node" data-type="level" data-key="soc-practitioner" role="button" tabindex="0">Practitioner <span class="level-time">~4–6mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:splunk-ent">Splunk Ent.</button>
+  <button type="button" class="tool-node clickable-node" data-track="soc:p1" data-type="tool" data-key="tool:splunk-ent">Splunk Ent.</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:elk-stack">ELK Stack</button>
+  <button type="button" class="tool-node clickable-node" data-track="soc:p1" data-type="tool" data-key="tool:elk-stack">ELK Stack</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:edr-crowdstrike">EDR (CrowdStrike)</button>
+  <button type="button" class="tool-node clickable-node" data-track="soc:p2" data-type="tool" data-key="tool:edr-crowdstrike">EDR (CrowdStrike)</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:blue-team-level-1-or-gcih">🎓 Blue Team Level 1 · or GCIH</button>
+  <button type="button" class="cert-node clickable-node" data-track="soc:p3" data-type="cert" data-key="cert:blue-team-level-1-or-gcih">🎓 Blue Team Level 1 · or GCIH</button>
 </div>
 <div class="stem"></div>
 <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="soc-advanced" role="button" tabindex="0">Advanced</div>
+  <div class="level-head clickable-node" data-type="level" data-key="soc-advanced" role="button" tabindex="0">Advanced <span class="level-time">~6–12mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:yara">YARA</button>
+  <button type="button" class="tool-node clickable-node" data-track="soc:a1" data-type="tool" data-key="tool:yara">YARA</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:volatility">Volatility</button>
+  <button type="button" class="tool-node clickable-node" data-track="soc:a2" data-type="tool" data-key="tool:volatility">Volatility</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:sysmon-sigma">Sysmon + Sigma</button>
+  <button type="button" class="tool-node clickable-node" data-track="soc:a3" data-type="tool" data-key="tool:sysmon-sigma">Sysmon + Sigma</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:gcfa-or-cysa">🎓 GCFA · or CySA+</button>
+  <button type="button" class="cert-node clickable-node" data-track="soc:a4" data-type="cert" data-key="cert:gcfa-or-cysa">🎓 GCFA · or CySA+</button>
 </div>
 </div>
 
@@ -471,31 +504,31 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
       <div class="col-header">Auditing</div>
 
       <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="audit-foundation" role="button" tabindex="0">Foundation</div>
+  <div class="level-head clickable-node" data-type="level" data-key="audit-foundation" role="button" tabindex="0">Foundation <span class="level-time">~2–3mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:control-checklists">Control checklists</button>
+  <button type="button" class="tool-node clickable-node" data-track="audit:f1" data-type="tool" data-key="tool:control-checklists">Control checklists</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:evidence-trackers">Evidence trackers</button>
+  <button type="button" class="tool-node clickable-node" data-track="audit:f2" data-type="tool" data-key="tool:evidence-trackers">Evidence trackers</button>
   <div class="node-connector"></div>
   <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:no-cert-required-learn-on-real-audits">🎓 No cert required — learn on real audits</button>
 </div>
 <div class="stem"></div>
 <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="audit-practitioner" role="button" tabindex="0">Practitioner</div>
+  <div class="level-head clickable-node" data-type="level" data-key="audit-practitioner" role="button" tabindex="0">Practitioner <span class="level-time">~4–6mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:auditboard">AuditBoard</button>
+  <button type="button" class="tool-node clickable-node" data-track="audit:p1" data-type="tool" data-key="tool:auditboard">AuditBoard</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:workiva">Workiva</button>
+  <button type="button" class="tool-node clickable-node" data-track="audit:p1" data-type="tool" data-key="tool:workiva">Workiva</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:cisa-isaca">🎓 CISA (ISACA)</button>
+  <button type="button" class="cert-node clickable-node" data-track="audit:p2" data-type="cert" data-key="cert:cisa-isaca">🎓 CISA (ISACA)</button>
 </div>
 <div class="stem"></div>
 <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="audit-advanced" role="button" tabindex="0">Advanced</div>
+  <div class="level-head clickable-node" data-type="level" data-key="audit-advanced" role="button" tabindex="0">Advanced <span class="level-time">~6–12mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:enterprise-grc-suites">Enterprise GRC suites</button>
+  <button type="button" class="tool-node clickable-node" data-track="audit:a1" data-type="tool" data-key="tool:enterprise-grc-suites">Enterprise GRC suites</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:cisa">🎓 CISA + <b>CIA</b> (Certified Internal Auditor)</button>
+  <button type="button" class="cert-node clickable-node" data-track="audit:a2" data-type="cert" data-key="cert:cisa">🎓 CISA + <b>CIA</b> (Certified Internal Auditor)</button>
 </div>
 </div>
 
@@ -505,35 +538,35 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
       <div class="col-header">GRC</div>
 
       <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="grc-foundation" role="button" tabindex="0">Foundation</div>
+  <div class="level-head clickable-node" data-type="level" data-key="grc-foundation" role="button" tabindex="0">Foundation <span class="level-time">~2–3mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:policy-templates">Policy templates</button>
+  <button type="button" class="tool-node clickable-node" data-track="grc:f1" data-type="tool" data-key="tool:policy-templates">Policy templates</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:vanta-drata">Vanta / Drata</button>
+  <button type="button" class="tool-node clickable-node" data-track="grc:f2" data-type="tool" data-key="tool:vanta-drata">Vanta / Drata</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:isc2-cc">🎓 ISC2 CC</button>
+  <button type="button" class="cert-node clickable-node" data-track="grc:f3" data-type="cert" data-key="cert:isc2-cc">🎓 ISC2 CC</button>
 </div>
 <div class="stem"></div>
 <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="grc-practitioner" role="button" tabindex="0">Practitioner</div>
+  <div class="level-head clickable-node" data-type="level" data-key="grc-practitioner" role="button" tabindex="0">Practitioner <span class="level-time">~4–6mo</span></div>
   <div class="node-connector"></div>
   <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:vanta">Vanta</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:onetrust">OneTrust</button>
+  <button type="button" class="tool-node clickable-node" data-track="grc:p1" data-type="tool" data-key="tool:onetrust">OneTrust</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:servicenow-grc">ServiceNow GRC</button>
+  <button type="button" class="tool-node clickable-node" data-track="grc:p1" data-type="tool" data-key="tool:servicenow-grc">ServiceNow GRC</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:crisc-or-iso-27001-lead-implementer">🎓 CRISC · or ISO 27001 Lead Implementer</button>
+  <button type="button" class="cert-node clickable-node" data-track="grc:p2" data-type="cert" data-key="cert:crisc-or-iso-27001-lead-implementer">🎓 CRISC · or ISO 27001 Lead Implementer</button>
 </div>
 <div class="stem"></div>
 <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="grc-advanced" role="button" tabindex="0">Advanced</div>
+  <div class="level-head clickable-node" data-type="level" data-key="grc-advanced" role="button" tabindex="0">Advanced <span class="level-time">~6–12mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:rsa-archer">RSA Archer</button>
+  <button type="button" class="tool-node clickable-node" data-track="grc:a1" data-type="tool" data-key="tool:rsa-archer">RSA Archer</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:metricstream">MetricStream</button>
+  <button type="button" class="tool-node clickable-node" data-track="grc:a1" data-type="tool" data-key="tool:metricstream">MetricStream</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:cgeit-or-advanced-crisc-practice">🎓 CGEIT · or advanced CRISC practice</button>
+  <button type="button" class="cert-node clickable-node" data-track="grc:a2" data-type="cert" data-key="cert:cgeit-or-advanced-crisc-practice">🎓 CGEIT · or advanced CRISC practice</button>
 </div>
 </div>
 
@@ -543,35 +576,35 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
       <div class="col-header">Cloud Security</div>
 
       <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="cloud-foundation" role="button" tabindex="0">Foundation</div>
+  <div class="level-head clickable-node" data-type="level" data-key="cloud-foundation" role="button" tabindex="0">Foundation <span class="level-time">~2–3mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:aws-azure-free-tier">AWS/Azure free tier</button>
+  <button type="button" class="tool-node clickable-node" data-track="cloud:f1" data-type="tool" data-key="tool:aws-azure-free-tier">AWS/Azure free tier</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:cloudtrail">CloudTrail</button>
+  <button type="button" class="tool-node clickable-node" data-track="cloud:f2" data-type="tool" data-key="tool:cloudtrail">CloudTrail</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:aws-cloud-practitioner">🎓 AWS Cloud Practitioner</button>
+  <button type="button" class="cert-node clickable-node" data-track="cloud:f3" data-type="cert" data-key="cert:aws-cloud-practitioner">🎓 AWS Cloud Practitioner</button>
 </div>
 <div class="stem"></div>
 <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="cloud-practitioner" role="button" tabindex="0">Practitioner</div>
+  <div class="level-head clickable-node" data-type="level" data-key="cloud-practitioner" role="button" tabindex="0">Practitioner <span class="level-time">~4–6mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:prowler">Prowler</button>
+  <button type="button" class="tool-node clickable-node" data-track="cloud:p1" data-type="tool" data-key="tool:prowler">Prowler</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:scoutsuite">ScoutSuite</button>
+  <button type="button" class="tool-node clickable-node" data-track="cloud:p1" data-type="tool" data-key="tool:scoutsuite">ScoutSuite</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:iam-policy-tools">IAM policy tools</button>
+  <button type="button" class="tool-node clickable-node" data-track="cloud:p2" data-type="tool" data-key="tool:iam-policy-tools">IAM policy tools</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:ccsk">🎓 CCSK</button>
+  <button type="button" class="cert-node clickable-node" data-track="cloud:p3" data-type="cert" data-key="cert:ccsk">🎓 CCSK</button>
 </div>
 <div class="stem"></div>
 <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="cloud-advanced" role="button" tabindex="0">Advanced</div>
+  <div class="level-head clickable-node" data-type="level" data-key="cloud-advanced" role="button" tabindex="0">Advanced <span class="level-time">~6–12mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:wiz">Wiz</button>
+  <button type="button" class="tool-node clickable-node" data-track="cloud:a1" data-type="tool" data-key="tool:wiz">Wiz</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:terraform-opa">Terraform + OPA</button>
+  <button type="button" class="tool-node clickable-node" data-track="cloud:a2" data-type="tool" data-key="tool:terraform-opa">Terraform + OPA</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:aws-security-specialty-or-ccsp">🎓 AWS Security Specialty · or CCSP</button>
+  <button type="button" class="cert-node clickable-node" data-track="cloud:a3" data-type="cert" data-key="cert:aws-security-specialty-or-ccsp">🎓 AWS Security Specialty · or CCSP</button>
 </div>
 </div>
 
@@ -581,39 +614,39 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
       <div class="col-header">Incident Response<br><span style="font-weight:400; font-size:11px; opacity:0.7;">(DFIR / Forensics)</span></div>
 
       <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="dfir-foundation" role="button" tabindex="0">Foundation</div>
+  <div class="level-head clickable-node" data-type="level" data-key="dfir-foundation" role="button" tabindex="0">Foundation <span class="level-time">~2–3mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:ftk-imager">FTK Imager</button>
+  <button type="button" class="tool-node clickable-node" data-track="dfir:f1" data-type="tool" data-key="tool:ftk-imager">FTK Imager</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:autopsy">Autopsy</button>
+  <button type="button" class="tool-node clickable-node" data-track="dfir:f2" data-type="tool" data-key="tool:autopsy">Autopsy</button>
   <div class="node-connector"></div>
   <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:event-viewer">Event Viewer</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:no-cert-required-start-with-nist-800-61r2">🎓 No cert required — start with NIST 800-61r2</button>
+  <button type="button" class="cert-node clickable-node" data-track="dfir:f3" data-type="cert" data-key="cert:no-cert-required-start-with-nist-800-61r2">🎓 No cert required — start with NIST 800-61r2</button>
 </div>
 <div class="stem"></div>
 <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="dfir-practitioner" role="button" tabindex="0">Practitioner</div>
+  <div class="level-head clickable-node" data-type="level" data-key="dfir-practitioner" role="button" tabindex="0">Practitioner <span class="level-time">~4–6mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:velociraptor">Velociraptor</button>
+  <button type="button" class="tool-node clickable-node" data-track="dfir:p2" data-type="tool" data-key="tool:velociraptor">Velociraptor</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:kape">KAPE</button>
+  <button type="button" class="tool-node clickable-node" data-track="dfir:p1" data-type="tool" data-key="tool:kape">KAPE</button>
   <div class="node-connector"></div>
   <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:volatility">Volatility</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:gcfe-or-blue-team-level-2">🎓 GCFE · or Blue Team Level 2</button>
+  <button type="button" class="cert-node clickable-node" data-track="dfir:p3" data-type="cert" data-key="cert:gcfe-or-blue-team-level-2">🎓 GCFE · or Blue Team Level 2</button>
 </div>
 <div class="stem"></div>
 <div class="level-group">
-  <div class="level-head clickable-node" data-type="level" data-key="dfir-advanced" role="button" tabindex="0">Advanced</div>
+  <div class="level-head clickable-node" data-type="level" data-key="dfir-advanced" role="button" tabindex="0">Advanced <span class="level-time">~6–12mo</span></div>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:chainsaw">Chainsaw</button>
+  <button type="button" class="tool-node clickable-node" data-track="dfir:a1" data-type="tool" data-key="tool:chainsaw">Chainsaw</button>
   <div class="node-connector"></div>
-  <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:timesketch">Timesketch</button>
+  <button type="button" class="tool-node clickable-node" data-track="dfir:a2" data-type="tool" data-key="tool:timesketch">Timesketch</button>
   <div class="node-connector"></div>
   <button type="button" class="tool-node clickable-node" data-type="tool" data-key="tool:rekall">Rekall</button>
   <div class="node-connector"></div>
-  <button type="button" class="cert-node clickable-node" data-type="cert" data-key="cert:gcfa-or-gnfa-grem">🎓 GCFA · or GNFA / GREM</button>
+  <button type="button" class="cert-node clickable-node" data-track="dfir:a3" data-type="cert" data-key="cert:gcfa-or-gnfa-grem">🎓 GCFA · or GNFA / GREM</button>
 </div>
 </div>
 
@@ -724,6 +757,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
 <script>
 const LEVEL_DETAILS = {
   "pentest-foundation": {
+    time: "~2–3 months",
     title: "Penetration Testing — Foundation",
     blurb: "This is where you build the muscle memory every pentester needs: reading network traffic, scanning for open services, and probing web applications by hand before you ever touch an automated tool. Nmap and Wireshark are the two you'll use daily for the rest of your career, no matter how senior you get.",
     cert: { name: "TCM Security — Practical Ethical Hacking", cost: "free–$30" },
@@ -734,6 +768,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "pentest-practitioner": {
+    time: "~4–6 months",
     title: "Penetration Testing — Practitioner",
     blurb: "Here you move from finding weaknesses to actually exploiting them. Metasploit and Burp Suite Pro turn manual probing into a repeatable workflow, and Nessus gives you the vulnerability-scanning backbone most real engagements start with. This is also where clients start expecting a proper written report, not just a list of findings.",
     cert: { name: "TCM PJPT · or eJPT", cost: "~$249" },
@@ -744,6 +779,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "pentest-advanced": {
+    time: "~6–12 months",
     title: "Penetration Testing — Advanced",
     blurb: "Advanced engagements stop looking like 'break into one box' and start looking like real adversary simulation: post-exploitation, lateral movement through Active Directory with BloodHound, and running your own command-and-control infrastructure. This is red-team territory, and it's where OSCP-level skill actually gets used day to day.",
     cert: { name: "TCM PNPT · or OSCP", cost: "~$499–$1,749" },
@@ -754,6 +790,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "network-foundation": {
+    time: "~2–3 months",
     title: "Network Engineering — Foundation",
     blurb: "Before you can secure a network, you have to actually understand how one works — reading packet captures, building topologies, and tracing why a connection is failing. Wireshark and Packet Tracer are the two tools that make 'the network' stop being an abstraction.",
     cert: { name: "CompTIA Network+", cost: "~$390" },
@@ -764,6 +801,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "network-practitioner": {
+    time: "~4–6 months",
     title: "Network Engineering — Practitioner",
     blurb: "This is the operational layer: configuring the firewalls, VPNs, and access-control lists that actually stand between an attacker and the internal network. pfSense and Cisco ASA are where most mid-size companies' perimeter security actually lives.",
     cert: { name: "Cisco CCNA", cost: "~$300" },
@@ -774,6 +812,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "network-advanced": {
+    time: "~6–12 months",
     title: "Network Engineering — Advanced",
     blurb: "At this level you're not just configuring devices, you're designing the architecture — zero trust segmentation, SD-WAN across multiple sites, identity-based network access with Cisco ISE. This is the difference between a network administrator and a network security architect.",
     cert: { name: "Cisco CCNP Security", cost: "~$700" },
@@ -784,6 +823,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "soc-foundation": {
+    time: "~2–3 months",
     title: "Cybersecurity Analyst — Foundation",
     blurb: "Day one of SOC work is log literacy: can you look at a Windows Event Viewer entry or a Splunk search and tell what actually happened? This level is about pattern recognition — knowing what normal looks like so abnormal stands out.",
     cert: { name: "ISC2 CC · or CompTIA Security+", cost: "$199–$425" },
@@ -794,6 +834,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "soc-practitioner": {
+    time: "~4–6 months",
     title: "Cybersecurity Analyst — Practitioner",
     blurb: "This is triage and response: building real detections in Splunk or the ELK stack, and working inside an EDR console when an alert actually needs investigating instead of just closing. Tier 2 analyst work lives here.",
     cert: { name: "Blue Team Level 1 · or GCIH", cost: "~$400–$999" },
@@ -804,6 +845,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "soc-advanced": {
+    time: "~6–12 months",
     title: "Cybersecurity Analyst — Advanced",
     blurb: "Advanced blue-team work is proactive, not reactive — writing YARA rules to catch malware before it's flagged, pulling apart memory dumps with Volatility, and building Sigma detection rules instead of just responding to someone else's. This is threat-hunting territory.",
     cert: { name: "GCFA · or CompTIA CySA+", cost: "~$425–$999" },
@@ -814,6 +856,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "audit-foundation": {
+    time: "~2–3 months",
     title: "Auditing — Foundation",
     blurb: "Auditing starts with the unglamorous groundwork: building a control checklist, gathering evidence, and learning to ask 'how do you know that's true?' about every process someone tells you exists.",
     cert: { name: "No cert required — learn on real audits", cost: "$0" },
@@ -824,6 +867,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "audit-practitioner": {
+    time: "~4–6 months",
     title: "Auditing — Practitioner",
     blurb: "This is where audits become a system rather than a spreadsheet — working inside a platform like AuditBoard or Workiva to manage evidence, findings, and remediation tracking across an entire audit cycle.",
     cert: { name: "CISA (ISACA)", cost: "$575–$760" },
@@ -834,6 +878,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "audit-advanced": {
+    time: "~6–12 months",
     title: "Auditing — Advanced",
     blurb: "At the senior level you're not just executing an audit program, you're running one — coordinating across an enterprise GRC suite, managing external auditor relationships, and reporting findings straight to the board or audit committee.",
     cert: { name: "CISA + CIA (Certified Internal Auditor)", cost: "~$1,000–1,500" },
@@ -844,6 +889,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "grc-foundation": {
+    time: "~2–3 months",
     title: "GRC — Foundation",
     blurb: "GRC starts with translation: turning a security control into a policy someone outside security can actually read and follow, and understanding tools like Vanta or Drata that automate a lot of the evidence-gathering.",
     cert: { name: "ISC2 CC", cost: "$199+$50/yr" },
@@ -854,6 +900,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "grc-practitioner": {
+    time: "~4–6 months",
     title: "GRC — Practitioner",
     blurb: "This level is vendor and program management — running third-party risk assessments in OneTrust or ServiceNow GRC, and starting to map controls to formal frameworks instead of ad hoc checklists.",
     cert: { name: "CRISC · or ISO 27001 Lead Implementer", cost: "$575–$3,000" },
@@ -864,6 +911,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "grc-advanced": {
+    time: "~6–12 months",
     title: "GRC — Advanced",
     blurb: "Enterprise GRC means working in platforms like RSA Archer or MetricStream, reporting risk in the language a board understands, and owning the risk register as a living document instead of an annual exercise.",
     cert: { name: "CISM · or CGEIT", cost: "$575–$760" },
@@ -874,6 +922,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "cloud-foundation": {
+    time: "~2–3 months",
     title: "Cloud Security — Foundation",
     blurb: "Cloud security starts with understanding the shared responsibility model: what AWS or Azure secures by default, and what's entirely on you. Setting up a free-tier account and actually reading CloudTrail logs is the fastest way to make that concrete.",
     cert: { name: "AWS Cloud Practitioner", cost: "~$100" },
@@ -884,6 +933,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "cloud-practitioner": {
+    time: "~4–6 months",
     title: "Cloud Security — Practitioner",
     blurb: "This is hands-on cloud hardening — running open-source scanners like Prowler or ScoutSuite against a real environment, and writing IAM policies tight enough to actually matter instead of copy-pasted from a tutorial.",
     cert: { name: "CCSK", cost: "~$445" },
@@ -894,6 +944,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "cloud-advanced": {
+    time: "~6–12 months",
     title: "Cloud Security — Advanced",
     blurb: "Advanced cloud security means thinking in code: CNAPP platforms like Wiz for continuous posture management, and policy-as-code with Terraform and OPA so misconfigurations get caught before they're ever deployed, not after.",
     cert: { name: "AWS Security Specialty · or CCSP", cost: "$300–$599" },
@@ -904,6 +955,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "dfir-foundation": {
+    time: "~2–3 months",
     title: "Incident Response — Foundation",
     blurb: "Incident response starts with evidence handling — imaging a disk properly with FTK Imager so it holds up to scrutiny, and learning to navigate a case in Autopsy without destroying what you're trying to preserve.",
     cert: { name: "No cert required — start with NIST 800-61r2", cost: "$0" },
@@ -914,6 +966,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "dfir-practitioner": {
+    time: "~4–6 months",
     title: "Incident Response — Practitioner",
     blurb: "This level is live response at scale: collecting artifacts across a fleet with KAPE, and running enterprise hunts with Velociraptor when an incident isn't confined to one machine.",
     cert: { name: "GCFE · or Blue Team Level 2", cost: "~$999" },
@@ -924,6 +977,7 @@ const LEVEL_DETAILS = {
     ]
   },
   "dfir-advanced": {
+    time: "~6–12 months",
     title: "Incident Response — Advanced",
     blurb: "Advanced DFIR is reconstruction — parsing Windows event logs at scale with Chainsaw, building a full attack timeline in Timesketch, and understanding memory forensics deeply enough to know what a live system was actually doing at the moment of compromise.",
     cert: { name: "GCFA · or GNFA / GREM", cost: "~$999" },
@@ -1017,6 +1071,28 @@ const CERT_DETAILS = {
   const overlay = document.getElementById('panelOverlay');
   const panel = document.getElementById('detailPanel');
   const closeBtn = document.getElementById('panelClose');
+  const TRACKER_KEY = "sec-roadmap-tracker";
+
+  function loadTrackerState(){
+    try{
+      const raw = localStorage.getItem(TRACKER_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch(e){ return {}; }
+  }
+  function saveTrackerState(state){
+    try{ localStorage.setItem(TRACKER_KEY, JSON.stringify(state)); } catch(e){}
+  }
+
+  function refreshNodeCheckmarks(){
+    const state = loadTrackerState();
+    document.querySelectorAll('[data-track]').forEach(el => {
+      const track = el.getAttribute('data-track');
+      if(state[track]) el.classList.add('node-done');
+      else el.classList.remove('node-done');
+    });
+  }
+
+  let currentTrackKey = null;
 
   function showLevel(key){
     const d = LEVEL_DETAILS[key];
@@ -1026,6 +1102,9 @@ const CERT_DETAILS = {
     document.getElementById('panelBlurb').textContent = d.blurb;
     document.getElementById('panelCertName').textContent = d.cert.name;
     document.getElementById('panelCertCost').textContent = d.cert.cost;
+    const timeEl = document.getElementById('panelTime');
+    if(d.time){ timeEl.textContent = '⏱ ' + d.time; timeEl.style.display = 'inline'; }
+    else { timeEl.style.display = 'none'; }
     const resWrap = document.getElementById('panelResources');
     resWrap.innerHTML = '';
     d.resources.forEach(r => {
@@ -1042,6 +1121,7 @@ const CERT_DETAILS = {
     const d = TOOL_DETAILS[key];
     if(!d) return;
     document.getElementById('panelTag').textContent = 'Tool';
+    document.getElementById('panelTime').style.display = 'none';
     document.getElementById('panelTitle').textContent = d.name;
     document.getElementById('panelBlurb').textContent = d.blurb;
     document.getElementById('certSection').style.display = 'none';
@@ -1062,6 +1142,7 @@ const CERT_DETAILS = {
     const d = CERT_DETAILS[key];
     if(!d) return;
     document.getElementById('panelTag').textContent = 'Certification';
+    document.getElementById('panelTime').style.display = 'none';
     document.getElementById('panelTitle').textContent = key.replace('cert:','').split('-').join(' ');
     document.getElementById('panelBlurb').textContent = d.blurb;
     document.getElementById('certSection').style.display = 'none';
@@ -1078,11 +1159,33 @@ const CERT_DETAILS = {
     }
   }
 
-  function openPanel(type, key){
+  function setupDoneToggle(track){
+    const doneSection = document.getElementById('doneSection');
+    const checkbox = document.getElementById('doneCheckbox');
+    if(!track){
+      doneSection.style.display = 'none';
+      return;
+    }
+    doneSection.style.display = 'block';
+    const state = loadTrackerState();
+    checkbox.checked = !!state[track];
+    currentTrackKey = track;
+  }
+
+  document.getElementById('doneCheckbox').addEventListener('change', (e) => {
+    if(!currentTrackKey) return;
+    const state = loadTrackerState();
+    state[currentTrackKey] = e.target.checked;
+    saveTrackerState(state);
+    refreshNodeCheckmarks();
+  });
+
+  function openPanel(type, key, track){
     if(type === 'level') showLevel(key);
     else if(type === 'tool') showTool(key);
     else if(type === 'cert') showCert(key);
     else return;
+    setupDoneToggle(track);
     overlay.classList.add('open');
     panel.classList.add('open');
   }
@@ -1095,15 +1198,31 @@ const CERT_DETAILS = {
   document.querySelectorAll('.clickable-node').forEach(el => {
     const type = el.getAttribute('data-type');
     const key = el.getAttribute('data-key');
-    el.addEventListener('click', () => openPanel(type, key));
+    const track = el.getAttribute('data-track');
+    el.addEventListener('click', () => openPanel(type, key, track));
     el.addEventListener('keydown', (e) => {
-      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openPanel(type, key); }
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openPanel(type, key, track); }
     });
   });
 
   overlay.addEventListener('click', closePanel);
   closeBtn.addEventListener('click', closePanel);
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closePanel(); });
+
+  refreshNodeCheckmarks();
+
+  // Auto-open a node if linked via ?open=tool:nmap or ?open=cert:oscp or ?open=pentest-foundation
+  const params = new URLSearchParams(window.location.search);
+  const openKey = params.get('open');
+  if(openKey){
+    const target = document.querySelector(`.clickable-node[data-key="${openKey}"]`);
+    if(target){
+      const type = target.getAttribute('data-type');
+      const track = target.getAttribute('data-track');
+      openPanel(type, openKey, track);
+      target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+    }
+  }
 })();
 </script>
 <script>

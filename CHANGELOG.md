@@ -2,6 +2,12 @@
 
 All notable changes to the Security Learning Roadmap are logged here, newest first.
 
+## 2026-07-23 (5)
+- **Tracker sync**: 70 of the 97 clickable nodes on `skill-tree-roadmap.html` now share a "Mark as done" toggle with `tracker.html` — both read/write the same `localStorage` state, so progress made in either place shows up in both. Synced nodes get a green checkmark. A handful of nodes have no tracker equivalent (extra tools that only exist in the skill tree) and are left unsynced rather than forced into a false match.
+- **Time estimates**: every level (Foundation/Practitioner/Advanced) now shows a rough time-to-complete estimate, both inline on the card and in the detail panel.
+- **`search.html`**: a global search across all 118 indexed items (51 tools, 21 certs, 34 glossary terms, 7 specialties, 5 pages) with type filters. Clicking a tool/cert result deep-links into `skill-tree-roadmap.html` and auto-opens that node's panel; glossary results pre-fill the glossary's own search box.
+- **`cheat-sheet.html`**: one printable page — all 7 specialties, their top cert, cost (USD + Naira), salary range, and rough time investment.
+
 ## 2026-07-23 (4)
 - `skill-tree-roadmap.html`: full redesign to match the roadmap.sh interaction pattern. Every tool (51) and every certification (21), not just the 3 level cards, is now individually clickable — 97 clickable nodes total, each opening the side panel with its own explanation and an official link (tool docs/homepage, or certifying body page). Level headers still open the fuller level overview with free resources.
 - Restructured the visual layout: tools and certs now cascade vertically within each branch with connecting lines, closer to roadmap.sh's flowchart look, instead of a flat chip list.

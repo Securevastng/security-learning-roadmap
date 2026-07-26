@@ -170,8 +170,8 @@ html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
 </div>
 
 <script>
-document.getElementById('search').addEventListener('input', function(e){
-  const q = e.target.value.toLowerCase().trim();
+function runFilter(q){
+  q = q.toLowerCase().trim();
   document.querySelectorAll('.entry').forEach(function(entry){
     const text = entry.textContent.toLowerCase();
     entry.classList.toggle('hidden', q.length > 0 && !text.includes(q));
@@ -185,7 +185,16 @@ document.getElementById('search').addEventListener('input', function(e){
     }
     label.classList.toggle('hidden', q.length > 0 && !anyVisible);
   });
-});
+}
+
+document.getElementById('search').addEventListener('input', function(e){ runFilter(e.target.value); });
+
+// Prefill from ?q= if linked from search.html
+const qParam = new URLSearchParams(window.location.search).get('q');
+if(qParam){
+  document.getElementById('search').value = qParam;
+  runFilter(qParam);
+}
 </script>
 <script>
 if ("serviceWorker" in navigator) {
