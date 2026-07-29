@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>
+(function(){
+  try{
+    var saved = localStorage.getItem('sec-roadmap-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e){}
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What's Next — Security Learning Roadmap</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="theme-color" content="#0D0F14">
+
+<meta property="og:title" content="What's Next — Security Learning Roadmap">
+<meta property="og:description" content="Planned improvements to the Security Learning Roadmap, and how to suggest your own.">
+<meta property="og:image" content="icons/icon-512.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+:root{
+  --bg:#F5F5F0; --surface:#FFFFFF; --surface-alt:#EFEFE8;
+  --accent:#7A9900; --on-accent:#14161C; --accent-soft:#EEF7C8; --accent-deep:#5C7300;
+  --ink:#111114; --ink-dim:#8A8A93; --line:#E7E7E0;
+  --shadow:0 10px 26px rgba(20,20,43,0.06);
+}
+html[data-theme="dark"]{
+  --bg:#0D0F14; --surface:#141824; --surface-alt:#1B202C;
+  --accent:#C6F135; --on-accent:#0D0F14; --accent-soft:#23301A; --accent-deep:#A8D62E;
+  --ink:#F2F2F0; --ink-dim:#9A9AA3; --line:#262B38;
+  --shadow:0 12px 30px rgba(0,0,0,0.45);
+}
+*{box-sizing:border-box;}
+html{overflow-x:hidden; width:100%;}
+body{ margin:0; background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.6; }
+.wrap{ max-width:720px; margin:0 auto; padding:52px 24px 90px; }
+
+.eyebrow{ color:var(--accent); font-weight:700; font-size:12px; letter-spacing:1px; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
+.eyebrow::before{ content:''; width:7px; height:7px; border-radius:50%; background:var(--accent); }
+h1{ font-size:30px; font-weight:800; margin:12px 0 6px; letter-spacing:-0.5px; }
+.subhead{ color:var(--ink-dim); font-size:14px; margin-bottom:8px; }
+.back-link{ font-size:13px; color:var(--ink-dim); text-decoration:none; font-weight:600; }
+.back-link:hover{ color:var(--accent); }
+
+.section{ margin-top:32px; }
+.section h2{ font-size:17px; font-weight:800; margin:0 0 12px; }
+
+.status-grid{ display:flex; flex-direction:column; gap:10px; }
+.status-row{
+  display:flex; align-items:flex-start; gap:12px;
+  background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:13px 16px;
+}
+.status-dot{ width:9px; height:9px; border-radius:50%; margin-top:5px; flex-shrink:0; }
+.status-dot.done{ background:var(--accent); }
+.status-dot.planned{ background:#F2994A; }
+.status-dot.idea{ background:var(--ink-dim); }
+.status-text b{ display:block; font-size:13.5px; font-weight:700; }
+.status-text span{ font-size:12px; color:var(--ink-dim); }
+.status-label{
+  margin-left:auto; font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;
+  padding:3px 9px; border-radius:999px; flex-shrink:0; white-space:nowrap;
+}
+.status-label.done{ background:var(--accent-soft); color:var(--accent-deep); }
+.status-label.planned{ background:#FFF1D6; color:#B8760A; }
+.status-label.idea{ background:var(--surface-alt); color:var(--ink-dim); }
+
+.feedback-card{
+  background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:22px 24px;
+  box-shadow:var(--shadow); margin-top:14px;
+}
+.feedback-card textarea{
+  width:100%; min-height:100px; border:1px solid var(--line); border-radius:12px; padding:12px 14px;
+  font-family:inherit; font-size:13.5px; color:var(--ink); background:var(--surface-alt); resize:vertical; margin-bottom:12px;
+}
+.feedback-card textarea:focus{ outline:none; border-color:var(--accent); }
+.feedback-btn{
+  background:var(--accent); color:var(--on-accent); border:none; border-radius:999px;
+  padding:11px 22px; font-family:inherit; font-weight:700; font-size:13px; cursor:pointer;
+}
+.feedback-note{ font-size:11.5px; color:var(--ink-dim); margin-top:10px; }
+
+footer.note{ margin-top:40px; font-size:12px; color:var(--ink-dim); }
+
+.theme-toggle{
+  width:38px; height:38px; border-radius:50%;
+  background:var(--surface); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:var(--shadow); color:var(--ink);
+  position:fixed; top:16px; right:16px; z-index:999;
+}
+.theme-toggle svg{ width:17px; height:17px; }
+.theme-toggle .icon-moon{ display:none; }
+html[data-theme="dark"] .theme-toggle .icon-sun{ display:none; }
+html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
+@media print{ .theme-toggle{ display:none !important; } }
+
+/* PAGE FADE TRANSITION */
+body{ animation: pageFadeIn 0.32s ease; }
+@keyframes pageFadeIn{ from{ opacity:0; } to{ opacity:1; } }
+body.page-fade-out{ opacity:0 !important; transition: opacity 0.22s ease; }
+@media (prefers-reduced-motion: reduce){
+  body{ animation:none; }
+  body.page-fade-out{ transition:none; }
+}
+
+/* KEYBOARD SHORTCUTS HINT */
+.shortcuts-hint{
+  position:fixed; bottom:16px; left:16px; z-index:998;
+  background:var(--surface); border:1px solid var(--line); border-radius:14px;
+  box-shadow:var(--shadow); padding:14px 18px; font-size:12.5px; color:var(--ink);
+  display:none; max-width:260px;
+}
+.shortcuts-hint.open{ display:block; }
+.shortcuts-hint b{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:var(--ink-dim); margin-bottom:8px; }
+.shortcuts-hint .row{ display:flex; justify-content:space-between; gap:12px; margin-bottom:6px; }
+.shortcuts-hint kbd{
+  background:var(--surface-alt); border:1px solid var(--line); border-radius:5px;
+  padding:1px 7px; font-family:monospace; font-size:11px;
+}
+@media print{ .shortcuts-hint{ display:none !important; } }
+</style>
+</head>
+<body>
+<button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+</button>
+<div class="wrap">
+
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+    <div class="eyebrow">Security Learning Roadmap</div>
+    <a class="back-link" href="index.html">← Back home</a>
+  </div>
+  <h1>What's next</h1>
+  <p class="subhead">What's been shipped, what's planned, and how to suggest something yourself.</p>
+
+  <div class="section">
+    <h2>Recently shipped</h2>
+    <div class="status-grid">
+      <div class="status-row"><span class="status-dot done"></span><div class="status-text"><b>Dashboard</b><span>Real progress data, streaks, quick actions</span></div><span class="status-label done">Done</span></div>
+      <div class="status-row"><span class="status-dot done"></span><div class="status-text"><b>Dark / light mode</b><span>Site-wide toggle, remembers your choice</span></div><span class="status-label done">Done</span></div>
+      <div class="status-row"><span class="status-dot done"></span><div class="status-text"><b>Global search</b><span>118 tools, certs, terms, and pages in one place</span></div><span class="status-label done">Done</span></div>
+      <div class="status-row"><span class="status-dot done"></span><div class="status-text"><b>Keyboard shortcuts</b><span><kbd>/</kbd> to search, <kbd>?</kbd> for the shortcut list</span></div><span class="status-label done">Done</span></div>
+      <div class="status-row"><span class="status-dot done"></span><div class="status-text"><b>Progress export</b><span>Download your tracker progress as CSV</span></div><span class="status-label done">Done</span></div>
+      <div class="status-row"><span class="status-dot done"></span><div class="status-text"><b>Streak tracking</b><span>Consecutive days of marking something done</span></div><span class="status-label done">Done</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Planned</h2>
+    <div class="status-grid">
+      <div class="status-row"><span class="status-dot planned"></span><div class="status-text"><b>Compare mode</b><span>Side-by-side view of two specialties</span></div><span class="status-label planned">Planned</span></div>
+      <div class="status-row"><span class="status-dot planned"></span><div class="status-text"><b>Consistent iconography</b><span>Replace mixed emoji/unicode icons with one SVG set</span></div><span class="status-label planned">Planned</span></div>
+      <div class="status-row"><span class="status-dot planned"></span><div class="status-text"><b>Social share image</b><span>Dedicated OG image, not just the app icon</span></div><span class="status-label planned">Planned</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Under consideration</h2>
+    <div class="status-grid">
+      <div class="status-row"><span class="status-dot idea"></span><div class="status-text"><b>Job title / salary mapping expansion</b><span>More granular than the current per-branch range</span></div><span class="status-label idea">Idea</span></div>
+      <div class="status-row"><span class="status-dot idea"></span><div class="status-text"><b>Cross-branch prerequisites</b><span>Show which specialties build on each other</span></div><span class="status-label idea">Idea</span></div>
+      <div class="status-row"><span class="status-dot idea"></span><div class="status-text"><b>Team-shared progress</b><span>Would need a real backend — deliberately not built yet</span></div><span class="status-label idea">Idea</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Suggest something</h2>
+    <div class="feedback-card">
+      <textarea id="feedbackText" placeholder="Found something outdated, or have an idea for what to add next?"></textarea>
+      <button class="feedback-btn" id="feedbackBtn">Send as email</button>
+      <div class="feedback-note">Opens your email client with this pre-filled — nothing is sent automatically, and nothing is stored anywhere on this site.</div>
+    </div>
+  </div>
+
+  <footer class="note">See <a href="about.html" style="color:var(--accent);">the methodology page</a> for how content decisions get made, or <code>CHANGELOG.md</code> in the repo for the full dated history.</footer>
+</div>
+
+<script>
+document.getElementById('feedbackBtn').addEventListener('click', () => {
+  const text = document.getElementById('feedbackText').value.trim();
+  const subject = encodeURIComponent('Security Learning Roadmap — feedback');
+  const body = encodeURIComponent(text || '(no message entered)');
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+});
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('themeToggle');
+  if(!btn) return;
+  btn.addEventListener('click', function(){
+    var html = document.documentElement;
+    var current = html.getAttribute('data-theme') || 'light';
+    var next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    try{ localStorage.setItem('sec-roadmap-theme', next); }catch(e){}
+  });
+})();
+</script>
+<script>
+(function(){
+  function navigateWithFade(href){
+    document.body.classList.add('page-fade-out');
+    setTimeout(function(){ window.location.href = href; }, 220);
+  }
+  window.navigateWithFade = navigateWithFade;
+
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a');
+    if(!a) return;
+    var href = a.getAttribute('href');
+    if(!href) return;
+    if(href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto:')) return;
+    if(a.target === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    navigateWithFade(href);
+  });
+
+  window.addEventListener('pageshow', function(e){
+    if(e.persisted) document.body.classList.remove('page-fade-out');
+  });
+})();
+</script>
+<script>
+(function(){
+  const hint = document.createElement('div');
+  hint.className = 'shortcuts-hint';
+  hint.id = 'shortcutsHint';
+  hint.innerHTML = `
+    <b>Keyboard shortcuts</b>
+    <div class="row"><span>Search everything</span><kbd>/</kbd></div>
+    <div class="row"><span>Close panel / this hint</span><kbd>Esc</kbd></div>
+    <div class="row"><span>Show this hint</span><kbd>?</kbd></div>
+  `;
+  document.body.appendChild(hint);
+
+  document.addEventListener('keydown', function(e){
+    const tag = (e.target.tagName || '').toLowerCase();
+    const typing = tag === 'input' || tag === 'textarea' || e.target.isContentEditable;
+
+    if(e.key === '/' && !typing){
+      e.preventDefault();
+      const localSearch = document.getElementById('search') || document.querySelector('.search-box input');
+      if(localSearch){ localSearch.focus(); }
+      else if(typeof navigateWithFade === 'function'){ navigateWithFade('search.html'); }
+      else { window.location.href = 'search.html'; }
+    }
+
+    if(e.key === '?' && !typing){
+      e.preventDefault();
+      hint.classList.toggle('open');
+    }
+
+    if(e.key === 'Escape'){
+      hint.classList.remove('open');
+    }
+  });
+
+  document.addEventListener('click', function(e){
+    if(hint.classList.contains('open') && !hint.contains(e.target)){
+      hint.classList.remove('open');
+    }
+  });
+})();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

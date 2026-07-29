@@ -2,6 +2,17 @@
 
 All notable changes to the Security Learning Roadmap are logged here, newest first.
 
+## 2026-07-25
+- **Fixed the mobile dashboard nav**: the sidebar previously collapsed into a squeezed horizontal scroll bar on narrow screens. Replaced with a proper slide-in drawer — a hamburger button in the top bar toggles the full nav in as an overlay from the left, with a dimmed backdrop, closes on backdrop click / nav link click / Escape. Verified with `node --check` and a mock-DOM execution run.
+
+## 2026-07-24 (5)
+- **Streak tracking**: marking any item done in `tracker.html` or `skill-tree-roadmap.html` records daily activity (`localStorage`, no backend). Shown as a "🔥 N days in a row" badge on `dashboard.html` when the streak is still active (today or yesterday).
+- **Keyboard shortcuts** site-wide: `/` focuses local search (or jumps to `search.html`), `?` shows a shortcuts hint, `Esc` closes panels/hints.
+- **Progress export**: `tracker.html` has an "Export progress (CSV)" button covering every specialty, section, item, and done-status.
+- **Better empty states** on `dashboard.html`: a fresh tracker now shows "Pick a specialty →" instead of a flat "0%" with nothing to do about it.
+- **`roadmap-status.html`**: what's shipped / planned / under consideration, plus a feedback box that opens a pre-filled email (no backend).
+- Verified all 70 inline scripts across all 13 pages pass `node --check`. Cache bumped to v10.
+
 ## 2026-07-24 (4)
 - **Mobile responsiveness pass** across all 12 pages. Fixed real squeeze issues: `dashboard.html`'s sidebar (now a proper horizontal scroll bar under 900px, stat cards stack under 560px/400px), `certificate.html`'s stats/footer/padding (was completely unresponsive), `cheat-sheet.html`'s 5-column table (now scrolls horizontally instead of squeezing), `index.html`'s top bar (brand text was colliding with the toggle/Glossary button under ~400px), `company-stage-roadmap.html` and `skill-tree-roadmap.html`'s padding/timeline indents, `tracker.html`'s panel header, and `search.html`'s result rows (long labels could overflow instead of wrapping). Added `html{overflow-x:hidden}` as a defensive baseline on every page so any future overflow can't force horizontal page scroll. Verified all inline scripts still pass `node --check` after the changes. Cache bumped to v9.
 

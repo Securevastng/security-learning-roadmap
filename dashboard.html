@@ -91,16 +91,37 @@ body{ margin:0; background:var(--bg); color:var(--ink); font-family:\'Inter\',sa
 .card-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; gap:10px; flex-wrap:wrap; }
 
 /* RESPONSIVE BREAKPOINTS */
+.menu-toggle{ display:none; }
+.sidebar-overlay{ display:none; }
+
 @media (max-width: 900px){
   .layout{ flex-direction:column; }
   .content-grid{ grid-template-columns: 1fr; }
-  .sidebar{
-    width:100%; flex-direction:row; overflow-x:auto; padding:12px 14px; gap:4px;
-    align-items:center; -webkit-overflow-scrolling:touch;
+
+  .menu-toggle{
+    display:flex; align-items:center; justify-content:center;
+    width:36px; height:36px; border-radius:10px; background:var(--surface); border:1px solid var(--line);
+    color:var(--ink); cursor:pointer; flex-shrink:0;
   }
-  .sidebar-brand{ padding:0 10px 0 0; flex-shrink:0; }
-  .nav-item{ padding:8px 12px; margin-bottom:0; flex-shrink:0; }
-  .sidebar-bottom{ margin-top:0; display:flex; gap:4px; flex-shrink:0; }
+  .menu-toggle svg{ width:18px; height:18px; }
+
+  .sidebar{
+    position:fixed; top:0; left:0; height:100%; width:250px; max-width:80vw;
+    flex-direction:column; overflow-y:auto; -webkit-overflow-scrolling:touch;
+    padding:20px 16px; transform:translateX(-100%);
+    transition:transform 0.25s ease; z-index:1001; box-shadow:var(--shadow);
+  }
+  .sidebar.open{ transform:translateX(0); }
+  .sidebar-brand{ padding:0 8px 22px; flex-shrink:0; }
+  .nav-item{ padding:10px 12px; margin-bottom:2px; flex-shrink:0; }
+  .sidebar-bottom{ margin-top:auto; display:block; }
+
+  .sidebar-overlay{
+    display:block; position:fixed; inset:0; background:rgba(12,12,14,0.4);
+    z-index:1000; opacity:0; pointer-events:none; transition:opacity 0.25s ease;
+  }
+  .sidebar-overlay.open{ opacity:1; pointer-events:auto; }
+
   .main{ padding:20px 18px; }
 }
 
@@ -206,12 +227,29 @@ body.page-fade-out{ opacity:0 !important; transition: opacity 0.22s ease; }
   body{ animation:none; }
   body.page-fade-out{ transition:none; }
 }
+
+/* KEYBOARD SHORTCUTS HINT */
+.shortcuts-hint{
+  position:fixed; bottom:16px; left:16px; z-index:998;
+  background:var(--surface); border:1px solid var(--line); border-radius:14px;
+  box-shadow:var(--shadow); padding:14px 18px; font-size:12.5px; color:var(--ink);
+  display:none; max-width:260px;
+}
+.shortcuts-hint.open{ display:block; }
+.shortcuts-hint b{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:var(--ink-dim); margin-bottom:8px; }
+.shortcuts-hint .row{ display:flex; justify-content:space-between; gap:12px; margin-bottom:6px; }
+.shortcuts-hint kbd{
+  background:var(--surface-alt); border:1px solid var(--line); border-radius:5px;
+  padding:1px 7px; font-family:monospace; font-size:11px;
+}
+@media print{ .shortcuts-hint{ display:none !important; } }
 </style>
 </head>
 <body>
 
 <div class="layout">
-  <div class="sidebar">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="sidebar" id="sidebar">
     <div class="sidebar-brand"><span class="dot"></span> Sec Roadmap</div>
     <a class="nav-item active" href="dashboard.html"><span class="nav-icon">&#9635;</span> Dashboard</a>
     <a class="nav-item" href="skill-tree-roadmap.html"><span class="nav-icon">&#9735;</span> Skill Tree</a>
@@ -228,6 +266,9 @@ body.page-fade-out{ opacity:0 !important; transition: opacity 0.22s ease; }
 
   <div class="main">
     <div class="topbar">
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
       <div class="search-box">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
         <input type="text" placeholder="Search tools, certs, terms…" onkeydown="if(event.key==='Enter'){navigateWithFade('search.html')}">
@@ -242,7 +283,7 @@ body.page-fade-out{ opacity:0 !important; transition: opacity 0.22s ease; }
 
     <div class="greeting">
       <h1 id="greetingText">Good morning</h1>
-      <p>Here's where things stand across all 7 specialties right now.</p>
+      <p>Here's where things stand across all 7 specialties right now. <span id="streakBadge" style="display:none;"></span></p>
       <button class="greeting-btn" onclick="navigateWithFade('tracker.html')">Open tracker →</button>
     </div>
 
@@ -520,6 +561,25 @@ const hour = new Date().getHours();
 document.getElementById('greetingText').textContent =
   hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 
+// Streak badge
+(function(){
+  try{
+    const raw = localStorage.getItem('sec-roadmap-streak');
+    if(!raw) return;
+    const data = JSON.parse(raw);
+    const today = new Date().toISOString().slice(0,10);
+    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+    const stillActive = data.lastActive === today || data.lastActive === yesterday;
+    if(data.streak > 0 && stillActive){
+      const badge = document.getElementById('streakBadge');
+      badge.style.display = 'inline';
+      badge.style.color = 'var(--accent)';
+      badge.style.fontWeight = '700';
+      badge.textContent = `· 🔥 ${data.streak} day${data.streak === 1 ? '' : 's'} in a row`;
+    }
+  } catch(e){}
+})();
+
 // Bars
 const barsWrap = document.getElementById('barsWrap');
 const progresses = PATHS.map(p => ({ path: p, prog: pathProgress(p) }));
@@ -534,8 +594,15 @@ progresses.forEach(({path, prog}) => {
 const totalDone = progresses.reduce((s,p) => s + p.prog.done, 0);
 const totalAll = progresses.reduce((s,p) => s + p.prog.total, 0);
 const overallPct = totalAll ? Math.round((totalDone/totalAll)*100) : 0;
-document.getElementById('miniOverall').textContent = overallPct + '%';
-document.getElementById('qcRing').textContent = overallPct + '%';
+const nothingStartedYet = totalDone === 0;
+
+if(nothingStartedYet){
+  document.getElementById('miniOverall').innerHTML = '<a href="skill-tree-roadmap.html" style="color:var(--accent); font-size:13px;">Pick a specialty →</a>';
+  document.getElementById('qcRing').textContent = '—';
+} else {
+  document.getElementById('miniOverall').textContent = overallPct + '%';
+  document.getElementById('qcRing').textContent = overallPct + '%';
+}
 
 const furthest = progresses.slice().sort((a,b) => b.prog.pct - a.prog.pct)[0];
 document.getElementById('miniFurthest').textContent = furthest.prog.pct > 0 ? `${furthest.path.name} (${furthest.prog.pct}%)` : 'Not started yet';
@@ -613,6 +680,27 @@ if(!certsLeft.length){
     try{ localStorage.setItem('sec-roadmap-theme', next); }catch(e){}
   });
 })();
+
+(function(){
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('sidebarOverlay');
+  var menuBtn = document.getElementById('menuToggle');
+  if(!sidebar || !overlay || !menuBtn) return;
+
+  function openDrawer(){ sidebar.classList.add('open'); overlay.classList.add('open'); }
+  function closeDrawer(){ sidebar.classList.remove('open'); overlay.classList.remove('open'); }
+
+  menuBtn.addEventListener('click', function(){
+    sidebar.classList.contains('open') ? closeDrawer() : openDrawer();
+  });
+  overlay.addEventListener('click', closeDrawer);
+  sidebar.querySelectorAll('a.nav-item').forEach(function(a){
+    a.addEventListener('click', closeDrawer);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeDrawer();
+  });
+})();
 </script>
 <script>
 if ("serviceWorker" in navigator) {
@@ -642,6 +730,48 @@ if ("serviceWorker" in navigator) {
 
   window.addEventListener('pageshow', function(e){
     if(e.persisted) document.body.classList.remove('page-fade-out');
+  });
+})();
+</script>
+<script>
+(function(){
+  const hint = document.createElement('div');
+  hint.className = 'shortcuts-hint';
+  hint.id = 'shortcutsHint';
+  hint.innerHTML = `
+    <b>Keyboard shortcuts</b>
+    <div class="row"><span>Search everything</span><kbd>/</kbd></div>
+    <div class="row"><span>Close panel / this hint</span><kbd>Esc</kbd></div>
+    <div class="row"><span>Show this hint</span><kbd>?</kbd></div>
+  `;
+  document.body.appendChild(hint);
+
+  document.addEventListener('keydown', function(e){
+    const tag = (e.target.tagName || '').toLowerCase();
+    const typing = tag === 'input' || tag === 'textarea' || e.target.isContentEditable;
+
+    if(e.key === '/' && !typing){
+      e.preventDefault();
+      const localSearch = document.getElementById('search') || document.querySelector('.search-box input');
+      if(localSearch){ localSearch.focus(); }
+      else if(typeof navigateWithFade === 'function'){ navigateWithFade('search.html'); }
+      else { window.location.href = 'search.html'; }
+    }
+
+    if(e.key === '?' && !typing){
+      e.preventDefault();
+      hint.classList.toggle('open');
+    }
+
+    if(e.key === 'Escape'){
+      hint.classList.remove('open');
+    }
+  });
+
+  document.addEventListener('click', function(e){
+    if(hint.classList.contains('open') && !hint.contains(e.target)){
+      hint.classList.remove('open');
+    }
   });
 })();
 </script>
