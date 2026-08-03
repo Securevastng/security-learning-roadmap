@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>
+(function(){
+  try{
+    var saved = localStorage.getItem('sec-roadmap-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e){}
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Compare Specialties — Security Learning Roadmap</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="theme-color" content="#0D0F14">
+
+<meta property="og:title" content="Compare Specialties — Security Learning Roadmap">
+<meta property="og:description" content="Side-by-side comparison of any two security specialties: cost, salary, time investment, and progress.">
+<meta property="og:image" content="icons/icon-512.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+@import url(\'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap\');
+:root{
+  --bg:#F5F5F0; --surface:#FFFFFF; --surface-alt:#EFEFE8;
+  --accent:#7A9900; --on-accent:#14161C; --accent-soft:#EEF7C8; --accent-deep:#5C7300;
+  --ink:#111114; --ink-dim:#8A8A93; --line:#E7E7E0;
+  --shadow:0 10px 26px rgba(20,20,43,0.06);
+}
+html[data-theme="dark"]{
+  --bg:#0D0F14; --surface:#141824; --surface-alt:#1B202C;
+  --accent:#C6F135; --on-accent:#0D0F14; --accent-soft:#23301A; --accent-deep:#A8D62E;
+  --ink:#F2F2F0; --ink-dim:#9A9AA3; --line:#262B38;
+  --shadow:0 12px 30px rgba(0,0,0,0.45);
+}
+*{box-sizing:border-box;}
+html{overflow-x:hidden; width:100%;}
+body{ margin:0; background:var(--bg); color:var(--ink); font-family:\'Inter\',sans-serif; line-height:1.6; }
+body{ animation: pageFadeIn 0.32s ease; }
+@keyframes pageFadeIn{ from{ opacity:0; } to{ opacity:1; } }
+body.page-fade-out{ opacity:0 !important; transition: opacity 0.22s ease; }
+@media (prefers-reduced-motion: reduce){ body{ animation:none; } body.page-fade-out{ transition:none; } }
+
+.wrap{ max-width:900px; margin:0 auto; padding:52px 24px 90px; }
+.eyebrow{ color:var(--accent); font-weight:700; font-size:12px; letter-spacing:1px; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
+.eyebrow::before{ content:\'\'; width:7px; height:7px; border-radius:50%; background:var(--accent); }
+h1{ font-size:30px; font-weight:800; margin:12px 0 6px; letter-spacing:-0.5px; }
+.subhead{ color:var(--ink-dim); font-size:14px; margin-bottom:22px; }
+.back-link{ font-size:13px; color:var(--ink-dim); text-decoration:none; font-weight:600; }
+.back-link:hover{ color:var(--accent); }
+
+.picker-row{ display:grid; grid-template-columns: 1fr auto 1fr; gap:14px; align-items:center; margin-bottom:26px; }
+.picker-vs{ font-size:13px; font-weight:800; color:var(--ink-dim); }
+select{
+  width:100%; padding:12px 16px; border:1px solid var(--line); border-radius:12px;
+  background:var(--surface); color:var(--ink); font-family:inherit; font-size:14px; font-weight:700;
+  box-shadow:var(--shadow); cursor:pointer;
+}
+
+.compare-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+@media (max-width:640px){ .compare-grid{ grid-template-columns: 1fr; } }
+
+.compare-card{ background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:20px 22px; box-shadow:var(--shadow); }
+.compare-card h2{ font-size:18px; font-weight:800; margin:0 0 4px; }
+.compare-card .tagline{ font-size:12px; color:var(--ink-dim); margin-bottom:16px; }
+
+.stat-line{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; padding:10px 0; border-top:1px solid var(--line); font-size:13px; }
+.stat-line:first-of-type{ border-top:none; }
+.stat-line .k{ color:var(--ink-dim); font-weight:600; flex-shrink:0; }
+.stat-line .v{ text-align:right; font-weight:700; }
+.stat-line .v small{ display:block; font-weight:400; color:var(--ink-dim); font-size:11px; }
+
+.progress-bar-track{ height:8px; border-radius:999px; background:var(--surface-alt); overflow:hidden; margin-top:6px; }
+.progress-bar-fill{ height:100%; background:var(--accent); border-radius:999px; }
+
+.winner-badge{
+  display:inline-block; font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;
+  background:var(--accent); color:var(--on-accent); padding:2px 8px; border-radius:999px; margin-left:6px;
+}
+
+.level-tools{ margin-top:16px; padding-top:14px; border-top:1px dashed var(--line); }
+.level-tools .lt-title{ font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--ink-dim); margin-bottom:8px; }
+.tool-chip-row{ display:flex; flex-wrap:wrap; gap:5px; }
+.tool-chip{ font-size:10.5px; background:var(--surface-alt); color:var(--ink-dim); padding:3px 8px; border-radius:999px; }
+
+.theme-toggle{
+  width:38px; height:38px; border-radius:50%;
+  background:var(--surface); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:var(--shadow); color:var(--ink);
+  position:fixed; top:16px; right:16px; z-index:999;
+}
+.theme-toggle svg{ width:17px; height:17px; }
+.theme-toggle .icon-moon{ display:none; }
+html[data-theme="dark"] .theme-toggle .icon-sun{ display:none; }
+html[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
+@media print{ .theme-toggle{ display:none !important; } }
+
+.shortcuts-hint{
+  position:fixed; bottom:16px; left:16px; z-index:998;
+  background:var(--surface); border:1px solid var(--line); border-radius:14px;
+  box-shadow:var(--shadow); padding:14px 18px; font-size:12.5px; color:var(--ink);
+  display:none; max-width:260px;
+}
+.shortcuts-hint.open{ display:block; }
+.shortcuts-hint b{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:var(--ink-dim); margin-bottom:8px; }
+.shortcuts-hint .row{ display:flex; justify-content:space-between; gap:12px; margin-bottom:6px; }
+.shortcuts-hint kbd{ background:var(--surface-alt); border:1px solid var(--line); border-radius:5px; padding:1px 7px; font-family:monospace; font-size:11px; }
+@media print{ .shortcuts-hint{ display:none !important; } }
+</style>
+</head>
+<body>
+<button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+</button>
+
+<div class="wrap">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+    <div class="eyebrow">Security Learning Roadmap</div>
+    <a class="back-link" href="index.html">← Back home</a>
+  </div>
+  <h1>Compare specialties</h1>
+  <p class="subhead">Pick two and see cost, salary, time investment, and your real progress side by side.</p>
+
+  <div class="picker-row">
+    <select id="pickA"></select>
+    <div class="picker-vs">VS</div>
+    <select id="pickB"></select>
+  </div>
+
+  <div class="compare-grid" id="compareGrid"></div>
+</div>
+
+<script>
+const PATHS = [
+  {
+    id: "pentest", name: "Penetration Testing",
+    sections: [
+      { label: "Foundation", items: [
+        {id:"f1", tag:"tool", text:"Comfortable running Nmap scans"},
+        {id:"f2", tag:"tool", text:"Comfortable reading Wireshark captures"},
+        {id:"f3", tag:"tool", text:"Used Burp Suite Community Edition"},
+        {id:"f4", tag:"cert", text:"Completed TCM Security — Practical Ethical Hacking"},
+      ]},
+      { label: "Practitioner", items: [
+        {id:"p1", tag:"tool", text:"Run an exploit with Metasploit"},
+        {id:"p2", tag:"tool", text:"Used Burp Suite Pro on a real target"},
+        {id:"p3", tag:"tool", text:"Run a Nessus vulnerability scan"},
+        {id:"p4", tag:"cert", text:"Earned TCM PJPT or eJPT"},
+      ]},
+      { label: "Advanced", items: [
+        {id:"a1", tag:"tool", text:"Set up Cobalt Strike or another C2 framework"},
+        {id:"a2", tag:"tool", text:"Used BloodHound for AD attack paths"},
+        {id:"a3", tag:"cert", text:"Earned TCM PNPT or OSCP"},
+      ]},
+      { label: "Free resources", items: [
+        {id:"r1", tag:"free", text:"Watched a TCM Security free course"},
+        {id:"r2", tag:"free", text:"Watched an IppSec HTB walkthrough"},
+        {id:"r3", tag:"free", text:"Joined r/AskNetsec or r/HowToHack"},
+        {id:"r4", tag:"free", text:"Started free rooms on TryHackMe"},
+      ]},
+    ]
+  },
+  {
+    id: "network", name: "Network Engineering",
+    sections: [
+      { label: "Foundation", items: [
+        {id:"f1", tag:"tool", text:"Comfortable reading Wireshark captures"},
+        {id:"f2", tag:"tool", text:"Built a topology in Packet Tracer"},
+        {id:"f3", tag:"tool", text:"Used traceroute/ping to debug a path"},
+        {id:"f4", tag:"cert", text:"Earned CompTIA Network+"},
+      ]},
+      { label: "Practitioner", items: [
+        {id:"p1", tag:"tool", text:"Configured pfSense"},
+        {id:"p2", tag:"tool", text:"Configured a Cisco ASA"},
+        {id:"p3", tag:"tool", text:"Set up a site-to-site VPN"},
+        {id:"p4", tag:"cert", text:"Earned Cisco CCNA"},
+      ]},
+      { label: "Advanced", items: [
+        {id:"a1", tag:"tool", text:"Worked with Cisco ISE for NAC"},
+        {id:"a2", tag:"tool", text:"Configured a Zscaler or SD-WAN policy"},
+        {id:"a3", tag:"cert", text:"Earned Cisco CCNP (Security concentration)"},
+      ]},
+      { label: "Free resources", items: [
+        {id:"r1", tag:"free", text:"Watched Jeremy's IT Lab CCNA series"},
+        {id:"r2", tag:"free", text:"Joined r/networking or r/ccna"},
+        {id:"r3", tag:"free", text:"Installed Packet Tracer or GNS3"},
+      ]},
+    ]
+  },
+  {
+    id: "soc", name: "Cybersecurity Analyst",
+    sections: [
+      { label: "Foundation", items: [
+        {id:"f1", tag:"tool", text:"Ran searches in Splunk Free"},
+        {id:"f2", tag:"tool", text:"Investigated logs in Windows Event Viewer"},
+        {id:"f3", tag:"tool", text:"Comfortable reading Wireshark captures"},
+        {id:"f4", tag:"cert", text:"Earned ISC2 CC or CompTIA Security+"},
+      ]},
+      { label: "Practitioner", items: [
+        {id:"p1", tag:"tool", text:"Built a dashboard in Splunk Enterprise or ELK"},
+        {id:"p2", tag:"tool", text:"Worked with an EDR console"},
+        {id:"p3", tag:"cert", text:"Earned Blue Team Level 1 or GCIH"},
+      ]},
+      { label: "Advanced", items: [
+        {id:"a1", tag:"tool", text:"Written or used a YARA rule"},
+        {id:"a2", tag:"tool", text:"Analyzed memory with Volatility"},
+        {id:"a3", tag:"tool", text:"Written a Sigma rule for Sysmon logs"},
+        {id:"a4", tag:"cert", text:"Earned GCFA or CompTIA CySA+"},
+      ]},
+      { label: "Free resources", items: [
+        {id:"r1", tag:"free", text:"Watched 13Cubed or John Hammond"},
+        {id:"r2", tag:"free", text:"Joined r/blueteamsec or r/netsecstudents"},
+        {id:"r3", tag:"free", text:"Started a free tier on LetsDefend or CyberDefenders"},
+      ]},
+    ]
+  },
+  {
+    id: "audit", name: "Auditing",
+    sections: [
+      { label: "Foundation", items: [
+        {id:"f1", tag:"tool", text:"Built a control checklist for a real audit area"},
+        {id:"f2", tag:"tool", text:"Maintained an evidence tracker"},
+      ]},
+      { label: "Practitioner", items: [
+        {id:"p1", tag:"tool", text:"Worked in AuditBoard or Workiva"},
+        {id:"p2", tag:"cert", text:"Earned CISA"},
+      ]},
+      { label: "Advanced", items: [
+        {id:"a1", tag:"tool", text:"Worked across an enterprise GRC suite"},
+        {id:"a2", tag:"cert", text:"Earned CIA (Certified Internal Auditor)"},
+      ]},
+      { label: "Free resources", items: [
+        {id:"r1", tag:"free", text:"Watched GRC Academy or GRC Uncensored"},
+        {id:"r2", tag:"free", text:"Joined r/GRC or r/cybersecurity"},
+        {id:"r3", tag:"free", text:"Read through NIST SP 800-53"},
+      ]},
+    ]
+  },
+  {
+    id: "grc", name: "GRC",
+    sections: [
+      { label: "Foundation", items: [
+        {id:"f1", tag:"tool", text:"Drafted a security policy from a template"},
+        {id:"f2", tag:"tool", text:"Used Vanta or Drata"},
+        {id:"f3", tag:"cert", text:"Earned ISC2 CC"},
+      ]},
+      { label: "Practitioner", items: [
+        {id:"p1", tag:"tool", text:"Managed vendor risk in OneTrust or ServiceNow GRC"},
+        {id:"p2", tag:"cert", text:"Earned CRISC or ISO 27001 Lead Implementer"},
+      ]},
+      { label: "Advanced", items: [
+        {id:"a1", tag:"tool", text:"Worked in RSA Archer or MetricStream"},
+        {id:"a2", tag:"cert", text:"Earned CISM or CGEIT"},
+      ]},
+      { label: "Free resources", items: [
+        {id:"r1", tag:"free", text:"Watched GRC Academy or Security in Five"},
+        {id:"r2", tag:"free", text:"Joined r/GRC"},
+        {id:"r3", tag:"free", text:"Read NIST CSF 2.0"},
+      ]},
+    ]
+  },
+  {
+    id: "cloud", name: "Cloud Security",
+    sections: [
+      { label: "Foundation", items: [
+        {id:"f1", tag:"tool", text:"Set up an AWS or Azure free-tier account"},
+        {id:"f2", tag:"tool", text:"Reviewed CloudTrail logs"},
+        {id:"f3", tag:"cert", text:"Earned AWS Cloud Practitioner"},
+      ]},
+      { label: "Practitioner", items: [
+        {id:"p1", tag:"tool", text:"Run a scan with Prowler or ScoutSuite"},
+        {id:"p2", tag:"tool", text:"Written an IAM policy from scratch"},
+        {id:"p3", tag:"cert", text:"Earned CCSK"},
+      ]},
+      { label: "Advanced", items: [
+        {id:"a1", tag:"tool", text:"Used Wiz or a similar CNAPP"},
+        {id:"a2", tag:"tool", text:"Written Terraform with policy-as-code (OPA)"},
+        {id:"a3", tag:"cert", text:"Earned AWS Security Specialty or CCSP"},
+      ]},
+      { label: "Free resources", items: [
+        {id:"r1", tag:"free", text:"Watched freeCodeCamp's AWS course"},
+        {id:"r2", tag:"free", text:"Joined r/aws or r/AWSCertifications"},
+        {id:"r3", tag:"free", text:"Used AWS Skill Builder free tier"},
+      ]},
+    ]
+  },
+  {
+    id: "dfir", name: "Incident Response",
+    sections: [
+      { label: "Foundation", items: [
+        {id:"f1", tag:"tool", text:"Imaged a disk with FTK Imager"},
+        {id:"f2", tag:"tool", text:"Explored a case in Autopsy"},
+        {id:"f3", tag:"tool", text:"Read NIST SP 800-61r2"},
+      ]},
+      { label: "Practitioner", items: [
+        {id:"p1", tag:"tool", text:"Collected artifacts with KAPE"},
+        {id:"p2", tag:"tool", text:"Run a hunt with Velociraptor"},
+        {id:"p3", tag:"cert", text:"Earned GCFE or Blue Team Level 2"},
+      ]},
+      { label: "Advanced", items: [
+        {id:"a1", tag:"tool", text:"Parsed logs with Chainsaw"},
+        {id:"a2", tag:"tool", text:"Built a timeline in Timesketch"},
+        {id:"a3", tag:"cert", text:"Earned GCFA, GNFA, or GREM"},
+      ]},
+      { label: "Free resources", items: [
+        {id:"r1", tag:"free", text:"Watched 13Cubed's DFIR series"},
+        {id:"r2", tag:"free", text:"Joined r/computerforensics"},
+        {id:"r3", tag:"free", text:"Tried a CyberDefenders challenge"},
+      ]},
+    ]
+  },
+];
+
+const SPEC_DATA = {
+  pentest:  { cert:"OSCP", cost:"~$1,749", costNgn:"≈₦2.41M", salary:"$85K–$150K", salaryNgn:"≈₦117M–₦207M", time:"~12–18 months" },
+  network:  { cert:"Cisco CCNA", cost:"~$300", costNgn:"≈₦414K", salary:"$90K–$150K", salaryNgn:"≈₦124M–₦207M", time:"~9–14 months" },
+  soc:      { cert:"CompTIA Security+", cost:"~$425", costNgn:"≈₦587K", salary:"$70K–$140K", salaryNgn:"≈₦97M–₦193M", time:"~9–15 months" },
+  audit:    { cert:"CISA", cost:"$575–$760", costNgn:"≈₦794K–₦1.05M", salary:"$95K–$150K", salaryNgn:"≈₦131M–₦207M", time:"~10–16 months" },
+  grc:      { cert:"CISM", cost:"$575–$760", costNgn:"≈₦794K–₦1.05M", salary:"$80K–$145K", salaryNgn:"≈₦110M–₦200M", time:"~10–16 months" },
+  cloud:    { cert:"CCSP", cost:"~$599", costNgn:"≈₦827K", salary:"$110K–$180K", salaryNgn:"≈₦152M–₦248M", time:"~9–14 months" },
+  dfir:     { cert:"GCFA", cost:"~$999", costNgn:"≈₦1.38M", salary:"$105K–$170K", salaryNgn:"≈₦145M–₦235M", time:"~12–18 months" },
+};
+
+const STORAGE_KEY = "sec-roadmap-tracker";
+function loadState(){
+  try{ const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {}; }
+  catch(e){ return {}; }
+}
+const state = loadState();
+
+function allItems(path){ return path.sections.flatMap(s => s.items); }
+function pathProgress(path){
+  const items = allItems(path);
+  const done = items.filter(it => state[path.id + ":" + it.id]).length;
+  return { done, total: items.length, pct: items.length ? Math.round((done/items.length)*100) : 0 };
+}
+function toolNames(path){
+  const found = path.sections.find(s => s.label === "Foundation");
+  return found ? found.items.filter(it => it.tag === 'tool').map(it => it.text) : [];
+}
+
+const selA = document.getElementById('pickA');
+const selB = document.getElementById('pickB');
+PATHS.forEach((p, i) => {
+  const o1 = document.createElement('option'); o1.value = p.id; o1.textContent = p.name; selA.appendChild(o1);
+  const o2 = document.createElement('option'); o2.value = p.id; o2.textContent = p.name; selB.appendChild(o2);
+});
+selA.value = PATHS[0].id;
+selB.value = PATHS[1].id;
+
+function parseMoney(str){
+  const nums = (str.match(/[\d,]+/g) || []).map(n => parseFloat(n.replace(/,/g,'')));
+  return nums.length ? Math.max(...nums) : 0;
+}
+
+function renderCard(pathId, otherPathId){
+  const path = PATHS.find(p => p.id === pathId);
+  const data = SPEC_DATA[pathId];
+  const otherData = SPEC_DATA[otherPathId];
+  const prog = pathProgress(path);
+  const tools = toolNames(path);
+
+  const cheaper = parseMoney(data.cost) < parseMoney(otherData.cost);
+  const higherSalary = parseMoney(data.salary.split('–')[1] || data.salary) > parseMoney((otherData.salary.split('–')[1] || otherData.salary));
+
+  return `
+    <div class="compare-card">
+      <h2>${path.name}${cheaper ? '<span class="winner-badge">Cheaper</span>' : ''}${higherSalary ? '<span class="winner-badge">Higher $</span>' : ''}</h2>
+      <div class="tagline">Top cert: <b style="color:var(--accent);">${data.cert}</b></div>
+
+      <div class="stat-line"><span class="k">Cert cost</span><span class="v">${data.cost}<small>${data.costNgn}</small></span></div>
+      <div class="stat-line"><span class="k">Salary range</span><span class="v">${data.salary}<small>${data.salaryNgn}</small></span></div>
+      <div class="stat-line"><span class="k">Time investment</span><span class="v">${data.time}</span></div>
+      <div class="stat-line">
+        <span class="k">Your progress</span>
+        <span class="v">${prog.pct}% <small>${prog.done}/${prog.total} items</small></span>
+      </div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" style="width:${prog.pct}%"></div></div>
+
+      <div class="level-tools">
+        <div class="lt-title">Foundation tools</div>
+        <div class="tool-chip-row">${tools.map(t => `<span class="tool-chip">${t}</span>`).join('')}</div>
+      </div>
+    </div>
+  `;
+}
+
+function render(){
+  document.getElementById('compareGrid').innerHTML =
+    renderCard(selA.value, selB.value) + renderCard(selB.value, selA.value);
+}
+selA.addEventListener('change', render);
+selB.addEventListener('change', render);
+render();
+
+(function(){
+  var btn = document.getElementById('themeToggle');
+  if(!btn) return;
+  btn.addEventListener('click', function(){
+    var html = document.documentElement;
+    var current = html.getAttribute('data-theme') || 'light';
+    var next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    try{ localStorage.setItem('sec-roadmap-theme', next); }catch(e){}
+  });
+})();
+
+(function(){
+  function navigateWithFade(href){
+    document.body.classList.add('page-fade-out');
+    setTimeout(function(){ window.location.href = href; }, 220);
+  }
+  window.navigateWithFade = navigateWithFade;
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a');
+    if(!a) return;
+    var href = a.getAttribute('href');
+    if(!href) return;
+    if(href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto:')) return;
+    if(a.target === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    navigateWithFade(href);
+  });
+  window.addEventListener('pageshow', function(e){
+    if(e.persisted) document.body.classList.remove('page-fade-out');
+  });
+})();
+
+(function(){
+  const hint = document.createElement('div');
+  hint.className = 'shortcuts-hint';
+  hint.innerHTML = `<b>Keyboard shortcuts</b>
+    <div class="row"><span>Search everything</span><kbd>/</kbd></div>
+    <div class="row"><span>Close panel / this hint</span><kbd>Esc</kbd></div>
+    <div class="row"><span>Show this hint</span><kbd>?</kbd></div>`;
+  document.body.appendChild(hint);
+  document.addEventListener('keydown', function(e){
+    const tag = (e.target.tagName || '').toLowerCase();
+    const typing = tag === 'input' || tag === 'textarea' || e.target.isContentEditable;
+    if(e.key === '/' && !typing){
+      e.preventDefault();
+      if(typeof navigateWithFade === 'function'){ navigateWithFade('search.html'); }
+      else { window.location.href = 'search.html'; }
+    }
+    if(e.key === '?' && !typing){ e.preventDefault(); hint.classList.toggle('open'); }
+    if(e.key === 'Escape'){ hint.classList.remove('open'); }
+  });
+  document.addEventListener('click', function(e){
+    if(hint.classList.contains('open') && !hint.contains(e.target)) hint.classList.remove('open');
+  });
+})();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

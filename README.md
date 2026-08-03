@@ -18,6 +18,9 @@ Internal reference for how leadership and the security team build cybersecurity 
 - **`CHANGELOG.md`** — dated history of what's changed.
 - **`404.html`** — custom not-found page, styled to match the rest of the site (set automatically by GitHub Pages if present at repo root).
 - **`roadmap-status.html`** — what's shipped, what's planned, what's under consideration, and a feedback box that opens a pre-filled email (no backend, nothing stored).
+- **`compare.html`** — pick any two specialties and see their top cert, cost (USD + Naira), salary range, time investment, and your real progress side by side.
+
+`dashboard.html` also now has: a first-visit onboarding tour (shows once), a "Share my progress" button that encodes your tracker state into a URL for read-only sharing (no backend), and `certificate.html` gets LinkedIn/X share buttons once a path hits 100%.
 
 Site-wide features: dark/light toggle, page fade transitions, keyboard shortcuts (`/` search, `?` shortcut list, `Esc` close), and a day-streak counter (shown on the dashboard) that tracks consecutive days you've marked something done in the tracker or skill tree. `tracker.html` also has a "Export progress (CSV)" button covering every specialty.
 - **`dashboard.html`** — an HR-dashboard-style landing view (sidebar nav, greeting header, task list, stat cards, progress chart) pulling real, live data from `tracker.html`'s `localStorage` state: next unchecked steps across every specialty, overall % complete, a bar chart of progress per specialty, and the top certs still left to earn. No separate data source — same shared state as the tracker.
@@ -33,7 +36,7 @@ Open any `.html` file directly in a browser — single-file, no build step, no d
 If GitHub Pages is enabled (Settings → Pages → Deploy from branch → `main` → `/root`), the whole thing is served at:
 
 ```
-https://securevastng.github.io/security-learning-roadmap/
+https://YOUR-ORG.github.io/security-learning-roadmap/
 ```
 
 `index.html` loads first and links out to the rest.
@@ -56,7 +59,7 @@ This repo should live under the company's GitHub **Organization**, not a persona
 If you haven't pointed this at the org yet:
 
 ```bash
-git remote set-url origin https://github.com/securevastng/security-learning-roadmap.git
+git remote set-url origin https://github.com/YOUR-ORG/security-learning-roadmap.git
 git push -u origin main
 ```
 

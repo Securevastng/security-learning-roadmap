@@ -2,6 +2,14 @@
 
 All notable changes to the Security Learning Roadmap are logged here, newest first.
 
+## 2026-07-25 (2)
+- **`compare.html`**: pick any two specialties and see cert cost (USD + Naira), salary range, time investment, and your real tracker progress side by side, with "Cheaper" / "Higher $" badges.
+- **First-visit onboarding tour** on `dashboard.html`: a 4-step walkthrough explaining how the dashboard, skill tree, tracker, and certificate connect. Shows once (localStorage), skippable, doesn't show on shared-progress links.
+- **Shareable progress link**: a "Share my progress →" button on the dashboard encodes your tracker state into a URL (no backend) — anyone with the link sees a read-only view of that exact progress, with a clear banner marking it as someone else's data.
+- **Social share on `certificate.html`**: once a path hits 100%, LinkedIn and X share buttons appear next to the certificate.
+- **Link health check**: spot-checked the riskiest external links (TCM Security, BloodHound, GIAC, Security Blue Team) — found and fixed one real broken link (Blue Team Level 1's path had changed). Full link coverage wasn't possible from this environment's sandboxed network; the rest were verified via search rather than an exhaustive crawl.
+- Verified all scripts pass `node --check` plus mock-DOM execution runs before packaging. Cache bumped to v12.
+
 ## 2026-07-25
 - **Fixed the mobile dashboard nav**: the sidebar previously collapsed into a squeezed horizontal scroll bar on narrow screens. Replaced with a proper slide-in drawer — a hamburger button in the top bar toggles the full nav in as an overlay from the left, with a dimmed backdrop, closes on backdrop click / nav link click / Escape. Verified with `node --check` and a mock-DOM execution run.
 

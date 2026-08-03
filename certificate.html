@@ -189,6 +189,18 @@ body{
   margin-top: 18px; text-align:center; font-size:11px; color:var(--ink-dim); max-width:560px; margin-left:auto; margin-right:auto;
 }
 
+.share-row{
+  display:flex; align-items:center; justify-content:center; gap:10px; margin-top:20px; flex-wrap:wrap;
+}
+.share-label{ font-size:12.5px; color:var(--ink-dim); font-weight:600; }
+.share-btn{
+  display:flex; align-items:center; gap:7px; border:1px solid var(--line); background:var(--surface);
+  color:var(--ink); border-radius:999px; padding:8px 16px; font-family:inherit; font-weight:700;
+  font-size:12.5px; cursor:pointer;
+}
+.share-btn:hover{ border-color:var(--accent); background:var(--accent-soft); }
+@media print{ .share-row{ display:none !important; } }
+
 @media (max-width: 600px){
   .stage{ padding: 0 4px; }
   .cert-inner{ padding: 30px 20px 26px; }
@@ -313,6 +325,18 @@ body.page-fade-out{ opacity:0 !important; transition: opacity 0.22s ease; }
     </div>
 
     <div class="disclaimer">This is an internal recognition of self-study progress, not an accredited or industry-issued certification. The real credentials referenced in this track (e.g. OSCP, CCNA, CISA) are earned separately through their official certifying bodies.</div>
+
+    <div class="share-row" id="shareRow" style="display:none;">
+      <span class="share-label">Share it:</span>
+      <button class="share-btn share-linkedin" id="shareLinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.84-3.03-1.85 0-2.14 1.44-2.14 2.94v5.66H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 11.02-4.12 2.06 2.06 0 01-.02 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+        LinkedIn
+      </button>
+      <button class="share-btn share-x" id="shareX">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M18.9 2H22l-7.6 8.7L23.5 22h-7l-5.5-6.7L4.7 22H1.5l8.1-9.3L1 2h7.2l5 6.1L18.9 2zm-1.2 18h1.7L7.4 4h-1.8l12.1 16z"/></svg>
+        X
+      </button>
+    </div>
   </div>
 
 </div>
@@ -426,6 +450,16 @@ if(!activePath){
     }
     nameInput.addEventListener('input', updateName);
     updateName();
+
+    document.getElementById('shareRow').style.display = 'flex';
+    const shareText = `I just completed the ${activePath.name} track on the Security Learning Roadmap 🎓`;
+    const shareUrl = window.location.origin + window.location.pathname.replace('certificate.html', 'index.html');
+    document.getElementById('shareLinkedIn').addEventListener('click', () => {
+      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,width=600,height=600');
+    });
+    document.getElementById('shareX').addEventListener('click', () => {
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,width=600,height=600');
+    });
   }
 }
 </script>

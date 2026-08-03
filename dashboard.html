@@ -90,6 +90,26 @@ body{ margin:0; background:var(--bg); color:var(--ink); font-family:\'Inter\',sa
 .card{ background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:18px 20px; box-shadow:var(--shadow); max-width:100%; box-sizing:border-box; }
 .card-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; gap:10px; flex-wrap:wrap; }
 
+/* ONBOARDING TOUR */
+.tour-overlay{
+  position:fixed; inset:0; background:rgba(12,12,14,0.5); z-index:2000;
+  display:none; align-items:center; justify-content:center; padding:20px;
+}
+.tour-overlay.open{ display:flex; }
+.tour-card{
+  background:var(--surface); border-radius:18px; padding:26px 26px 22px; max-width:380px; width:100%;
+  box-shadow:0 20px 50px rgba(0,0,0,0.3);
+}
+.tour-step-label{ font-size:10.5px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px; }
+.tour-card h3{ font-size:18px; font-weight:800; margin:0 0 8px; }
+.tour-card p{ font-size:13.5px; color:var(--ink-dim); margin:0 0 20px; line-height:1.6; }
+.tour-dots{ display:flex; gap:6px; margin-bottom:18px; }
+.tour-dot{ width:6px; height:6px; border-radius:50%; background:var(--line); }
+.tour-dot.active{ background:var(--accent); width:16px; border-radius:3px; }
+.tour-actions{ display:flex; justify-content:space-between; align-items:center; }
+.tour-skip{ background:none; border:none; color:var(--ink-dim); font-family:inherit; font-size:12.5px; cursor:pointer; font-weight:600; }
+.tour-next{ background:var(--accent); color:var(--on-accent); border:none; border-radius:999px; padding:10px 20px; font-family:inherit; font-weight:700; font-size:13px; cursor:pointer; }
+
 /* RESPONSIVE BREAKPOINTS */
 .menu-toggle{ display:none; }
 .sidebar-overlay{ display:none; }
@@ -258,6 +278,7 @@ body.page-fade-out{ opacity:0 !important; transition: opacity 0.22s ease; }
     <a class="nav-item" href="certificate.html"><span class="nav-icon">&#127891;</span> Certificate</a>
     <a class="nav-item" href="glossary.html"><span class="nav-icon">&#128214;</span> Glossary</a>
     <a class="nav-item" href="cheat-sheet.html"><span class="nav-icon">&#128203;</span> Cheat Sheet</a>
+    <a class="nav-item" href="compare.html"><span class="nav-icon">&#9878;</span> Compare</a>
     <div class="sidebar-bottom">
       <a class="nav-item" href="about.html"><span class="nav-icon">&#9881;</span> Methodology</a>
       <a class="nav-item" href="index.html"><span class="nav-icon">&#8592;</span> All Views</a>
@@ -281,10 +302,13 @@ body.page-fade-out{ opacity:0 !important; transition: opacity 0.22s ease; }
       <div class="avatar">S</div>
     </div>
 
+    <div id="sharedBanner" style="display:none; background:var(--accent-soft); border:1px solid var(--accent); border-radius:12px; padding:12px 16px; margin-bottom:18px; font-size:13px; color:var(--ink);"></div>
+
     <div class="greeting">
       <h1 id="greetingText">Good morning</h1>
       <p>Here's where things stand across all 7 specialties right now. <span id="streakBadge" style="display:none;"></span></p>
-      <button class="greeting-btn" onclick="navigateWithFade('tracker.html')">Open tracker →</button>
+      <button class="greeting-btn" id="openTrackerBtn" onclick="navigateWithFade('tracker.html')">Open tracker →</button>
+      <button class="greeting-btn" id="shareProgressBtn" style="margin-left:8px;">Share my progress →</button>
     </div>
 
     <div class="content-grid">
@@ -357,6 +381,19 @@ body.page-fade-out{ opacity:0 !important; transition: opacity 0.22s ease; }
           <div id="certsList"></div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="tour-overlay" id="tourOverlay">
+  <div class="tour-card">
+    <div class="tour-step-label" id="tourStepLabel">Step 1 of 4</div>
+    <h3 id="tourTitle">Welcome to your dashboard</h3>
+    <p id="tourBody">This shows real progress pulled from your tracker — nothing here is fake data, it's exactly what you've checked off.</p>
+    <div class="tour-dots" id="tourDots"></div>
+    <div class="tour-actions">
+      <button class="tour-skip" id="tourSkip">Skip tour</button>
+      <button class="tour-next" id="tourNext">Next →</button>
     </div>
   </div>
 </div>
@@ -547,7 +584,22 @@ function loadState(){
   try{ const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {}; }
   catch(e){ return {}; }
 }
-const state = loadState();
+function encodeShareState(obj){
+  return btoa(unescape(encodeURIComponent(JSON.stringify(obj))));
+}
+function decodeShareState(str){
+  return JSON.parse(decodeURIComponent(escape(atob(str))));
+}
+
+const sharedParam = new URLSearchParams(window.location.search).get('shared');
+let isSharedView = false;
+let state;
+if(sharedParam){
+  try{ state = decodeShareState(sharedParam); isSharedView = true; }
+  catch(e){ state = loadState(); }
+} else {
+  state = loadState();
+}
 
 function allItems(path){ return path.sections.flatMap(s => s.items.map(it => ({...it, section: s.label}))); }
 function pathProgress(path){
@@ -560,6 +612,36 @@ function pathProgress(path){
 const hour = new Date().getHours();
 document.getElementById('greetingText').textContent =
   hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+
+// Shared-view banner + share button
+if(isSharedView){
+  const banner = document.getElementById('sharedBanner');
+  banner.style.display = 'block';
+  banner.innerHTML = "👀 <b>Viewing a shared progress link</b> — this is someone else's saved progress, read-only. It won't affect anything stored in this browser.";
+  document.getElementById('openTrackerBtn').style.display = 'none';
+  document.getElementById('shareProgressBtn').style.display = 'none';
+} else {
+  document.getElementById('shareProgressBtn').addEventListener('click', () => {
+    const encoded = encodeShareState(state);
+    const url = `${window.location.origin}${window.location.pathname}?shared=${encoded}`;
+    const btn = document.getElementById('shareProgressBtn');
+    const original = btn.textContent;
+    function fallbackCopy(){
+      const ta = document.createElement('textarea');
+      ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); } catch(e){}
+      document.body.removeChild(ta);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).catch(fallbackCopy);
+    } else {
+      fallbackCopy();
+    }
+    btn.textContent = 'Link copied ✓';
+    setTimeout(() => { btn.textContent = original; }, 2000);
+  });
+}
 
 // Streak badge
 (function(){
@@ -700,6 +782,52 @@ if(!certsLeft.length){
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape') closeDrawer();
   });
+})();
+
+(function(){
+  const STEPS = [
+    { title: "Welcome to your dashboard", body: "This shows real progress pulled from your tracker — nothing here is fake data, it's exactly what you've checked off." },
+    { title: "Start in the Skill Tree", body: "That's where the actual learning happens — 97 clickable tools and certs, each with an explanation and an official link." },
+    { title: "Check things off in the Tracker", body: "As you learn, mark items done there (or right inside the Skill Tree panels — they're synced) and this dashboard updates automatically." },
+    { title: "Earn a certificate", body: "Once a whole specialty path hits 100%, a printable Certificate of Completion unlocks. That's the finish line." }
+  ];
+  let step = 0;
+  const tourOverlay = document.getElementById('tourOverlay');
+  const titleEl = document.getElementById('tourTitle');
+  const bodyEl = document.getElementById('tourBody');
+  const labelEl = document.getElementById('tourStepLabel');
+  const dotsEl = document.getElementById('tourDots');
+  const nextBtn = document.getElementById('tourNext');
+  const skipBtn = document.getElementById('tourSkip');
+
+  function renderTour(){
+    const s = STEPS[step];
+    titleEl.textContent = s.title;
+    bodyEl.textContent = s.body;
+    labelEl.textContent = `Step ${step+1} of ${STEPS.length}`;
+    nextBtn.textContent = step === STEPS.length - 1 ? "Got it →" : "Next →";
+    dotsEl.innerHTML = STEPS.map((_, i) => `<span class="tour-dot${i===step?' active':''}"></span>`).join('');
+  }
+
+  function closeTour(){
+    tourOverlay.classList.remove('open');
+    try{ localStorage.setItem('sec-roadmap-tour-seen', '1'); }catch(e){}
+  }
+
+  nextBtn.addEventListener('click', () => {
+    if(step === STEPS.length - 1){ closeTour(); return; }
+    step++;
+    renderTour();
+  });
+  skipBtn.addEventListener('click', closeTour);
+  tourOverlay.addEventListener('click', (e) => { if(e.target === tourOverlay) closeTour(); });
+
+  try{
+    if(!localStorage.getItem('sec-roadmap-tour-seen') && !new URLSearchParams(window.location.search).get('shared')){
+      renderTour();
+      tourOverlay.classList.add('open');
+    }
+  } catch(e){}
 })();
 </script>
 <script>
